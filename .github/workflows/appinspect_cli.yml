@@ -1,0 +1,53 @@
+name: Lint and App Inspect CLI
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install deps
+        uses: CultureHQ/actions-yarn@master
+        with:
+          args: install
+
+      - name: Lint
+        uses: CultureHQ/actions-yarn@master
+        with:
+          args: lint
+
+      - name: Build
+        uses: CultureHQ/actions-yarn@master
+        with:
+          args: build
+
+      - name: Update Permissions
+        run: |
+          chmod +x ./.github/actions/appinspect_cli/entrypoint.sh
+          
+      - name: Update Version Number
+        run: |
+          old_str="X.Y.Z"
+          new_str="1.0.0"
+          sed -i "s/$old_str/$new_str/g" package.json
+          sed -i "s/$old_str/$new_str/g" ./github-audit-log-monitoring-add-on-for-splunk/setup.py
+          sed -i "s/$old_str/$new_str/g" ./github-audit-log-monitoring-add-on-for-splunk/default/app.conf
+
+      - name: Run App Inspect CLI
+        uses: ./.github/actions/appinspect_cli
+        with:
+          app-path: github-audit-log-monitoring-add-on-for-splunk/

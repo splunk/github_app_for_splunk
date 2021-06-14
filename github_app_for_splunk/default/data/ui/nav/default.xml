@@ -1,0 +1,14 @@
+<nav search_view="search" color="#24292e">
+  <collection label="Enterprise Server Monitor"  default='true'>
+    <view source="all" match="monitor" />
+  </collection>
+  <collection label="Audit"  default='true'>
+    <view source="all" match="audit" />
+  </collection>
+  <view name="integration_monitoring"/>
+  <collection label="Config">
+    <view source="all" match="config" />
+  </collection>
+  <view name="search" />
+  <view name="dashboards" />
+</nav>

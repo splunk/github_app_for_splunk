@@ -1,0 +1,65 @@
+<form>
+  <label>Process Monitor</label>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="time" token="timeTkn" searchWhenChanged="true">
+      <label></label>
+      <default>
+        <earliest>-60m@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="envTkn" searchWhenChanged="true">
+      <label>Environment</label>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <fieldForLabel>host</fieldForLabel>
+      <fieldForValue>host</fieldForValue>
+      <search>
+        <query>| mstats count prestats=true WHERE `github_collectd` AND metric_name="cpu.*" span=10s BY host
+| dedup host | table host</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <chart>
+        <title>Processes</title>
+        <search>
+          <query>| mstats avg("processes.ps_count.threads") prestats=true WHERE `github_collectd` host="$envTkn$" span=10s BY plugin_instance
+| timechart avg("processes.ps_count.threads") span=10s useother=false BY plugin_instance WHERE max in top50
+| fields - _span*</query>
+          <earliest>$timeTkn.earliest$</earliest>
+          <latest>$timeTkn.latest$</latest>
+        </search>
+        <option name="charting.axisLabelsY.majorUnit">25</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">bottom</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Memory</title>
+        <search>
+          <query>| mstats avg(_value) as "Avg" WHERE `github_collectd` metric_name="processes.ps_rss.value" host="$envTkn$" span=10s BY plugin_instance
+| eval mem_gb = Avg / 1024 / 1024 / 1024
+| timechart avg("mem_gb") span=10s useother=false BY plugin_instance WHERE max in top50
+| fields - _span*</query>
+          <earliest>$timeTkn.earliest$</earliest>
+          <latest>$timeTkn.latest$</latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.text">GB</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</form>

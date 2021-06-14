@@ -1,0 +1,27 @@
+{
+    "name": "auto-update-action",
+    "version": "0.0.0",
+    "private": true,
+    "main": "lib/main.js",
+    "scripts": {
+        "build": "tsc",
+        "pack": "ncc build",
+        "all": "npm run build && npm run pack"
+    },
+    "license": "UNLICENSED",
+    "dependencies": {
+        "@actions/core": "^1.2.0",
+        "@actions/exec": "^1.0.3",
+        "@actions/github": "^2.1.1",
+        "form-data": "^3.0.0",
+        "node-fetch": "^2.6.0"
+    },
+    "devDependencies": {
+        "@types/form-data": "^2.5.0",
+        "@types/node": "^12.7.12",
+        "@types/node-fetch": "^2.5.7",
+        "@zeit/ncc": "^0.20.5",
+        "js-yaml": "^3.13.1",
+        "typescript": "^3.6.4"
+    }
+}

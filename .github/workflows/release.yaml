@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f ./github-audit-log-monitoring-add-on-for-splunk/requirements.txt ]; then pip install -r ./github-audit-log-monitoring-add-on-for-splunk/requirements.txt; fi
+    - name: Test with nosetests
+      run: |
+        sed -i 's/from audit_log_entry/from .audit_log_entry/g' ./github-audit-log-monitoring-add-on-for-splunk/bin/audit_log.py
+        sed -i 's/from audit_log/from .audit_log/g' ./github-audit-log-monitoring-add-on-for-splunk/bin/rest_client.py
+        nosetests -vs
+        sed -i 's/from .audit_log_entry/from audit_log_entry/g' ./github-audit-log-monitoring-add-on-for-splunk/bin/audit_log.py
+        sed -i 's/from .audit_log/from audit_log/g' ./github-audit-log-monitoring-add-on-for-splunk/bin/rest_client.py
+    - name: Build package
+      run: |
+        python setup.py sdist
+    - name: Get tag name
+      id: tag_extraction
+      run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+    - name: Check output
+      env:
+        RELEASE_VERSION: ${{ steps.tag_extraction.github-audit-log-monitoring-add-on-for-splunks.tag }}
+      run: |
+        echo $RELEASE_VERSION
+        echo ${{ steps.tag_extraction.github-audit-log-monitoring-add-on-for-splunks.tag }}
+    - uses: actions/upload-artifact@main
+      with:
+        name: github-audit-log-monitoring-add-on-for-splunk_${{ steps.tag_extraction.github-audit-log-monitoring-add-on-for-splunks.tag }}.tar.gz
+        path: dist/
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: dist/github-audit-log-monitoring-add-on-for-splunk_${{ steps.tag_extraction.github-audit-log-monitoring-add-on-for-splunks.tag }}.tar.gz
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

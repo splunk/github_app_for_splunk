@@ -1,0 +1,22 @@
+name: App Inspect
+description: Run Splunk appinspect for a splunk app bundle
+author: Siegfried Puchbauer
+runs:
+    using: node12
+    main: dist/index.js
+inputs:
+    filePath:
+        description: Path to the app bundle file (.tar.gz or .spl)
+        required: true
+    splunkUser:
+        description: Splunk.com user used to login to the appinspect API
+        required: true
+    splunkPassword:
+        description: Splunk.com password used to login to the appinspect API
+        required: true
+    includedTags:
+        description: Comma separated list of tags to include in appinspect job
+        required: false
+    excludedTags:
+        description: Comma separated list of tags to exclude from appinspect job
+        required: false

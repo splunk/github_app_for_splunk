@@ -1,0 +1,19 @@
+# action.yml
+name: 'Splunk AppInspect'
+description: 'Run Splunk App insect on a Splunk app directory.'
+inputs:
+  app-path:
+    description: 'path to the application directory to be inspected'
+    required: true
+  result-file:
+    description: 'json result file name'
+    default: 'appinspect_result.json'
+outputs:
+  status:
+    description: 'value is success/fail based on app inspect result'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.app-path }}
+    - ${{ inputs.result-file }}

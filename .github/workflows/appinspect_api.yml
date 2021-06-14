@@ -1,0 +1,49 @@
+name: App Inspect API
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+    appinspect:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: 12.x
+            - uses: actions/cache@v1
+              with:
+                  path: node_modules
+                  key: nodeModules-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      nodeModules-
+            - name: Update Version Number
+              run: |
+                old_str="X.Y.Z"
+                new_str=$(echo "${GITHUB_REF#refs/*/}" | tr -d "v")
+                sed -i "s/$old_str/$new_str/g" package.json
+                sed -i "s/$old_str/$new_str/g" ./github-audit-log-monitoring-add-on-for-splunk/setup.py
+                sed -i "s/$old_str/$new_str/g" ./github-audit-log-monitoring-add-on-for-splunk/default/app.conf
+                cat package.json
+                cat ./github-audit-log-monitoring-add-on-for-splunk/setup.py
+                cat ./github-audit-log-monitoring-add-on-for-splunk/default/app.conf
+            - name: Install dependencies
+              run: yarn install
+              env:
+                  CI: true
+            - name: Build app package
+              run: |
+                  yarn package
+                  mv dist/*.spl dist/github-audit-log-monitoring-add-on-for-splunk.spl
+            - uses: actions/upload-artifact@v1
+              with:
+                  name: app-package
+                  path: dist/github-audit-log-monitoring-add-on-for-splunk.spl
+            - uses: ./.github/actions/appinspect_api
+              with:
+                  filePath: ./dist/github-audit-log-monitoring-add-on-for-splunk.spl
+                  splunkUser: ${{ secrets.SPLUNKBASE_USER }}
+                  splunkPassword: ${{ secrets.SPLUNKBASE_PASSWORD }}
+                  includedTags: cloud

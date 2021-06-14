@@ -1,0 +1,198 @@
+<form script="tabs.js" stylesheet="tabs.css">
+  <label>Audit Log Activity</label>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="time" token="timeRng">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <chart>
+        <title>Events over time</title>
+        <search>
+          <query>`github_source` action | dedup document_id | timechart count by action</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">bottom</option>
+      </chart>
+    </panel>
+    <panel>
+      <single>
+        <title>Total events</title>
+        <search>
+          <query>`github_source` action | dedup document_id | stats count</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="height">250</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[5000,15000,35000,60000]</option>
+        <option name="refresh.display">preview</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+  </row>
+  <row id="tabs">
+    <panel>
+      <html> 
+        <ul id="tabs" class="nav nav-tabs"> 
+          <li class="active">
+            <a href="#" class="toggle-tab" data-toggle="tab" data-elements="tab_activityMap">Activity Map by Actor Location</a>
+          </li>
+          <li>
+            <a href="#" class="toggle-tab" data-toggle="tab" data-elements="tab_activityCount">Activity Count by Actor Location</a>
+          </li>
+        </ul> 
+      </html>
+    </panel>
+  </row>
+  <row id="tab_activityMap">
+    <panel>
+      <map>
+        <search>
+          <query>`github_source` | rex field=actor_location "\{\'country_code\'\: \'(?&lt;iso2&gt;[A-Z]{2})\'" | stats count by iso2 | lookup geo_attr_countries iso2 OUTPUT country | append [ | inputlookup geo_attr_countries] | dedup country | fillnull value=0 | fields+ count, country, geom | geom geo_countries featureIdField="country"</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="mapping.choroplethLayer.colorBins">9</option>
+        <option name="mapping.choroplethLayer.colorMode">auto</option>
+        <option name="mapping.choroplethLayer.maximumColor">0xaf575a</option>
+        <option name="mapping.choroplethLayer.minimumColor">0x62b3b2</option>
+        <option name="mapping.choroplethLayer.neutralPoint">50</option>
+        <option name="mapping.choroplethLayer.shapeOpacity">0.75</option>
+        <option name="mapping.choroplethLayer.showBorder">1</option>
+        <option name="mapping.data.maxClusters">100</option>
+        <option name="mapping.legend.placement">bottomright</option>
+        <option name="mapping.map.center">(0,0)</option>
+        <option name="mapping.map.panning">1</option>
+        <option name="mapping.map.scrollZoom">0</option>
+        <option name="mapping.map.zoom">2</option>
+        <option name="mapping.markerLayer.markerMaxSize">50</option>
+        <option name="mapping.markerLayer.markerMinSize">10</option>
+        <option name="mapping.markerLayer.markerOpacity">0.8</option>
+        <option name="mapping.showTiles">1</option>
+        <option name="mapping.tileLayer.maxZoom">7</option>
+        <option name="mapping.tileLayer.minZoom">0</option>
+        <option name="mapping.tileLayer.tileOpacity">1</option>
+        <option name="mapping.type">choropleth</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </map>
+    </panel>
+  </row>
+  <row id="tab_activityCount">
+    <panel>
+      <table>
+        <search>
+          <query>`github_source` action | rex field=actor_location "\{\'country_code\'\: \'(?&lt;iso2&gt;[A-Z]{2})\'" | stats count by iso2 | lookup geo_attr_countries iso2 OUTPUT country | fields country, count</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Top 5 event types</title>
+        <search>
+          <query>`github_source` action | dedup document_id | stats count by action | sort 5 - count</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.chart">bar</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">preview</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Top 5 active users</title>
+        <search>
+          <query>`github_source` action | dedup document_id | stats count by actor | sort 5 - count</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.chart">bar</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">preview</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Events per org</title>
+        <search>
+          <query>`github_source` action | dedup document_id | stats count by org</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">preview</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Workflow runs</title>
+        <search>
+          <query>`github_source` | dedup document_id | stats count by conclusion</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">preview</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Top 10 active repositories</title>
+        <search>
+          <query>`github_source` | dedup document_id | rename repo as repository | stats count by repository | sort 10 - count</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+        </search>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="refresh.display">preview</option>
+      </chart>
+    </panel>
+  </row>
+</form>

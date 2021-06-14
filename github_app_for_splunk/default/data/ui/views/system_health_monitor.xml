@@ -1,0 +1,157 @@
+<form>
+  <label>System Health Monitor</label>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="time" token="timeTkn" searchWhenChanged="true">
+      <label></label>
+      <default>
+        <earliest>-60m@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="envTkn" searchWhenChanged="true">
+      <label>Environment</label>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <fieldForLabel>host</fieldForLabel>
+      <fieldForValue>host</fieldForValue>
+      <search>
+        <query>| mstats count prestats=true WHERE `github_collectd` AND metric_name="cpu.*" span=10s BY host
+| dedup host | table host</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <chart>
+        <title>CPU</title>
+        <search>
+          <query>| mstats avg(_value) prestats=true WHERE `github_collectd` AND metric_name="cpu.*" AND host="$envTkn$" span=10s BY metric_name
+| eval metric_name=mvindex(split(metric_name,"."),2)
+| timechart avg(_value) as "Avg" span=10sec by metric_name</query>
+          <earliest>$timeTkn.earliest$</earliest>
+          <latest>$timeTkn.latest$</latest>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisLabelsY.majorUnit">25</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisY.maximumNumber">100</option>
+        <option name="charting.axisY.minimumNumber">0</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Memory</title>
+        <search>
+          <query>| mstats avg(_value) as "Avg" WHERE `github_collectd` AND metric_name="memory.*" AND metric_name!="*slab*" AND host="$envTkn$" span=10s BY metric_name
+| eval metric_name=mvindex(split(metric_name,"."),1)
+| eval mem_gb = Avg / 1024 / 1024 / 1024
+| timechart avg("mem_gb") as "Avg" span=10sec by metric_name</query>
+          <earliest>$timeTkn.earliest$</earliest>
+          <latest>$timeTkn.latest$</latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.text">GB</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisEnd</option>
+        <option name="charting.legend.placement">bottom</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Load</title>
+        <search>
+          <query>| mstats avg(_value) prestats=true WHERE `github_collectd` AND metric_name="load.*" AND host="$envTkn$" span=10s BY metric_name
+| eval metric_name=mvindex(split(metric_name,"."),1)
+| timechart avg(_value) as "Avg" span=10sec by metric_name</query>
+          <earliest>$timeTkn.earliest$</earliest>
+          <latest>$timeTkn.latest$</latest>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Processes</title>
+        <search>
+          <query>| mstats avg(_value) prestats=true WHERE `github_collectd` AND metric_name="processes.ps_state.*" AND host="$envTkn$" span=10s BY metric_name
+| eval metric_name=mvindex(split(metric_name,"."),2)
+| timechart avg(_value) as "Avg" span=10sec by metric_name</query>
+          <earliest>$timeTkn.earliest$</earliest>
+          <latest>$timeTkn.latest$</latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisEnd</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>File</title>
+        <search>
+          <query>| mstats avg(_value) prestats=true WHERE `github_collectd` AND metric_name="fhcount.file_handles.*" AND metric_name!="*unused*" AND host="$envTkn$" span=10s BY metric_name
+| eval metric_name=mvindex(split(metric_name,"."),2)
+| timechart avg(_value) as "Avg" span=10sec by metric_name</query>
+          <earliest>$timeTkn.earliest$</earliest>
+          <latest>$timeTkn.latest$</latest>
+          <refresh>1m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Forks</title>
+        <search>
+          <query>| mstats avg(_value) prestats=true WHERE `github_collectd` AND metric_name="processes.fork_rate.value" AND host="$envTkn$" span=10s BY metric_name
+| eval metric_name=mvindex(split(metric_name,"."),1)
+| timechart avg(_value) as "Avg" span=10sec by metric_name</query>
+          <earliest>$timeTkn.earliest$</earliest>
+          <latest>$timeTkn.latest$</latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisEnd</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</form>

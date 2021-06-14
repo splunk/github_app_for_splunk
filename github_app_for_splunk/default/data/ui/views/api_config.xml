@@ -1,0 +1,232 @@
+<dashboard>
+  <label>Audit Log Config</label>
+  <row>
+    <panel>
+      <html>
+        <h1 id="github-enterprise-audit-log-monitoring">GitHub Enterprise Audit Log Monitoring</h1>
+<p>This modular input makes an HTTPS request to the GitHub Enterprise's Audit Log REST API endpoint at a definable interval to fetch audit log data.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Splunk v8+</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<ol>
+<li>
+            <p>Download the latest release of the Splunk Add-On for Github Enterprise Audit Logs from SplunkBase</p>
+</li>
+<li>
+            <p>Go to Apps &gt; Manage Apps in the toolbar menu.</p>
+</li>
+<li>
+            <p>Use the "Install app from file" button to upload the spl file you downloaded from Splunkbase</p>
+</li>
+<li>
+            <p>Generate a Personal Access Token in GitHub Enterprise with the <code>site_admin</code> scope.</p>
+</li>
+<li>
+            <p>Under Settings &gt; Data inputs, there should be a new option called Github Audit Log Monitoring, click "+ Add new"</p>
+</li>
+<li>
+            <p>Configure the Input by entering the necessary information in the input fields. Don't forget to define the Index for the data to be stored in. This option is under the "More settings" option.</p>
+</li>
+<li>
+            <p>Under Settings &gt; Advanced Search, select Search Macros. You'll need to update the <code>github_source</code> macro to use the Index you assigned above. </p>
+</li>
+</ol>
+<h2 id="configuration">Configuration</h2>
+<h3 id="personal-access-token-scope">Personal Access Token Scope</h3>
+<p>The following are the required scopes for the personal access token allowing the module to fetch the audit log entries successfully:</p>
+<ul>
+<li>[x] admin:enterprise <code>Full control of enterprises</code>
+            <ul>
+<li>[x] manage_billing:enterprise <code>Read and write enterprise billing data</code>
+              </li>
+<li>[x] read:enterprise <code>Read enterprise profile data</code>
+              </li>
+</ul>
+</li>
+</ul>
+<h3 id="input-fields">Input Fields</h3>
+<ul>
+<li>
+            <p>
+              <strong>name</strong>
+            </p>
+<ul>
+<li>This is name of your instance. You can have multiple modular inputs running simultaneously. However, this is not a recommended behavior for this module.</li>
+<li>Takes: alpha-numeric, white spaces and symbol characters</li>
+<li>Example: <code>GHE-enterprise-name</code>
+              </li>
+</ul>
+</li>
+<li>
+            <p>
+              <strong>Hostname</strong>
+            </p>
+<ul>
+<li>This is the hostname of your GitHub Enterprise instance. Make sure there are no trailing <code>/</code> in the URL provided. This could either be a FQDN or an IP address. Do not append any paths beyond the tld.</li>
+<li>Example: <a href="https://api.github.com">https://api.github.com</a>
+              </li>
+</ul>
+</li>
+<li>
+            <p>
+              <strong>Enterprise</strong>
+            </p>
+<ul>
+<li>The enterprise name for which to fetch audit log events</li>
+</ul>
+</li>
+<li>
+            <p>
+              <strong>Personal Access Token</strong>
+            </p>
+<ul>
+<li>This is your personal access token that you generate for your or a service account in GitHub Enterprise. This module requires that the personal access token be created with the <code>site_admin</code> scope. This is a very sensitive token so make sure to keep it secure at all times!</li>
+<li>Security: The personal access token is encrypted and stored in Splunk's password storage. After you configure it the first time it will be replaced in Splunk's UI with a unique identifier. This identifier will be used by the module to fetch the personal access token before making the API request to GitHub Enterprise.</li>
+<li>Takes: a 40 character token</li>
+<li>Example: <code>d0e117b6ad471der3rjdowcc401a95d09202119f</code>
+              </li>
+</ul>
+</li>
+<li>
+            <p>
+              <strong>Event Types</strong>
+            </p>
+<ul>
+<li>The audit log contains multiple event types. This field allows you to specify which events to include:<ul>
+<li>web - returns web (non-Git) events</li>
+<li>git - returns Git events</li>
+<li>all - returns both web and Git events</li>
+</ul>
+</li>
+<li>
+                <a href="https://docs.github.com/en/rest/reference/enterprise-admin#get-the-audit-log-for-an-enterprise">More details</a>
+              </li>
+</ul>
+</li>
+<li>
+            <p>
+              <strong>Maximum Entries Per Run</strong>
+            </p>
+<ul>
+<li>The maximum number of events / entries to fetch each time the script runs. To understand how to calculate the maximum number of entries and interval to best fit your organization go to the <a href="#tweaking-throughput">Tweaking throughput</a> section below.</li>
+</ul>
+</li>
+<li>
+            <p>
+              <strong>Verify Self-Signed Certificates</strong>
+            </p>
+<ul>
+<li>This is a parameter passed to the <code>get()</code> method in the <code>Requests</code> library. If the checkbox is cheked then the SSL certificate will be verified like a browser does and Requests will throw a SSLError if it’s unable to verify the certificate. Uncheck this box if you are using <strong>self-signed certificates</strong>.</li>
+</ul>
+</li>
+<li>
+            <p>
+              <strong>Debug Mode</strong>
+            </p>
+<ul>
+<li>The personal access token will be leaked in the splunkd logs. <strong>DO NOT ENABLE</strong> unless you are ready to update your personal access token.</li>
+<li>If you are experiencing issues and the module is not operating as intended, you can enable this mode to seethe module's debugging information in the <code>splunkd</code> logs.</li>
+</ul>
+</li>
+<li>
+            <p>
+              <strong>Interval</strong>
+            </p>
+<ul>
+<li>Takes a <code>cron expression</code> as defined in the <a href="https://docs.splunk.com/Documentation/Splunk/8.1.0/Alert/CronExpressions">Splunk docs</a>.</li>
+<li>Example: <code>30 * * * *</code>
+                <ul>
+<li>At minute 30 of every hour. For example, if you set this CRON job at 11:02, your job will begin running at 11:30, 12:30, 1:30, etc...</li>
+</ul>
+</li>
+<li>Example: <code>*/5 * * * *</code>
+                <ul>
+<li>Every 5 minutes</li>
+</ul>
+</li>
+<li>Example: <code>300</code>
+                <ul>
+<li>Every 300 seconds or 5 minutes</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="tweaking-throughput">Tweaking throughput</h3>
+<p>This modular input fetches events by calling the <a href="https://docs.github.com/en/rest/reference/enterprise-admin#get-the-audit-log-for-an-enterprise">Enterprise Audit Log API</a>. This API returns a maximum of 100 events / entries per page. The pagination algorithm can fetch events up to the maximum entries per run defined. It's important to tweak the <code>maximum entries per run</code> and <code>interval</code> parameters to have the ability to fetch your data in a timely manner and stay <code>as close</code> to real-time as possible.</p>
+<p>
+          <strong>Example:</strong>
+<table>
+  <tr>
+    <th>Enterprise</th>
+    <th>Events per minute</th>
+    <th>Maximum entries per run</th>
+    <th>Interval</th>
+    <th>API calls used</th>
+    <th>Guidance</th>
+  </tr>
+  <tr>
+    <td>Evil-Corp</td>
+    <td>1000</td>
+    <td>1000</td>
+    <td>*/1 * * * *</td>
+    <td>3000 per hour</td>
+    <td>The modular input should be able to handle this with ease.</td>
+  </tr>
+  <tr>
+    <td>Poizen-Inc</td>
+    <td>5000</td>
+    <td>5000</td>
+    <td>*/1 * * * *</td>
+    <td>600 per hour</td>
+    <td>We are approaching API rate limit per hour. Depending on latency, 5000 entries = 50 API calls per minute. One minute might not be sufficient to fetch all this data.</td>
+  </tr>
+  <tr>
+    <td>Monsters-Inc</td>
+    <td>10000</td>
+    <td>2000</td>
+    <td>*/1 * * * *</td>
+    <td>1200 per hour</td>
+    <td>We are approaching API rate limit per hour. Depending on latency, 5000 entries = 50 API calls per minute. One minute might not be sufficient to fetch all this data.</td>
+  </tr>
+</table>
+</p>
+<h2 id="faqs">FAQs</h2>
+<h3 id="how-is-my-personal-access-token-secured-">How is my Personal Access Token secured?</h3>
+<p>On the first run the modular input will identify that your personal access token (PAT) is not encrypted. It will encrypt your PAT and store it in Splunk's credentials manager. It will replace the plaintext PAT with an md5 hash of an identifying key.</p>
+<p>Your personal access token is only visible in plaintext from the time you configure the modular input instance until the first run.</p>
+<h3 id="does-the-interval-field-access-only-cron-syntax-">Does the interval field access only cron syntax?</h3>
+<p>No, you can enter the number of seconds instead.</p>
+<h3 id="i-enabled-debug-mode-what-now-">I enabled debug mode, what now?</h3>
+<p>If you've enabled debug mode be ready to change your personal access token because it will most likely be leaked into the Splunk logs in plain text.</p>
+<h3 id="why-can-t-i-use-a-github-app-instead-of-a-personal-access-token-">Why can't I use a GitHub app instead of a personal access token?</h3>
+<p>GitHub apps cannot be installed on the enterprise level. The REST API requires enterprise admin privileges which are out of scope for GitHub apps.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="read-logs-in-splunk">Read logs in Splunk</h3>
+<p>You can use this search query to fetch all the logs belonging to this module when <strong>Debug Mode</strong> is enabled.</p>
+<pre>
+          <code class="lang-sh">
+            <span class="hljs-attr">index</span>=<span class="hljs-string">"_internal"</span> source=<span class="hljs-string">"/opt/splunk/var/log/splunk/splunkd.log"</span> ghe_audit_log_monitoring
+</code>
+        </pre>
+<h3 id="test-the-modular-input-for-syntax-problems">Test the modular input for syntax problems</h3>
+<p>Run this test if you don't see anything in the logs (which is a highly unlikely scenario). This will display any syntax errors if there are any.</p>
+<pre>
+          <code class="lang-sh">sudo <span class="hljs-variable">$SPLUNK_HOME</span>
+            <span class="hljs-regexp">/bin/</span>splunk cmd python <span class="hljs-variable">$SPLUNK_HOME</span>
+            <span class="hljs-regexp">/etc/</span>apps<span class="hljs-regexp">/ghe_audit_log_monitoring/</span>bin<span class="hljs-regexp">/ghe_audit_log_monitoring.py</span>
+</code>
+        </pre>
+<h3 id="where-are-state-files-stored-">Where are state files stored?</h3>
+<p>State files for enterprises are stored in this directory:</p>
+<pre>
+          <code class="lang-sh">
+            <span class="hljs-variable">$SPLUNK_HOME</span>/etc/apps/ghe_audit_log_monitoring/<span class="hljs-keyword">state</span>/
+</code>
+        </pre>
+      </html>
+    </panel>
+  </row>
+</dashboard>

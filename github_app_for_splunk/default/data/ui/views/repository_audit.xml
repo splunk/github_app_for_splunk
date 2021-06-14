@@ -1,0 +1,121 @@
+<form script="tabs.js" stylesheet="tabs.css">
+  <label>Repository Audit</label>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="dropdown" token="repo" searchWhenChanged="true">
+      <label>Repository</label>
+      <fieldForLabel>repo</fieldForLabel>
+      <fieldForValue>repo</fieldForValue>
+      <search>
+        <query>`github_source` action="repo*" | dedup repo | table repo</query>
+        <earliest>$timeRng.earliest$</earliest>
+        <latest>$timeRng.latest$</latest>
+      </search>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="time" token="timeRng">
+      <label></label>
+      <default>
+        <earliest>-30d@d</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Repository Activity</title>
+      <table>
+        <search>
+          <query>`github_source` action IN("workflows.completed*","repo*") repo="$repo$" | stats count by action</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <title>User Activity Count</title>
+      <table>
+        <search>
+          <query>`github_source` action IN("workflows.completed*","repo*") repo="$repo$" | stats count by actor</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row id="tabs">
+    <panel>
+      <html> 
+        <ul id="tabs" class="nav nav-tabs"> 
+          <li class="active">
+            <a href="#" class="toggle-tab" data-toggle="tab" data-elements="tab_repoChanges">Repository Changes</a>
+          </li>
+          <li>
+            <a href="#" class="toggle-tab" data-toggle="tab" data-elements="tab_userChanges">Repository User Changes</a>
+          </li>
+          <li>
+            <a href="#" class="toggle-tab" data-toggle="tab" data-elements="tab_repoActions">Repository Action Details</a>
+          </li>
+        </ul> 
+      </html>
+    </panel>
+  </row>
+  <row id="tab_repoChanges">
+    <panel>
+      <title>Repository Changes</title>
+      <table>
+        <search>
+          <query>`github_source` action="repo*" repo="$repo$" | table _time, org, repo, actor, action</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row id="tab_userChanges">
+    <panel>
+      <title>Repository User Changes</title>
+      <table>
+        <search>
+          <query>`github_source` action IN("repo.add_member","repo.remove_member") repo="$repo$" | table _time, org, repo, actor, user, action</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row id="tab_repoActions">
+    <panel>
+      <title>Repository Action Details</title>
+      <table>
+        <title>Clicking an Action run will take you to Github to view the Action Workflow</title>
+        <search>
+          <query>`github_source` action IN("workflows.completed*") repo="*" | stats latest(conclusion) as status by org, actor, name, repo, head_branch, workflow_run_id</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <link target="_blank">
+            <![CDATA[https://github.com/$row.repo|n$/actions/runs/$row.workflow_run_id$]]>
+          </link>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</form>

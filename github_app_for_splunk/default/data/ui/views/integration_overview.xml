@@ -1,0 +1,219 @@
+<form script="tabs.js" stylesheet="tabs.css">
+  <label>Integration Overview</label>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="time" token="timeRng">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row id="tabs">
+    <panel>
+      <html> 
+        <ul id="tabs" class="nav nav-tabs"> 
+          <li class="active">
+            <a href="#" class="toggle-tab" data-toggle="tab" data-elements="tab_auditLogs,tab_rlUsage,tab_fetchedEvents">Audit Logs</a>
+          </li>
+          <li>
+            <a href="#" class="toggle-tab" data-toggle="tab" data-elements="tab_webhooks,tab_webhooksTime">Webhooks</a>
+          </li>
+        </ul> 
+      </html>
+    </panel>
+  </row>
+  <row id="tab_auditLogs">
+    <panel>
+      <single>
+        <search>
+          <query>index=_internal component=ExecProcessor "TA_splunk_ghe_audit_log_monitoring" "stream_events(): Fetched:" OR "API Rate limits"| rex "\'x_rl_limit\'\: \'(?&lt;x_rl_limit&gt;\d+?)\', \'x_rl_remainig\'\: \'(?&lt;x_rl_remaining&gt;\d+?)\', 'x_rl_reset_timestamp\'\: \'(?&lt;x_rl_reset_timestamp&gt;\d+?)\', \'x_rl_used\'\: \'(?&lt;x_rl_used&gt;\d+?)\'" | rex "stream_events\(\)\: Fetched: (?&lt;event_count&gt;\d+?) events" | timechart sum(event_count) as fetched_event max(x_rl_limit) as x_rl_limit, min(x_rl_remaining) as x_rl_remaining, max(x_rl_used) as x_rl_used | stats max(x_rl_limit) as "Rate Limit", avg(x_rl_used) as "Average Rate Limit Used", min(fetched_event) as "Minimum Fetched Events", avg(fetched_event) as "Average Fetched Events", max(fetched_event) as "Maximum Fetched Events"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="height">165</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051", "0x0877a6", "0xf8be34", "0xf1813f", "0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">1</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">0</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+  </row>
+  <row id="tab_rlUsage">
+    <panel>
+      <title>Rate Limit Usage</title>
+      <chart>
+        <search>
+          <query>index=_internal component=ExecProcessor "TA_splunk_ghe_audit_log_monitoring" "API Rate limits"| rex "\'x_rl_limit\'\: \'(?&lt;x_rl_limit&gt;\d+?)\', \'x_rl_remainig\'\: \'(?&lt;x_rl_remaining&gt;\d+?)\', 'x_rl_reset_timestamp\'\: \'(?&lt;x_rl_reset_timestamp&gt;\d+?)\', \'x_rl_used\'\: \'(?&lt;x_rl_used&gt;\d+?)\'" | timechart max(x_rl_limit) as "Rate Limit", min(x_rl_remaining) as "Rate Limit Remaining", max(x_rl_used) as "Rate Limit Used"</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row id="tab_fetchedEvents">
+    <panel>
+      <title>Fetched Events</title>
+      <chart>
+        <search>
+          <query>index=_internal component=ExecProcessor "TA_splunk_ghe_audit_log_monitoring" "stream_events(): Fetched:" | rex "stream_events\(\)\: Fetched: (?&lt;event_count&gt;\d+?) events" | timechart sum(event_count) as fetched_event</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row id="tab_webhooks">
+    <panel>
+      <single>
+        <search>
+          <query>`github_webhooks` | timechart count as fetched_event | stats min(fetched_event) as "Minimum Webhook Events", avg(fetched_event) as "Average Webhook Events", max(fetched_event) as "Maximum Webhook Events"</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="height">235</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051", "0x0877a6", "0xf8be34", "0xf1813f", "0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">1</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">large</option>
+        <option name="trellis.splitBy">_aggregation</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">0</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+  </row>
+  <row id="tab_webhooksTime">
+    <panel>
+      <chart>
+        <search>
+          <query>`github_webhooks` | timechart count as webhook_events</query>
+          <earliest>$timeRng.earliest$</earliest>
+          <latest>$timeRng.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">zero</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+</form>
