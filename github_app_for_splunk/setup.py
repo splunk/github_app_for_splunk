@@ -1,12 +1,12 @@
 import setuptools
 
 setuptools.setup(
-    name="TA_splunk_ghe_audit_log_monitoring",
+    name="github_app_for_splunk",
     version="X.Y.Z",
-    url="https://github.com/splunk/TA_splunk_ghe_audit_log_monitoring",
-    author="Bassem Dghaidi and Doug Erkkila",
-    author_email="link-@github.com",
-    description="Splunk modular input to pull audit log events from GitHub Enterprise",
-    packages=['TA_splunk_ghe_audit_log_monitoring'],
+    url="https://github.com/splunk/github_app_for_splunk",
+    author="Doug Erkkila",
+    author_email="derkkila@splunk.com",
+    description="Dashboard and Knowledge object collection for Github data sources.",
+    packages=['github_app_for_splunk'],
     license="MIT"
 )
