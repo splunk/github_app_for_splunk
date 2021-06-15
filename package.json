@@ -1,7 +1,7 @@
 {
-  "name": "github-audit-log-monitoring-add-on-for-splunk",
+  "name": "github_app_for_splunk",
   "version": "X.Y.Z",
-  "description": "GitHub Audit Log Monitoring",
+  "description": "Github App for Splunk",
   "license": "MIT",
   "author": "Splunk",
   "contributors": [
@@ -10,8 +10,8 @@
   ],
   "private": true,
   "splunk": {
-    "appName": "github-audit-log-monitoring-add-on-for-splunk",
-    "appSource": "github-audit-log-monitoring-add-on-for-splunk"
+    "appName": "github_app_for_splunk",
+    "appSource": "github_app_for_splunk"
   },
   "scripts": {
     "build": "lerna run build",
