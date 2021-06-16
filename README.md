@@ -21,6 +21,10 @@ The Github App for Splunk is available for download from [Splunkbase](https://sp
 1. The macro `github_webhooks` is the macro used for all webhook events. Since it is assuming a single index for all webhook events, that is the predefined example, but update as needed.
 1. Finally, the macro `github_collectd` is the macro used for all collectd metrics sent from Github Enterprise Server. Please update accordingly.
 
+### Integration Overview dashboard
+
+There is an *Integration Overview* dashboard listed under *Dashboards* that allows you to monitor API rate limits, audit events fetched, or webhooks received. This dashboard is primarily meant to be used with the `Github Audit Log Monitoring Add-On for Splunk` and uses internal Splunk logs. To be able to view them you will probably need elevated privileges in Splunk that include access to the `_internal` index. Please coordinate with your Splunk team if that dashboard is desired.
+
 ## Support
 
 Support for Github App for Splunk is run through [Github Issues](https://github.com/splunk/github_app_for_splunk/issues). Please open a new issue for any support issues or for feature requests. You may also open a Pull Request if you'd like to contribute additional dashboards, eventtypes for webhooks, or enhancements you may have.
