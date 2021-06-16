@@ -1,15 +1,13 @@
----
-layout: page
-title: Splunk collectd forwarding for GHES Playbook
-author: droidpl
-description: Playbook to configure Splunk to forward logs into GHES
----
 This guide describes how to enable collectd forwarding on GitHub Enterprise Server (GHES) using Splunk Enterprise (v7.0.7).
 ## Affected products and versions
 GitHub Enterprise Server
-{: .label }
-⚠️⚠️ This is an experimental tutorial to make Splunk compatible with collectd forwarding. Since the tutorial modifies some internal GitHub Enteprise Server files, in case of an update, the configurations need to be applied again. [This feature request](https://github.com/github/customer-feedback/issues/4070) will solve the problem we have in this configuration by adding support for http and JSON format into GitHub Enterprise Server ⚠️
-{: .protip .info }
+
+⚠️⚠️
+
+This is an experimental tutorial to make Splunk compatible with collectd forwarding. Since the tutorial modifies some internal GitHub Enteprise Server files, in case of an update, the configurations need to be applied again. [This feature request](https://github.com/github/customer-feedback/issues/4070) will solve the problem we have in this configuration by adding support for http and JSON format into GitHub Enterprise Server
+
+⚠️⚠️
+
 ## Collectd configuration for splunk
 ### Background information
 This setup requires some non-standard configuration due to limitations on the current collectd installations. The reasoning are:
