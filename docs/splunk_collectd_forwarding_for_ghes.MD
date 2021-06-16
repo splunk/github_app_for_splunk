@@ -1,4 +1,4 @@
-This guide describes how to enable collectd forwarding on GitHub Enterprise Server (GHES) using Splunk Enterprise (v7.0.7).
+This guide describes how to enable collectd forwarding on GitHub Enterprise Server (GHES) using Splunk Enterprise (v8.0+).
 ## Affected products and versions
 GitHub Enterprise Server
 
