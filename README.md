@@ -28,6 +28,29 @@ There is an *Integration Overview* dashboard listed under *Dashboards* that allo
 
 ### Examples
 
+<details>
+  <summary>Expand for screenshots</summary>
+
+#### Audit Log Dashboard
+  
+  ![Audit Log Dashboard](./docs/images/9F8E9A89-1203-4C0A-B227-C2FD1E17C8B0.jpg)
+
+#### Repository Audit Dashboard
+
+![Repository Changes Audit](./docs/images/567E11DB-B229-4DF0.jpg)
+
+![User Changes Audit](./docs/images/88740939-AB98-4E32-8C13-8BA6FD923EB3.jpg)
+
+#### System Health Monitor
+
+![System Health Monitor](./docs/images/FDB8D3D9-1628-478E-8AE7-1E336DC51FF5.png)
+
+#### Process Monitor
+
+![Process Monitor](./docs/images/46110846-5115-43F9-AB77-2C826F115D54.png)
+
+</details>
+
 ## Support
 
 Support for Github App for Splunk is run through [Github Issues](https://github.com/splunk/github_app_for_splunk/issues). Please open a new issue for any support issues or for feature requests. You may also open a Pull Request if you'd like to contribute additional dashboards, eventtypes for webhooks, or enhancements you may have.
