@@ -59,7 +59,7 @@ Read more about the option in [the Splunk documentation](https://docs.splunk.com
     port = 9001
     enableSSL = 0
     index = collectd
-    sourcetype = collectd_http
+    sourcetype = collectd_github
     allowQueryStringAuth = true
     ```
 
@@ -81,7 +81,7 @@ To enable collectd in GitHub Enterprise Server (GHES) to send that to Splunk, **
 LoadPlugin write_http
 <Plugin write_http>
   <Node "node-http-1">
-    URL "http://{{SPLUNK_URL}}:{{SPLUNK_PORT}}/services/collector/raw?token={{SPLUNK_TOKEN}}&sourcetype=http_collectd"
+    URL "http://{{SPLUNK_URL}}:{{SPLUNK_PORT}}/services/collector/raw?token={{SPLUNK_TOKEN}}&sourcetype=collectd_github"
     Format "JSON"
     Metrics true
     StoreRates true
