@@ -13,12 +13,6 @@ jobs:
             - uses: actions/setup-node@v1
               with:
                   node-version: 12.x
-            - uses: actions/cache@v1
-              with:
-                  path: node_modules
-                  key: nodeModules-${{ hashFiles('**/yarn.lock') }}
-                  restore-keys: |
-                      nodeModules-
             - name: Update Version Number
               run: |
                 old_str="X.Y.Z"
@@ -27,10 +21,6 @@ jobs:
                 sed -i "s/$old_str/$new_str/g" ./github_app_for_splunk/default/app.conf
                 cat package.json
                 cat ./github_app_for_splunk/default/app.conf
-            - name: Install dependencies
-              run: yarn install
-              env:
-                  CI: true
             - name: Build app package
               run: |
                   yarn package

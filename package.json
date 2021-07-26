@@ -18,28 +18,7 @@
     "format": "git ls-files | grep -E \"\\.(jsx?|css)$\" | xargs prettier --write",
     "format:verify": "git ls-files | grep -E \"\\.(jsx?|css)$\" | xargs prettier --list-different",
     "lint": "lerna run lint --no-sort",
-    "setup": "yarn && lerna run build",
-    "start": "lerna run start --stream --no-sort --concurrency 100",
-    "test": "lerna run test --stream --no-sort",
-    "setup": "yarn install && yarn build && yarn symlink",
-    "build2": "slap stage",
-    "build:pages": "date",
-    "slap:post-stage": "yarn build:pages",
-    "symlink": "slap symlink",
-    "package": "slap package --prod",
     "pkg": "yarn package",
-    "rebuild": "echo \"Rebuilding...\" && slap stage --skip-clean",
-    "start2": "yarn build && onchange src/** -- slap stage",
-    "test2": "python -m unittest discover -s src/app/bin -p '*_tests.py' -v",
-    "test:watch": "onchange src/app/bin/** -- yarn test"
-  },
-  "dependencies": {
-    "@splunk/react-page": "^3.0.0",
-    "@splunk/react-toast-notifications": "^0.7.0",
-    "@splunk/react-ui": "^2",
-    "react": "^16",
-    "react-dom": "^16",
-    "styled-components": "^4"
   },
   "devDependencies": {
     "lerna": "^2.9.0",
