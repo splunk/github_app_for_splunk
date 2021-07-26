@@ -1,5 +1,0 @@
-graft default/
-graft lib/
-graft README/
-graft state/
-graft tests/
