@@ -8,7 +8,7 @@
     "Doug Erkkila <derkkila@splunk.com> (https://www.splunk.com)",
     "Bassem Dghaidi <stump@example.com> (https://www.github.com)"
   ],
-  "private": true,
+  "private": false,
   "splunk": {
     "appName": "github_app_for_splunk",
     "appSource": "github_app_for_splunk"
@@ -29,7 +29,17 @@
     "package": "slap package --prod",
     "pkg": "yarn package",
     "rebuild": "echo \"Rebuilding...\" && slap stage --skip-clean",
-    "start2": "yarn build && onchange src/** -- slap stage"
+    "start2": "yarn build && onchange src/** -- slap stage",
+    "test2": "python -m unittest discover -s src/app/bin -p '*_tests.py' -v",
+    "test:watch": "onchange src/app/bin/** -- yarn test"
+  },
+  "dependencies": {
+    "@splunk/react-page": "^3.0.0",
+    "@splunk/react-toast-notifications": "^0.7.0",
+    "@splunk/react-ui": "^2",
+    "react": "^16",
+    "react-dom": "^16",
+    "styled-components": "^4"
   },
   "devDependencies": {
     "lerna": "^2.9.0",
