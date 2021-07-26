@@ -18,6 +18,7 @@
     "format": "git ls-files | grep -E \"\\.(jsx?|css)$\" | xargs prettier --write",
     "format:verify": "git ls-files | grep -E \"\\.(jsx?|css)$\" | xargs prettier --list-different",
     "lint": "lerna run lint --no-sort",
+    "package": "slap package --prod",
     "pkg": "yarn package"
   },
   "devDependencies": {
