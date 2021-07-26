@@ -1,4 +1,4 @@
-<dashboard>
+<dashboard version="1.1">
   <label>Audit Log Config</label>
   <row>
     <panel>

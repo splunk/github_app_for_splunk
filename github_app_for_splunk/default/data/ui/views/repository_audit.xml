@@ -1,4 +1,4 @@
-<form script="tabs.js" stylesheet="tabs.css">
+<form version="1.1" script="tabs.js" stylesheet="tabs.css">
   <label>Repository Audit</label>
   <fieldset submitButton="false" autoRun="true">
     <input type="dropdown" token="repo" searchWhenChanged="true">
@@ -50,8 +50,8 @@
   </row>
   <row id="tabs">
     <panel>
-      <html> 
-        <ul id="tabs" class="nav nav-tabs"> 
+      <html>
+        <ul id="tabs" class="nav nav-tabs">
           <li class="active">
             <a href="#" class="toggle-tab" data-toggle="tab" data-elements="tab_repoChanges">Repository Changes</a>
           </li>
@@ -61,7 +61,7 @@
           <li>
             <a href="#" class="toggle-tab" data-toggle="tab" data-elements="tab_repoActions">Repository Action Details</a>
           </li>
-        </ul> 
+        </ul>
       </html>
     </panel>
   </row>
