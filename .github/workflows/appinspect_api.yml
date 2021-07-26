@@ -26,7 +26,6 @@ jobs:
                 sed -i "s/$old_str/$new_str/g" package.json
                 sed -i "s/$old_str/$new_str/g" ./github_app_for_splunk/default/app.conf
                 cat package.json
-                cat ./github_app_for_splunk/setup.py
                 cat ./github_app_for_splunk/default/app.conf
             - name: Install dependencies
               run: yarn install
