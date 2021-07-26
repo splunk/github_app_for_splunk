@@ -13,7 +13,13 @@ The Github App for Splunk is designed to work with the following data sources:
 
 ## Dashboard Instructions
 
-The Github App for Splunk is available for download from [Splunkbase](https://splunkbase.splunk.com/app/5596/). Once installed there are a couple steps needed to light up all the dashboards.
+### Installation
+
+The Github App for Splunk is available for download from [Splunkbase](https://splunkbase.splunk.com/app/5596/). For Splunk Cloud, refer to [Install apps in your Splunk Cloud deployment](https://docs.splunk.com/Documentation/SplunkCloud/latest/Admin/SelfServiceAppInstall). For non-Splunk Cloud deployments, refer to the standard methods for Splunk Add-on installs as documented for a [Single Server Install](http://docs.splunk.com/Documentation/AddOns/latest/Overview/Singleserverinstall) or a [Distributed Environment Install](http://docs.splunk.com/Documentation/AddOns/latest/Overview/Distributedinstall).
+
+**This app should be installed on both your search head tier as well as your indexer tier.**
+ 
+### Configuration
 
 ![Settings>Advanced Search>Search macros](./docs/images/macros.png)
 
@@ -32,7 +38,7 @@ There is an *Integration Overview* dashboard listed under *Dashboards* that allo
   <summary>Expand for screenshots</summary>
 
 #### Audit Log Dashboard
-  
+
   ![Audit Log Dashboard](./docs/images/9F8E9A89-1203-4C0A-B227-C2FD1E17C8B0.jpg)
 
 #### Repository Audit Dashboard
