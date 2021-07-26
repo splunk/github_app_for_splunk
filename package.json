@@ -8,7 +8,7 @@
     "Doug Erkkila <derkkila@splunk.com> (https://www.splunk.com)",
     "Bassem Dghaidi <stump@example.com> (https://www.github.com)"
   ],
-  "private": false,
+  "private": true,
   "splunk": {
     "appName": "github_app_for_splunk",
     "appSource": "github_app_for_splunk"
