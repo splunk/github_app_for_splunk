@@ -1,0 +1,74 @@
+<form>
+  <label>Value Stream Analytics</label>
+  <fieldset submitButton="false">
+    <input type="time" token="timeTkn" searchWhenChanged="true">
+      <label></label>
+      <default>
+        <earliest>-30d@d</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="multiselect" token="repoTkn">
+      <label>Repositories</label>
+      <fieldForLabel>repository.name</fieldForLabel>
+      <fieldForValue>repository.name</fieldForValue>
+      <search>
+        <query>`github_webhooks` eventtype="GitHub::Push"|dedup repository.name| table repository.name</query>
+        <earliest>-30d@d</earliest>
+        <latest>now</latest>
+      </search>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <delimiter>,</delimiter>
+      <valuePrefix>"</valuePrefix>
+      <valueSuffix>"</valueSuffix>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Step 1: Time to Accept</title>
+      <single>
+        <search>
+          <query>`github_webhooks` (eventtype="GitHub::Issue" (action IN("opened","milestoned")) OR (action="labeled" AND label.name="in progress")) OR (eventtype="GitHub::Push" issueNumber=*) repository.name IN($repoTkn$) | eval openTime=if(action=="opened",_time,NULL) | eval inProgressTime=if(action=="labeled",_time,if(action="milestoned",_time,NULL)) | eval workTime=if(eventtype=="GitHub::Push",_time,NULL) | stats min(openTime) as opened, min(inProgressTime) as in_progress, min(workTime) as working by repository.name,issueNumber | search opened=* | eval acceptTimeDiff=in_progress-opened | eval workingTimeDiff=working-in_progress | search acceptTimeDiff=* | stats avg(acceptTimeDiff) as acceptTime | eval acceptTime=toString(round(acceptTime),"Duration")</query>
+          <earliest>$timeTkn.earliest$</earliest>
+          <latest>$timeTkn.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Step 2: Time to Work</title>
+      <single>
+        <search>
+          <query>`github_webhooks` (eventtype="GitHub::Issue" (action IN("opened","milestoned")) OR (action="labeled" AND label.name="in progress")) OR (eventtype="GitHub::Push" issueNumber=*) repository.name IN($repoTkn$) | eval openTime=if(action=="opened",_time,NULL) | eval inProgressTime=if(action=="labeled",_time,if(action="milestoned",_time,NULL)) | eval workTime=if(eventtype=="GitHub::Push",_time,NULL) | stats min(openTime) as opened, min(inProgressTime) as in_progress, min(workTime) as working by repository.name,issueNumber | search opened=* | eval acceptTimeDiff=in_progress-opened | eval workingTimeDiff=working-in_progress | search workingTimeDiff&gt;0 | stats avg(workingTimeDiff) as workingTime | eval workingTime=toString(round(workingTime),"Duration")</query>
+          <earliest>$timeTkn.earliest$</earliest>
+          <latest>$timeTkn.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>`github_webhooks` repository.name IN($repoTkn$) (eventtype="GitHub::Issue" (action IN("opened","milestoned")) OR (action="labeled" AND label.name="in progress")) OR (eventtype="GitHub::Push" issueNumber=*) | eval openTime=if(action=="opened",_time,NULL) | eval inProgressTime=if(action=="labeled",_time,if(action="milestoned",_time,NULL)) | eval workTime=if(eventtype=="GitHub::Push",_time,NULL) | stats max(issue.title) as issue.title, min(openTime) as opened, min(inProgressTime) as in_progress, max(workTime) as working by repository.name,issueNumber | search opened=* | eval acceptTimeDiff=in_progress-opened | eval workingTimeDiff=working-in_progress | eval acceptTime=toString(round(acceptTimeDiff),"Duration"), workingTime=toString(round(workingTimeDiff),"Duration") | fields repository.name, issueNumber, issue.title, acceptTime, workingTime</query>
+          <earliest>$timeTkn.earliest$</earliest>
+          <latest>$timeTkn.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</form>
