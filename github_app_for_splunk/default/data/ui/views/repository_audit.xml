@@ -59,7 +59,7 @@
             <a href="#" class="toggle-tab" data-toggle="tab" data-elements="tab_userChanges">Repository User Changes</a>
           </li>
           <li>
-            <a href="#" class="toggle-tab" data-toggle="tab" data-elements="tab_repoActions">Repository Action Details</a>
+            <a href="#" class="toggle-tab" data-toggle="tab" data-elements="tab_repoActions">Repository Workflow Details</a>
           </li>
         </ul>
       </html>
@@ -95,9 +95,9 @@
   </row>
   <row id="tab_repoActions">
     <panel>
-      <title>Repository Action Details</title>
+      <title>Repository Workflow Details</title>
       <table>
-        <title>Clicking an Action run will take you to Github to view the Action Workflow</title>
+        <title>Clicking an Workflow run will take you to Github to view the Workflow</title>
         <search>
           <query>`github_source` action IN("workflows.completed*") repo="*" | stats latest(conclusion) as status by org, actor, name, repo, head_branch, workflow_run_id</query>
           <earliest>$timeRng.earliest$</earliest>
