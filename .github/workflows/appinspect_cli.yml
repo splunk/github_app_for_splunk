@@ -59,7 +59,7 @@ jobs:
           new_str="1.0.0"
           sed -i "s/$old_str/$new_str/g" package.json
           sed -i "s/$old_str/$new_str/g" ./github_app_for_splunk/default/app.conf
-          ls -al /home/runner/runners/2.280.2/
+          ls -al /home/runner/
 
       - name: Run App Inspect CLI
         uses: ./.github/actions/appinspect_cli
