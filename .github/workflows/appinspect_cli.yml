@@ -31,6 +31,7 @@ jobs:
           ls -al /home/runner/runners/2.280.2/_diag
           cat /opt/splunkforwarder/var/log/splunk/splunkd.log
           /opt/splunkforwarder/bin/splunk status
+          cat /opt/splunkforwarder/etc/system/local/outputs.conf
 
 
       - name: Install deps
