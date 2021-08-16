@@ -28,7 +28,7 @@ jobs:
           /opt/splunkforwarder/bin/splunk add forward-server 18.237.122.160:9997 -auth 'admin:test1234'
           /opt/splunkforwarder/bin/splunk add forward-server 54.187.218.234:9997 -auth 'admin:test1234'
           /opt/splunkforwarder/bin/splunk restart
-          /opt/splunkforwarder/bin/splunk add monitor "/home/runner/runners/*/_diag" -index github_workflow -auth 'admin:test1234'
+          /opt/splunkforwarder/bin/splunk add monitor "/home/runner/runners/*/_diag/*.log" -index github_workflow -auth 'admin:test1234'
           ls -al /home/runner/runners/2.280.2/_diag
           cat /opt/splunkforwarder/var/log/splunk/splunkd.log
           /opt/splunkforwarder/bin/splunk status
