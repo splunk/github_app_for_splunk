@@ -26,6 +26,7 @@ jobs:
           tar xvzf splunkforwarder-8.2.1-ddff1c41e5cf-Linux-x86_64.tgz -C /opt
           /opt/splunkforwarder/bin/splunk start --accept-license
           admin
+          test1234
 
       - name: Install deps
         uses: CultureHQ/actions-yarn@master
