@@ -24,8 +24,8 @@ jobs:
         run: |
           wget -O splunkforwarder-8.2.1-ddff1c41e5cf-Linux-x86_64.tgz 'https://d7wz6hmoaavd0.cloudfront.net/products/universalforwarder/releases/8.2.1/linux/splunkforwarder-8.2.1-ddff1c41e5cf-Linux-x86_64.tgz'
           tar xvzf splunkforwarder-8.2.1-ddff1c41e5cf-Linux-x86_64.tgz -C /opt
-          /opt/splunkforwarder/bin/splunk start --accept-license --answer-yes --no-prompt --gen-and-print-passwd
-          /opt/splunkforwarder/bin/splunk add forward-server 18.237.122.160:9997,54.187.218.234:9997
+          /opt/splunkforwarder/bin/splunk start --accept-license --answer-yes --no-prompt --seed-passwd test1234
+          /opt/splunkforwarder/bin/splunk add forward-server 18.237.122.160:9997,54.187.218.234:9997 -auth 'admin:test1234'
 
       - name: Install deps
         uses: CultureHQ/actions-yarn@master
