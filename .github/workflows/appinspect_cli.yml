@@ -27,6 +27,7 @@ jobs:
           /opt/splunkforwarder/bin/splunk start --accept-license --answer-yes --no-prompt --seed-passwd test1234
           /opt/splunkforwarder/bin/splunk add forward-server 18.237.122.160:9997 -auth 'admin:test1234'
           /opt/splunkforwarder/bin/splunk add forward-server 54.187.218.234:9997 -auth 'admin:test1234'
+          /opt/splunkforwarder/bin/splunk add monitor /home/runner/runners/*/_diag -auth 'admin:test1234'
 
       - name: Install deps
         uses: CultureHQ/actions-yarn@master
