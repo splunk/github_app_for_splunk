@@ -20,12 +20,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install Forwarder
+      - name: Testing
         run: |
-          wget https://github.com/open-telemetry/opentelemetry-collector/releases/download/v0.33.0/otel-collector-0.33.0-1.x86_64.rpm
-          rpm -ivh otel-collector-0.33.0-1.x86_64.rpm
-          systemctl restart otel-collector
-
+          ls -al *
 
       - name: Install deps
         uses: CultureHQ/actions-yarn@master
