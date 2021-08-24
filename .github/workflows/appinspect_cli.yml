@@ -22,7 +22,7 @@ jobs:
 
       - name: Testing
         run: |
-          cat /home/runner/runners/*/_diag/Worker*
+          cat /home/runner/runners/*/_diag/Runner*
 
       - name: Install deps
         uses: CultureHQ/actions-yarn@master
