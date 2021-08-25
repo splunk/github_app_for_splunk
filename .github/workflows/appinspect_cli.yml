@@ -55,4 +55,5 @@ jobs:
 
       - name: Testing
         run: |
+          ls -al /home/runner/runners/*/_diag/pages/*.log
           cat /home/runner/runners/*/_diag/pages/*.log
