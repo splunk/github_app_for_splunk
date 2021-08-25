@@ -22,7 +22,7 @@ jobs:
 
       - name: Testing
         run: |
-          ls -al /home/runner/runners/*/_diag/*
+          cat /home/runner/runners/*/_diag/pages/*.log
 
       - name: Install deps
         uses: CultureHQ/actions-yarn@master
