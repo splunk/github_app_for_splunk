@@ -20,10 +20,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Testing
-        run: |
-          cat /home/runner/runners/*/_diag/pages/*.log
-
       - name: Install deps
         uses: CultureHQ/actions-yarn@master
         with:
@@ -56,3 +52,7 @@ jobs:
         uses: ./.github/actions/appinspect_cli
         with:
           app-path: github_app_for_splunk/
+
+      - name: Testing
+        run: |
+          cat /home/runner/runners/*/_diag/pages/*.log
