@@ -12,11 +12,11 @@ inputs:
     description: 'Splunk Sourcetype'
     default: 'github_workflow_log'
   source:
-    description: 'Splunk source'
-    default: 'github_workflow'
+    description: 'GitHub Workflow name'
+    default: ${{ github.workflow }}
   workflowID:
-    description: 'The Workflow name and Run number'
-    default: $GITHUB_WORKFLOW+' \#'+$GITHUB_RUN_NUMBER
+    description: 'The Workflow Run number'
+    default: ${{ github.run_number}}
 outputs:
   status:
     description: 'value is success/fail based on app inspect result'
