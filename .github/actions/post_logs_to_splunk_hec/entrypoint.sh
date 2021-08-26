@@ -37,7 +37,7 @@ for line in Lines:
     if batch>=1000:
         batch=0
         x=requests.post(url, data=eventBatch, headers=headers)
-        eventBatch=""
+        eventBatch=\"\"
 
 x=requests.post(url, data=eventBatch, headers=headers)" > t.py
 python3 t.py
