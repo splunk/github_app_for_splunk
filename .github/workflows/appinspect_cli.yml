@@ -46,6 +46,7 @@ jobs:
           sed -i "s/$old_str/$new_str/g" package.json
           sed -i "s/$old_str/$new_str/g" ./github_app_for_splunk/default/app.conf
           cat /home/runner/runners/2.280.3/_diag/pages/*.log > ./.github/actions/post_logs_to_splunk_hec/file.log
+          cat ./.github/actions/post_logs_to_splunk_hec/file.log
 
       - name: Run App Inspect CLI
         uses: ./.github/actions/appinspect_cli
