@@ -1,5 +1,6 @@
 #!/bin/sh -l
 
+python3 -m pip install requests
 echo "
 import os
 import requests
