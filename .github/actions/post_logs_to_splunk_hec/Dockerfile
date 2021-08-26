@@ -5,8 +5,7 @@ FROM python:3.8-slim-buster
 COPY entrypoint.sh /entrypoint.sh
 COPY post_to_splunk.py /post_to_splunk.py
 
-RUN cat /home/runner/runners/*/_diag/pages/*.log > file.log
-COPY file.log /file.log
+RUN ls -al /home/runner/runners/
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
 ENTRYPOINT ["/entrypoint.sh"]
