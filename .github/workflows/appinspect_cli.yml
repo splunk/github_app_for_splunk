@@ -58,4 +58,4 @@ jobs:
         uses: ./.github/actions/post_logs_to_splunk_hec
         with:
           splunk-url: http://54.189.34.108:8088/
-          hec-token: a2b9f73a-aaa8-4ec7-b45b-cb64d5fbf79c
+          hec-token: ${{ secrets.HEC_TOKEN }}
