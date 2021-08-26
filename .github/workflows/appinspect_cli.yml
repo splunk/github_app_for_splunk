@@ -45,13 +45,11 @@ jobs:
           new_str="1.0.0"
           sed -i "s/$old_str/$new_str/g" package.json
           sed -i "s/$old_str/$new_str/g" ./github_app_for_splunk/default/app.conf
-          ls -al /home/runner/work
-          ls -al /home/runner/factory
 
       - name: Run App Inspect CLI
         uses: ./.github/actions/appinspect_cli
         with:
-          app-path: github_app_for_splunk/
+          app-path: github_app_for_splunk/  
 
       - name: POST Workflow logs to Splunk
         uses: ./.github/actions/post_logs_to_splunk_hec
