@@ -17,7 +17,9 @@ token=\"$2\"
 headers = {\"Authorization\": \"Splunk \"+token}
 sourcetype = \"$3\"
 eventBatch = \"\"
-workflowID=\"Lint and App Inspect CLI #79\"
+workflowID=\"$5\"
+source=\"$4\"
+host=\""+$HOSTNAME+""\"
 
 for line in Lines:
     count+=1
@@ -30,7 +32,7 @@ for line in Lines:
     fields = {'lineNumber':count,'workflowID':workflowID}
     if x:
         batch+=1
-        event={'event':x,'sourcetype':sourcetype,'source':\"github.com\",'host':\"runnerxxx\",'time':timestamp,'fields':fields}
+        event={'event':x,'sourcetype':sourcetype,'source':source,'host':host,'time':timestamp,'fields':fields}
         eventBatch=eventBatch+json.dumps(event)
     else:
         print(\"skipped line \"+str(count))
