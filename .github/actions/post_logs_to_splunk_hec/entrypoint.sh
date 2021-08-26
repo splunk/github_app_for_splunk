@@ -12,7 +12,7 @@ logfile = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), \"file.l
 Lines = logfile.readlines()
 
 batch = count = 0
-url = \"$1\"
+url = \"$1services/collector/event\"
 token=\"$2\"
 headers = {\"Authorization\": \"Splunk \"+token}
 sourcetype = \"$3\"
