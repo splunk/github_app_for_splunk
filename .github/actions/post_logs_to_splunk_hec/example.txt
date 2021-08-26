@@ -1,0 +1,1041 @@
+2021-08-25T17:18:54.3022116Z Found online and idle hosted runner in the current repository's enterprise account that matches the required labels: 'ubuntu-latest'
+2021-08-25T17:18:54.3735546Z Waiting for a Hosted runner in the 'enterprise' to pick this job...
+2021-08-25T17:18:54.6613887Z Job is waiting for a hosted runner to come online.
+2021-08-25T17:18:59.6350688Z Job is about to start running on the hosted runner: GitHub Actions 2 (hosted)
+2021-08-25T17:19:03.2559793Z Current runner version: '2.280.3'
+2021-08-25T17:19:03.2591225Z ##[group]Operating System
+2021-08-25T17:19:03.2592402Z Ubuntu
+2021-08-25T17:19:03.2592867Z 20.04.2
+2021-08-25T17:19:03.2593353Z LTS
+2021-08-25T17:19:03.2593828Z ##[endgroup]
+2021-08-25T17:19:03.2594520Z ##[group]Virtual Environment
+2021-08-25T17:19:03.2595179Z Environment: ubuntu-20.04
+2021-08-25T17:19:03.2595806Z Version: 20210816.1
+2021-08-25T17:19:03.2597016Z Included Software: https://github.com/actions/virtual-environments/blob/ubuntu20/20210816.1/images/linux/Ubuntu2004-README.md
+2021-08-25T17:19:03.2598625Z Image Release: https://github.com/actions/virtual-environments/releases/tag/ubuntu20%2F20210816.1
+2021-08-25T17:19:03.2599621Z ##[endgroup]
+2021-08-25T17:19:03.2600233Z ##[group]Virtual Environment Provisioner
+2021-08-25T17:19:03.2600932Z 1.0.0.0-master-20210816-1
+2021-08-25T17:19:03.2601456Z ##[endgroup]
+2021-08-25T17:19:03.2603623Z ##[group]GITHUB_TOKEN Permissions
+2021-08-25T17:19:03.2605072Z Actions: write
+2021-08-25T17:19:03.2605679Z Checks: write
+2021-08-25T17:19:03.2606226Z Contents: write
+2021-08-25T17:19:03.2606774Z Deployments: write
+2021-08-25T17:19:03.2607424Z Discussions: write
+2021-08-25T17:19:03.2607940Z Issues: write
+2021-08-25T17:19:03.2608489Z Metadata: read
+2021-08-25T17:19:03.2609044Z Packages: write
+2021-08-25T17:19:03.2609601Z PullRequests: write
+2021-08-25T17:19:03.2610308Z RepositoryProjects: write
+2021-08-25T17:19:03.2610945Z SecurityEvents: write
+2021-08-25T17:19:03.2611550Z Statuses: write
+2021-08-25T17:19:03.2612187Z ##[endgroup]
+2021-08-25T17:19:03.2615500Z Prepare workflow directory
+2021-08-25T17:19:03.3436670Z Prepare all required actions
+2021-08-25T17:19:03.3448173Z Getting action download info
+2021-08-25T17:19:03.7876565Z Download action repository 'actions/checkout@v2' (SHA:5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f)
+2021-08-25T17:19:05.7164298Z Download action repository 'CultureHQ/actions-yarn@master' (SHA:63c4ac29d15ad50856e763a252874ced41b6cbb9)
+2021-08-25T17:19:06.3094136Z ##[group]Pull down action image 'culturehq/actions-yarn:latest'
+2021-08-25T17:19:06.3141994Z ##[command]/usr/bin/docker pull culturehq/actions-yarn:latest
+2021-08-25T17:19:07.7153772Z latest: Pulling from culturehq/actions-yarn
+2021-08-25T17:19:07.7217319Z 8f91359f1fff: Pulling fs layer
+2021-08-25T17:19:07.7218294Z 3bfc330579f6: Pulling fs layer
+2021-08-25T17:19:07.7218951Z c960067b0736: Pulling fs layer
+2021-08-25T17:19:07.7219907Z 614b99d26fc9: Pulling fs layer
+2021-08-25T17:19:07.7220950Z 5f1c18961594: Pulling fs layer
+2021-08-25T17:19:07.7222221Z ae340d2ea83a: Pulling fs layer
+2021-08-25T17:19:07.7223095Z 71030804c8ab: Pulling fs layer
+2021-08-25T17:19:07.7223672Z 614b99d26fc9: Waiting
+2021-08-25T17:19:07.7224202Z 5f1c18961594: Waiting
+2021-08-25T17:19:07.7224846Z ae340d2ea83a: Waiting
+2021-08-25T17:19:07.7225360Z 71030804c8ab: Waiting
+2021-08-25T17:19:07.7225902Z 3bfc330579f6: Verifying Checksum
+2021-08-25T17:19:07.7226524Z 3bfc330579f6: Download complete
+2021-08-25T17:19:07.8381284Z 8f91359f1fff: Verifying Checksum
+2021-08-25T17:19:07.8382625Z 8f91359f1fff: Download complete
+2021-08-25T17:19:08.0239028Z c960067b0736: Verifying Checksum
+2021-08-25T17:19:08.0239808Z c960067b0736: Download complete
+2021-08-25T17:19:08.0411586Z 614b99d26fc9: Verifying Checksum
+2021-08-25T17:19:08.0412142Z 614b99d26fc9: Download complete
+2021-08-25T17:19:08.1079782Z 5f1c18961594: Verifying Checksum
+2021-08-25T17:19:08.1080316Z 5f1c18961594: Download complete
+2021-08-25T17:19:08.2658614Z 71030804c8ab: Verifying Checksum
+2021-08-25T17:19:08.2659550Z 71030804c8ab: Download complete
+2021-08-25T17:19:08.3299691Z ae340d2ea83a: Verifying Checksum
+2021-08-25T17:19:08.3301361Z ae340d2ea83a: Download complete
+2021-08-25T17:19:08.8544900Z 8f91359f1fff: Pull complete
+2021-08-25T17:19:09.5023446Z 3bfc330579f6: Pull complete
+2021-08-25T17:19:11.5029883Z c960067b0736: Pull complete
+2021-08-25T17:19:11.6293279Z 614b99d26fc9: Pull complete
+2021-08-25T17:19:11.6964458Z 5f1c18961594: Pull complete
+2021-08-25T17:19:11.7660069Z ae340d2ea83a: Pull complete
+2021-08-25T17:19:11.8362572Z 71030804c8ab: Pull complete
+2021-08-25T17:19:11.8432070Z Digest: sha256:e434d9710bb71fb48999d1feedda97b24b2f2405b683a4a94d4dd7e08680435f
+2021-08-25T17:19:11.8455142Z Status: Downloaded newer image for culturehq/actions-yarn:latest
+2021-08-25T17:19:11.8490067Z docker.io/culturehq/actions-yarn:latest
+2021-08-25T17:19:11.8508993Z ##[endgroup]
+2021-08-25T17:19:11.8799863Z ##[group]Run actions/checkout@v2
+2021-08-25T17:19:11.8800513Z with:
+2021-08-25T17:19:11.8800999Z   repository: splunk/github_app_for_splunk
+2021-08-25T17:19:11.8801999Z   token: ***
+2021-08-25T17:19:11.8802386Z   ssh-strict: true
+2021-08-25T17:19:11.8802907Z   persist-credentials: true
+2021-08-25T17:19:11.8803388Z   clean: true
+2021-08-25T17:19:11.8803792Z   fetch-depth: 1
+2021-08-25T17:19:11.8804177Z   lfs: false
+2021-08-25T17:19:11.8804574Z   submodules: false
+2021-08-25T17:19:11.8804977Z ##[endgroup]
+2021-08-25T17:19:12.1405834Z Syncing repository: splunk/github_app_for_splunk
+2021-08-25T17:19:12.1407234Z ##[group]Getting Git version info
+2021-08-25T17:19:12.1408386Z Working directory is '/home/runner/work/github_app_for_splunk/github_app_for_splunk'
+2021-08-25T17:19:12.1473582Z [command]/usr/bin/git version
+2021-08-25T17:19:12.1618000Z git version 2.32.0
+2021-08-25T17:19:12.1644796Z ##[endgroup]
+2021-08-25T17:19:12.1653477Z Deleting the contents of '/home/runner/work/github_app_for_splunk/github_app_for_splunk'
+2021-08-25T17:19:12.1659484Z ##[group]Initializing the repository
+2021-08-25T17:19:12.1665233Z [command]/usr/bin/git init /home/runner/work/github_app_for_splunk/github_app_for_splunk
+2021-08-25T17:19:12.1742599Z hint: Using 'master' as the name for the initial branch. This default branch name
+2021-08-25T17:19:12.1743888Z hint: is subject to change. To configure the initial branch name to use in all
+2021-08-25T17:19:12.1745048Z hint: of your new repositories, which will suppress this warning, call:
+2021-08-25T17:19:12.1745901Z hint:
+2021-08-25T17:19:12.1747419Z hint: 	git config --global init.defaultBranch <name>
+2021-08-25T17:19:12.1748221Z hint:
+2021-08-25T17:19:12.1749342Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2021-08-25T17:19:12.1750396Z hint: 'development'. The just-created branch can be renamed via this command:
+2021-08-25T17:19:12.1751083Z hint:
+2021-08-25T17:19:12.1751772Z hint: 	git branch -m <name>
+2021-08-25T17:19:12.1759500Z Initialized empty Git repository in /home/runner/work/github_app_for_splunk/github_app_for_splunk/.git/
+2021-08-25T17:19:12.1771208Z [command]/usr/bin/git remote add origin https://github.com/splunk/github_app_for_splunk
+2021-08-25T17:19:12.1816514Z ##[endgroup]
+2021-08-25T17:19:12.1817711Z ##[group]Disabling automatic garbage collection
+2021-08-25T17:19:12.1824889Z [command]/usr/bin/git config --local gc.auto 0
+2021-08-25T17:19:12.1857901Z ##[endgroup]
+2021-08-25T17:19:12.1868201Z ##[group]Setting up auth
+2021-08-25T17:19:12.1878789Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2021-08-25T17:19:12.1911704Z [command]/usr/bin/git submodule foreach --recursive git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :
+2021-08-25T17:19:12.2300190Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2021-08-25T17:19:12.2333726Z [command]/usr/bin/git submodule foreach --recursive git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :
+2021-08-25T17:19:12.2559379Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2021-08-25T17:19:12.2604555Z ##[endgroup]
+2021-08-25T17:19:12.2607426Z ##[group]Fetching the repository
+2021-08-25T17:19:12.2620021Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=1 origin +1fbf5d7eb36123aa46847f13a2b44651eb0a29c6:refs/remotes/origin/main
+2021-08-25T17:19:12.5734433Z remote: Enumerating objects: 88, done.
+2021-08-25T17:19:12.5737023Z remote: Counting objects:   1% (1/88)
+2021-08-25T17:19:12.5749385Z remote: Counting objects:   2% (2/88)
+2021-08-25T17:19:12.5754425Z remote: Counting objects:   3% (3/88)
+2021-08-25T17:19:12.5755505Z remote: Counting objects:   4% (4/88)
+2021-08-25T17:19:12.5756549Z remote: Counting objects:   5% (5/88)
+2021-08-25T17:19:12.5757372Z remote: Counting objects:   6% (6/88)
+2021-08-25T17:19:12.5758411Z remote: Counting objects:   7% (7/88)
+2021-08-25T17:19:12.5759106Z remote: Counting objects:   9% (8/88)
+2021-08-25T17:19:12.5759740Z remote: Counting objects:  10% (9/88)
+2021-08-25T17:19:12.5760458Z remote: Counting objects:  11% (10/88)
+2021-08-25T17:19:12.5761284Z remote: Counting objects:  12% (11/88)
+2021-08-25T17:19:12.5762067Z remote: Counting objects:  13% (12/88)
+2021-08-25T17:19:12.5762792Z remote: Counting objects:  14% (13/88)
+2021-08-25T17:19:12.5763507Z remote: Counting objects:  15% (14/88)
+2021-08-25T17:19:12.5764321Z remote: Counting objects:  17% (15/88)
+2021-08-25T17:19:12.5765434Z remote: Counting objects:  18% (16/88)
+2021-08-25T17:19:12.5766040Z remote: Counting objects:  19% (17/88)
+2021-08-25T17:19:12.5766739Z remote: Counting objects:  20% (18/88)
+2021-08-25T17:19:12.5767335Z remote: Counting objects:  21% (19/88)
+2021-08-25T17:19:12.5768019Z remote: Counting objects:  22% (20/88)
+2021-08-25T17:19:12.5768610Z remote: Counting objects:  23% (21/88)
+2021-08-25T17:19:12.5769250Z remote: Counting objects:  25% (22/88)
+2021-08-25T17:19:12.5769834Z remote: Counting objects:  26% (23/88)
+2021-08-25T17:19:12.5770643Z remote: Counting objects:  27% (24/88)
+2021-08-25T17:19:12.5771341Z remote: Counting objects:  28% (25/88)
+2021-08-25T17:19:12.5771948Z remote: Counting objects:  29% (26/88)
+2021-08-25T17:19:12.5772823Z remote: Counting objects:  30% (27/88)
+2021-08-25T17:19:12.5773486Z remote: Counting objects:  31% (28/88)
+2021-08-25T17:19:12.5774092Z remote: Counting objects:  32% (29/88)
+2021-08-25T17:19:12.5774684Z remote: Counting objects:  34% (30/88)
+2021-08-25T17:19:12.5775307Z remote: Counting objects:  35% (31/88)
+2021-08-25T17:19:12.5775870Z remote: Counting objects:  36% (32/88)
+2021-08-25T17:19:12.5776492Z remote: Counting objects:  37% (33/88)
+2021-08-25T17:19:12.5777312Z remote: Counting objects:  38% (34/88)
+2021-08-25T17:19:12.5777868Z remote: Counting objects:  39% (35/88)
+2021-08-25T17:19:12.5778431Z remote: Counting objects:  40% (36/88)
+2021-08-25T17:19:12.5778954Z remote: Counting objects:  42% (37/88)
+2021-08-25T17:19:12.5779635Z remote: Counting objects:  43% (38/88)
+2021-08-25T17:19:12.5780171Z remote: Counting objects:  44% (39/88)
+2021-08-25T17:19:12.5780914Z remote: Counting objects:  45% (40/88)
+2021-08-25T17:19:12.5781475Z remote: Counting objects:  46% (41/88)
+2021-08-25T17:19:12.5782088Z remote: Counting objects:  47% (42/88)
+2021-08-25T17:19:12.5782642Z remote: Counting objects:  48% (43/88)
+2021-08-25T17:19:12.5783243Z remote: Counting objects:  50% (44/88)
+2021-08-25T17:19:12.5783866Z remote: Counting objects:  51% (45/88)
+2021-08-25T17:19:12.5784422Z remote: Counting objects:  52% (46/88)
+2021-08-25T17:19:12.5785037Z remote: Counting objects:  53% (47/88)
+2021-08-25T17:19:12.5785589Z remote: Counting objects:  54% (48/88)
+2021-08-25T17:19:12.5786187Z remote: Counting objects:  55% (49/88)
+2021-08-25T17:19:12.5786740Z remote: Counting objects:  56% (50/88)
+2021-08-25T17:19:12.5787385Z remote: Counting objects:  57% (51/88)
+2021-08-25T17:19:12.5788177Z remote: Counting objects:  59% (52/88)
+2021-08-25T17:19:12.5788782Z remote: Counting objects:  60% (53/88)
+2021-08-25T17:19:12.5789383Z remote: Counting objects:  61% (54/88)
+2021-08-25T17:19:12.5790091Z remote: Counting objects:  62% (55/88)
+2021-08-25T17:19:12.5790735Z remote: Counting objects:  63% (56/88)
+2021-08-25T17:19:12.5791288Z remote: Counting objects:  64% (57/88)
+2021-08-25T17:19:12.5791890Z remote: Counting objects:  65% (58/88)
+2021-08-25T17:19:12.5792522Z remote: Counting objects:  67% (59/88)
+2021-08-25T17:19:12.5793139Z remote: Counting objects:  68% (60/88)
+2021-08-25T17:19:12.5793842Z remote: Counting objects:  69% (61/88)
+2021-08-25T17:19:12.5794425Z remote: Counting objects:  70% (62/88)
+2021-08-25T17:19:12.5795005Z remote: Counting objects:  71% (63/88)
+2021-08-25T17:19:12.5795537Z remote: Counting objects:  72% (64/88)
+2021-08-25T17:19:12.5796349Z remote: Counting objects:  73% (65/88)
+2021-08-25T17:19:12.5796917Z remote: Counting objects:  75% (66/88)
+2021-08-25T17:19:12.5797497Z remote: Counting objects:  76% (67/88)
+2021-08-25T17:19:12.5798252Z remote: Counting objects:  77% (68/88)
+2021-08-25T17:19:12.5798789Z remote: Counting objects:  78% (69/88)
+2021-08-25T17:19:12.5799380Z remote: Counting objects:  79% (70/88)
+2021-08-25T17:19:12.5799967Z remote: Counting objects:  80% (71/88)
+2021-08-25T17:19:12.5800556Z remote: Counting objects:  81% (72/88)
+2021-08-25T17:19:12.5801090Z remote: Counting objects:  82% (73/88)
+2021-08-25T17:19:12.5801669Z remote: Counting objects:  84% (74/88)
+2021-08-25T17:19:12.5802219Z remote: Counting objects:  85% (75/88)
+2021-08-25T17:19:12.5802823Z remote: Counting objects:  86% (76/88)
+2021-08-25T17:19:12.5803404Z remote: Counting objects:  87% (77/88)
+2021-08-25T17:19:12.5803936Z remote: Counting objects:  88% (78/88)
+2021-08-25T17:19:12.5804640Z remote: Counting objects:  89% (79/88)
+2021-08-25T17:19:12.5805166Z remote: Counting objects:  90% (80/88)
+2021-08-25T17:19:12.5805745Z remote: Counting objects:  92% (81/88)
+2021-08-25T17:19:12.5806270Z remote: Counting objects:  93% (82/88)
+2021-08-25T17:19:12.5806828Z remote: Counting objects:  94% (83/88)
+2021-08-25T17:19:12.5807343Z remote: Counting objects:  95% (84/88)
+2021-08-25T17:19:12.5807916Z remote: Counting objects:  96% (85/88)
+2021-08-25T17:19:12.5808504Z remote: Counting objects:  97% (86/88)
+2021-08-25T17:19:12.5809020Z remote: Counting objects:  98% (87/88)
+2021-08-25T17:19:12.5809577Z remote: Counting objects: 100% (88/88)
+2021-08-25T17:19:12.5810116Z remote: Counting objects: 100% (88/88), done.
+2021-08-25T17:19:12.5810745Z remote: Compressing objects:   1% (1/80)
+2021-08-25T17:19:12.5811339Z remote: Compressing objects:   2% (2/80)
+2021-08-25T17:19:12.5811975Z remote: Compressing objects:   3% (3/80)
+2021-08-25T17:19:12.5812540Z remote: Compressing objects:   5% (4/80)
+2021-08-25T17:19:12.5814830Z remote: Compressing objects:   6% (5/80)
+2021-08-25T17:19:12.5815473Z remote: Compressing objects:   7% (6/80)
+2021-08-25T17:19:12.5816853Z remote: Compressing objects:   8% (7/80)
+2021-08-25T17:19:12.5817499Z remote: Compressing objects:  10% (8/80)
+2021-08-25T17:19:12.5818072Z remote: Compressing objects:  11% (9/80)
+2021-08-25T17:19:12.5818712Z remote: Compressing objects:  12% (10/80)
+2021-08-25T17:19:12.5819280Z remote: Compressing objects:  13% (11/80)
+2021-08-25T17:19:12.5819928Z remote: Compressing objects:  15% (12/80)
+2021-08-25T17:19:12.5820500Z remote: Compressing objects:  16% (13/80)
+2021-08-25T17:19:12.5821122Z remote: Compressing objects:  17% (14/80)
+2021-08-25T17:19:12.5821729Z remote: Compressing objects:  18% (15/80)
+2021-08-25T17:19:12.5822290Z remote: Compressing objects:  20% (16/80)
+2021-08-25T17:19:12.5822918Z remote: Compressing objects:  21% (17/80)
+2021-08-25T17:19:12.5823486Z remote: Compressing objects:  22% (18/80)
+2021-08-25T17:19:12.5824252Z remote: Compressing objects:  23% (19/80)
+2021-08-25T17:19:12.5824814Z remote: Compressing objects:  25% (20/80)
+2021-08-25T17:19:12.5825437Z remote: Compressing objects:  26% (21/80)
+2021-08-25T17:19:12.5826032Z remote: Compressing objects:  27% (22/80)
+2021-08-25T17:19:12.5826849Z remote: Compressing objects:  28% (23/80)
+2021-08-25T17:19:12.5827895Z remote: Compressing objects:  30% (24/80)
+2021-08-25T17:19:12.5828639Z remote: Compressing objects:  31% (25/80)
+2021-08-25T17:19:12.5829291Z remote: Compressing objects:  32% (26/80)
+2021-08-25T17:19:12.5830586Z remote: Compressing objects:  33% (27/80)
+2021-08-25T17:19:12.5831963Z remote: Compressing objects:  35% (28/80)
+2021-08-25T17:19:12.5834477Z remote: Compressing objects:  36% (29/80)
+2021-08-25T17:19:12.5835056Z remote: Compressing objects:  37% (30/80)
+2021-08-25T17:19:12.5835668Z remote: Compressing objects:  38% (31/80)
+2021-08-25T17:19:12.5836345Z remote: Compressing objects:  40% (32/80)
+2021-08-25T17:19:12.5905035Z remote: Compressing objects:  41% (33/80)
+2021-08-25T17:19:12.5905730Z remote: Compressing objects:  42% (34/80)
+2021-08-25T17:19:12.5906298Z remote: Compressing objects:  43% (35/80)
+2021-08-25T17:19:12.5906925Z remote: Compressing objects:  45% (36/80)
+2021-08-25T17:19:12.6625636Z remote: Compressing objects:  46% (37/80)
+2021-08-25T17:19:12.6628725Z remote: Compressing objects:  47% (38/80)
+2021-08-25T17:19:12.6629454Z remote: Compressing objects:  48% (39/80)
+2021-08-25T17:19:12.6630286Z remote: Compressing objects:  50% (40/80)
+2021-08-25T17:19:12.6630898Z remote: Compressing objects:  51% (41/80)
+2021-08-25T17:19:12.7113609Z remote: Compressing objects:  52% (42/80)
+2021-08-25T17:19:12.7489445Z remote: Compressing objects:  53% (43/80)
+2021-08-25T17:19:12.7580901Z remote: Compressing objects:  55% (44/80)
+2021-08-25T17:19:12.8051568Z remote: Compressing objects:  56% (45/80)
+2021-08-25T17:19:12.8052396Z remote: Compressing objects:  57% (46/80)
+2021-08-25T17:19:12.8053218Z remote: Compressing objects:  58% (47/80)
+2021-08-25T17:19:12.8054089Z remote: Compressing objects:  60% (48/80)
+2021-08-25T17:19:12.8054805Z remote: Compressing objects:  61% (49/80)
+2021-08-25T17:19:12.8055520Z remote: Compressing objects:  62% (50/80)
+2021-08-25T17:19:12.8056465Z remote: Compressing objects:  63% (51/80)
+2021-08-25T17:19:12.8057252Z remote: Compressing objects:  65% (52/80)
+2021-08-25T17:19:12.8058115Z remote: Compressing objects:  66% (53/80)
+2021-08-25T17:19:12.8058949Z remote: Compressing objects:  67% (54/80)
+2021-08-25T17:19:12.8059809Z remote: Compressing objects:  68% (55/80)
+2021-08-25T17:19:12.8060533Z remote: Compressing objects:  70% (56/80)
+2021-08-25T17:19:12.8061223Z remote: Compressing objects:  71% (57/80)
+2021-08-25T17:19:12.8062000Z remote: Compressing objects:  72% (58/80)
+2021-08-25T17:19:12.8062673Z remote: Compressing objects:  73% (59/80)
+2021-08-25T17:19:12.8154098Z remote: Compressing objects:  75% (60/80)
+2021-08-25T17:19:12.8155254Z remote: Compressing objects:  76% (61/80)
+2021-08-25T17:19:12.8156025Z remote: Compressing objects:  77% (62/80)
+2021-08-25T17:19:12.8156850Z remote: Compressing objects:  78% (63/80)
+2021-08-25T17:19:12.8157547Z remote: Compressing objects:  80% (64/80)
+2021-08-25T17:19:12.8158487Z remote: Compressing objects:  81% (65/80)
+2021-08-25T17:19:12.8159483Z remote: Compressing objects:  82% (66/80)
+2021-08-25T17:19:12.8160293Z remote: Compressing objects:  83% (67/80)
+2021-08-25T17:19:12.8161465Z remote: Compressing objects:  85% (68/80)
+2021-08-25T17:19:12.8162268Z remote: Compressing objects:  86% (69/80)
+2021-08-25T17:19:12.8163185Z remote: Compressing objects:  87% (70/80)
+2021-08-25T17:19:12.8164217Z remote: Compressing objects:  88% (71/80)
+2021-08-25T17:19:12.8270114Z remote: Compressing objects:  90% (72/80)
+2021-08-25T17:19:12.8270676Z remote: Compressing objects:  91% (73/80)
+2021-08-25T17:19:12.8271208Z remote: Compressing objects:  92% (74/80)
+2021-08-25T17:19:12.8272037Z remote: Compressing objects:  93% (75/80)
+2021-08-25T17:19:12.8272616Z remote: Compressing objects:  95% (76/80)
+2021-08-25T17:19:12.8273168Z remote: Compressing objects:  96% (77/80)
+2021-08-25T17:19:12.8273709Z remote: Compressing objects:  97% (78/80)
+2021-08-25T17:19:12.8274267Z remote: Compressing objects:  98% (79/80)
+2021-08-25T17:19:12.8274807Z remote: Compressing objects: 100% (80/80)
+2021-08-25T17:19:12.8275497Z remote: Compressing objects: 100% (80/80), done.
+2021-08-25T17:19:13.7187835Z remote: Total 88 (delta 5), reused 61 (delta 0), pack-reused 0
+2021-08-25T17:19:13.7414992Z From https://github.com/splunk/github_app_for_splunk
+2021-08-25T17:19:13.7418278Z  * [new ref]         1fbf5d7eb36123aa46847f13a2b44651eb0a29c6 -> origin/main
+2021-08-25T17:19:13.7462289Z ##[endgroup]
+2021-08-25T17:19:13.7464338Z ##[group]Determining the checkout info
+2021-08-25T17:19:13.7467125Z ##[endgroup]
+2021-08-25T17:19:13.7468787Z ##[group]Checking out the ref
+2021-08-25T17:19:13.7470390Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2021-08-25T17:19:13.8475865Z Switched to a new branch 'main'
+2021-08-25T17:19:13.8499625Z Branch 'main' set up to track remote branch 'main' from 'origin'.
+2021-08-25T17:19:13.8501587Z ##[endgroup]
+2021-08-25T17:19:13.8546791Z [command]/usr/bin/git log -1 --format='%H'
+2021-08-25T17:19:13.8568186Z '1fbf5d7eb36123aa46847f13a2b44651eb0a29c6'
+2021-08-25T17:19:13.8777427Z ##[group]Run CultureHQ/actions-yarn@master
+2021-08-25T17:19:13.8778280Z with:
+2021-08-25T17:19:13.8778658Z   args: install
+2021-08-25T17:19:13.8779055Z ##[endgroup]
+2021-08-25T17:19:13.8815431Z ##[command]/usr/bin/docker run --name culturehqactionsyarnlatest_d53b9a --label c9e036 --workdir /github/workspace --rm -e INPUT_ARGS -e HOME -e GITHUB_JOB -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY -e GITHUB_REPOSITORY_OWNER -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_RETENTION_DAYS -e GITHUB_ACTOR -e GITHUB_WORKFLOW -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GITHUB_EVENT_NAME -e GITHUB_SERVER_URL -e GITHUB_API_URL -e GITHUB_GRAPHQL_URL -e GITHUB_WORKSPACE -e GITHUB_ACTION -e GITHUB_EVENT_PATH -e GITHUB_ACTION_REPOSITORY -e GITHUB_ACTION_REF -e GITHUB_PATH -e GITHUB_ENV -e RUNNER_OS -e RUNNER_TOOL_CACHE -e RUNNER_TEMP -e RUNNER_WORKSPACE -e ACTIONS_RUNTIME_URL -e ACTIONS_RUNTIME_TOKEN -e ACTIONS_CACHE_URL -e GITHUB_ACTIONS=true -e CI=true -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" -v "/home/runner/work/_temp/_runner_file_commands":"/github/file_commands" -v "/home/runner/work/github_app_for_splunk/github_app_for_splunk":"/github/workspace" culturehq/actions-yarn:latest install
+2021-08-25T17:19:14.7392833Z yarn install v1.17.3
+2021-08-25T17:19:14.8526963Z [1/5] Validating package.json...
+2021-08-25T17:19:14.8566182Z [2/5] Resolving packages...
+2021-08-25T17:19:18.0079015Z warning @splunk/react-ui > react-sortable-hoc > babel-runtime > core-js@2.6.12: core-js@<3.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
+2021-08-25T17:19:20.1076400Z warning onchange > chokidar@1.7.0: Chokidar 2 will break on node v14+. Upgrade to chokidar 3 with 15x less dependencies.
+2021-08-25T17:19:20.1849223Z warning onchange > chokidar > fsevents@1.2.13: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
+2021-08-25T17:19:20.9357441Z warning splunk-slap > tar-pack > tar@2.2.2: This version of tar is no longer supported, and will not receive security updates. Please upgrade asap.
+2021-08-25T17:19:21.6185673Z [3/5] Fetching packages...
+2021-08-25T17:19:39.9952054Z info fsevents@1.2.13: The platform "linux" is incompatible with this module.
+2021-08-25T17:19:40.0076520Z info "fsevents@1.2.13" is an optional dependency and failed compatibility check. Excluding it from installation.
+2021-08-25T17:19:40.0077609Z info fsevents@2.1.3: The platform "linux" is incompatible with this module.
+2021-08-25T17:19:40.0078775Z info "fsevents@2.1.3" is an optional dependency and failed compatibility check. Excluding it from installation.
+2021-08-25T17:19:40.0079622Z [4/5] Linking dependencies...
+2021-08-25T17:19:46.6263944Z [5/5] Building fresh packages...
+2021-08-25T17:19:49.0489093Z success Saved lockfile.
+2021-08-25T17:19:49.0540829Z Done in 34.32s.
+2021-08-25T17:19:52.0564267Z ##[group]Run CultureHQ/actions-yarn@master
+2021-08-25T17:19:52.0564795Z with:
+2021-08-25T17:19:52.0565111Z   args: lint
+2021-08-25T17:19:52.0565461Z ##[endgroup]
+2021-08-25T17:19:52.0580978Z ##[command]/usr/bin/docker run --name culturehqactionsyarnlatest_a77255 --label c9e036 --workdir /github/workspace --rm -e INPUT_ARGS -e HOME -e GITHUB_JOB -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY -e GITHUB_REPOSITORY_OWNER -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_RETENTION_DAYS -e GITHUB_ACTOR -e GITHUB_WORKFLOW -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GITHUB_EVENT_NAME -e GITHUB_SERVER_URL -e GITHUB_API_URL -e GITHUB_GRAPHQL_URL -e GITHUB_WORKSPACE -e GITHUB_ACTION -e GITHUB_EVENT_PATH -e GITHUB_ACTION_REPOSITORY -e GITHUB_ACTION_REF -e GITHUB_PATH -e GITHUB_ENV -e RUNNER_OS -e RUNNER_TOOL_CACHE -e RUNNER_TEMP -e RUNNER_WORKSPACE -e ACTIONS_RUNTIME_URL -e ACTIONS_RUNTIME_TOKEN -e ACTIONS_CACHE_URL -e GITHUB_ACTIONS=true -e CI=true -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" -v "/home/runner/work/_temp/_runner_file_commands":"/github/file_commands" -v "/home/runner/work/github_app_for_splunk/github_app_for_splunk":"/github/workspace" culturehq/actions-yarn:latest lint
+2021-08-25T17:19:52.7196767Z yarn run v1.17.3
+2021-08-25T17:19:52.7595607Z $ lerna run lint --no-sort
+2021-08-25T17:19:53.0585854Z lerna info version 2.11.0
+2021-08-25T17:19:53.0659776Z lerna WARN No packages found with the npm script 'lint'
+2021-08-25T17:19:53.0784018Z Done in 0.36s.
+2021-08-25T17:19:53.2291386Z ##[group]Run CultureHQ/actions-yarn@master
+2021-08-25T17:19:53.2291914Z with:
+2021-08-25T17:19:53.2292280Z   args: build
+2021-08-25T17:19:53.2292672Z ##[endgroup]
+2021-08-25T17:19:53.2310853Z ##[command]/usr/bin/docker run --name culturehqactionsyarnlatest_176e23 --label c9e036 --workdir /github/workspace --rm -e INPUT_ARGS -e HOME -e GITHUB_JOB -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY -e GITHUB_REPOSITORY_OWNER -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_RETENTION_DAYS -e GITHUB_ACTOR -e GITHUB_WORKFLOW -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GITHUB_EVENT_NAME -e GITHUB_SERVER_URL -e GITHUB_API_URL -e GITHUB_GRAPHQL_URL -e GITHUB_WORKSPACE -e GITHUB_ACTION -e GITHUB_EVENT_PATH -e GITHUB_ACTION_REPOSITORY -e GITHUB_ACTION_REF -e GITHUB_PATH -e GITHUB_ENV -e RUNNER_OS -e RUNNER_TOOL_CACHE -e RUNNER_TEMP -e RUNNER_WORKSPACE -e ACTIONS_RUNTIME_URL -e ACTIONS_RUNTIME_TOKEN -e ACTIONS_CACHE_URL -e GITHUB_ACTIONS=true -e CI=true -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" -v "/home/runner/work/_temp/_runner_file_commands":"/github/file_commands" -v "/home/runner/work/github_app_for_splunk/github_app_for_splunk":"/github/workspace" culturehq/actions-yarn:latest build
+2021-08-25T17:19:53.9237028Z yarn run v1.17.3
+2021-08-25T17:19:53.9569417Z $ lerna run build
+2021-08-25T17:19:54.2583255Z lerna info version 2.11.0
+2021-08-25T17:19:54.2658413Z lerna WARN No packages found with the npm script 'build'
+2021-08-25T17:19:54.2791179Z Done in 0.36s.
+2021-08-25T17:19:54.4289672Z ##[group]Run chmod +x ./.github/actions/appinspect_cli/entrypoint.sh
+2021-08-25T17:19:54.4290627Z [36;1mchmod +x ./.github/actions/appinspect_cli/entrypoint.sh[0m
+2021-08-25T17:19:54.4333537Z shell: /usr/bin/bash -e {0}
+2021-08-25T17:19:54.4333990Z ##[endgroup]
+2021-08-25T17:19:54.4461408Z ##[group]Run old_str="X.Y.Z"
+2021-08-25T17:19:54.4461959Z [36;1mold_str="X.Y.Z"[0m
+2021-08-25T17:19:54.4462896Z [36;1mnew_str="1.0.0"[0m
+2021-08-25T17:19:54.4463415Z [36;1msed -i "s/$old_str/$new_str/g" package.json[0m
+2021-08-25T17:19:54.4464091Z [36;1msed -i "s/$old_str/$new_str/g" ./github_app_for_splunk/default/app.conf[0m
+2021-08-25T17:19:54.4464717Z [36;1mls -al /home/runner/work[0m
+2021-08-25T17:19:54.4465207Z [36;1mls -al /home/runner/factory[0m
+2021-08-25T17:19:54.4502171Z shell: /usr/bin/bash -e {0}
+2021-08-25T17:19:54.4502591Z ##[endgroup]
+2021-08-25T17:19:54.4785519Z total 24
+2021-08-25T17:19:54.4786780Z drwxr-xr-x  6 runner root   4096 Aug 25 17:19 .
+2021-08-25T17:19:54.4787354Z drwxrwxrwx 11 runner docker 4096 Aug 25 17:18 ..
+2021-08-25T17:19:54.4788215Z drwxr-xr-x  3 runner docker 4096 Aug 25 17:19 _PipelineMapping
+2021-08-25T17:19:54.4789081Z drwxr-xr-x  4 runner docker 4096 Aug 25 17:19 _actions
+2021-08-25T17:19:54.4789887Z drwxr-xr-x  5 runner docker 4096 Aug 25 17:19 _temp
+2021-08-25T17:19:54.4790720Z drwxr-xr-x  3 runner docker 4096 Aug 25 17:19 github_app_for_splunk
+2021-08-25T17:19:54.4807495Z total 8
+2021-08-25T17:19:54.4808332Z drwxr-xr-x  2 runner root   4096 Aug 23 15:36 .
+2021-08-25T17:19:54.4808898Z drwxrwxrwx 11 runner docker 4096 Aug 25 17:18 ..
+2021-08-25T17:19:54.4874015Z ##[group]Run ./.github/actions/appinspect_cli
+2021-08-25T17:19:54.4874525Z with:
+2021-08-25T17:19:54.4874970Z   app-path: github_app_for_splunk/
+2021-08-25T17:19:54.4875548Z   result-file: appinspect_result.json
+2021-08-25T17:19:54.4876071Z ##[endgroup]
+2021-08-25T17:19:54.4878979Z ##[group]Building docker image
+2021-08-25T17:19:54.4879888Z Dockerfile for action: '/home/runner/work/github_app_for_splunk/github_app_for_splunk/./.github/actions/appinspect_cli/Dockerfile'.
+2021-08-25T17:19:54.4885438Z ##[command]/usr/bin/docker build -t c9e036:fa277171103c5e9adbaf104c21d5cf85 -f "/home/runner/work/github_app_for_splunk/github_app_for_splunk/./.github/actions/appinspect_cli/Dockerfile" "/home/runner/work/github_app_for_splunk/github_app_for_splunk/.github/actions/appinspect_cli"
+2021-08-25T17:19:54.5301474Z Sending build context to Docker daemon  6.656kB
+2021-08-25T17:19:54.5302356Z
+2021-08-25T17:19:54.5886384Z Step 1/3 : FROM ghcr.io/splunk/appinspect-cli-action:latest
+2021-08-25T17:19:55.2620611Z latest: Pulling from splunk/appinspect-cli-action
+2021-08-25T17:19:55.2636630Z 0bc3020d05f1: Pulling fs layer
+2021-08-25T17:19:55.2637159Z a110e5871660: Pulling fs layer
+2021-08-25T17:19:55.2637645Z 83d3c0fa203a: Pulling fs layer
+2021-08-25T17:19:55.2638323Z a8fd09c11b02: Pulling fs layer
+2021-08-25T17:19:55.2638846Z 14feb89c4a52: Pulling fs layer
+2021-08-25T17:19:55.2639301Z 70752631d778: Pulling fs layer
+2021-08-25T17:19:55.2639749Z a834932271ab: Pulling fs layer
+2021-08-25T17:19:55.2640226Z 4ebf65e8e0bf: Pulling fs layer
+2021-08-25T17:19:55.2640820Z 8649b4f64c8b: Pulling fs layer
+2021-08-25T17:19:55.2641320Z dade5f001a5f: Pulling fs layer
+2021-08-25T17:19:55.2641813Z db96275fa313: Pulling fs layer
+2021-08-25T17:19:55.2642303Z 64ded84c8f3d: Pulling fs layer
+2021-08-25T17:19:55.2642799Z ceaa4ab271a2: Pulling fs layer
+2021-08-25T17:19:55.2643311Z d235daa59d1e: Pulling fs layer
+2021-08-25T17:19:55.2643781Z 4ebf65e8e0bf: Waiting
+2021-08-25T17:19:55.2644214Z 8649b4f64c8b: Waiting
+2021-08-25T17:19:55.2644779Z dade5f001a5f: Waiting
+2021-08-25T17:19:55.2645224Z db96275fa313: Waiting
+2021-08-25T17:19:55.2645634Z 64ded84c8f3d: Waiting
+2021-08-25T17:19:55.2646077Z ceaa4ab271a2: Waiting
+2021-08-25T17:19:55.2646504Z d235daa59d1e: Waiting
+2021-08-25T17:19:55.2648792Z a8fd09c11b02: Waiting
+2021-08-25T17:19:55.2649505Z 14feb89c4a52: Waiting
+2021-08-25T17:19:55.2650047Z 70752631d778: Waiting
+2021-08-25T17:19:55.2650439Z a834932271ab: Waiting
+2021-08-25T17:19:55.6271207Z 83d3c0fa203a: Verifying Checksum
+2021-08-25T17:19:55.6271806Z 83d3c0fa203a: Download complete
+2021-08-25T17:19:55.6370533Z a110e5871660: Verifying Checksum
+2021-08-25T17:19:55.6371094Z a110e5871660: Download complete
+2021-08-25T17:19:55.9109625Z 0bc3020d05f1: Verifying Checksum
+2021-08-25T17:19:55.9110211Z 0bc3020d05f1: Download complete
+2021-08-25T17:19:56.2880817Z 70752631d778: Verifying Checksum
+2021-08-25T17:19:56.2896354Z 70752631d778: Download complete
+2021-08-25T17:19:56.4380779Z a8fd09c11b02: Verifying Checksum
+2021-08-25T17:19:56.4381426Z a8fd09c11b02: Download complete
+2021-08-25T17:19:56.7390846Z 4ebf65e8e0bf: Verifying Checksum
+2021-08-25T17:19:56.7393755Z 4ebf65e8e0bf: Download complete
+2021-08-25T17:19:56.8305098Z a834932271ab: Verifying Checksum
+2021-08-25T17:19:56.8318772Z a834932271ab: Download complete
+2021-08-25T17:19:57.0825484Z dade5f001a5f: Verifying Checksum
+2021-08-25T17:19:57.0826111Z dade5f001a5f: Download complete
+2021-08-25T17:19:57.3818037Z 8649b4f64c8b: Verifying Checksum
+2021-08-25T17:19:57.3818657Z 8649b4f64c8b: Download complete
+2021-08-25T17:19:57.6427864Z db96275fa313: Verifying Checksum
+2021-08-25T17:19:57.6428449Z db96275fa313: Download complete
+2021-08-25T17:19:57.6439284Z 64ded84c8f3d: Verifying Checksum
+2021-08-25T17:19:57.6439864Z 64ded84c8f3d: Download complete
+2021-08-25T17:19:57.8842620Z d235daa59d1e: Verifying Checksum
+2021-08-25T17:19:57.8843203Z d235daa59d1e: Download complete
+2021-08-25T17:19:57.9271666Z ceaa4ab271a2: Verifying Checksum
+2021-08-25T17:19:57.9272281Z ceaa4ab271a2: Download complete
+2021-08-25T17:19:58.2860516Z 14feb89c4a52: Verifying Checksum
+2021-08-25T17:19:58.2861224Z 14feb89c4a52: Download complete
+2021-08-25T17:19:58.7513264Z 0bc3020d05f1: Pull complete
+2021-08-25T17:20:01.2116388Z a110e5871660: Pull complete
+2021-08-25T17:20:01.5286754Z 83d3c0fa203a: Pull complete
+2021-08-25T17:20:04.3552563Z a8fd09c11b02: Pull complete
+2021-08-25T17:20:12.8506198Z 14feb89c4a52: Pull complete
+2021-08-25T17:20:13.2243079Z 70752631d778: Pull complete
+2021-08-25T17:20:14.0088641Z a834932271ab: Pull complete
+2021-08-25T17:20:14.0831137Z 4ebf65e8e0bf: Pull complete
+2021-08-25T17:20:14.3542084Z 8649b4f64c8b: Pull complete
+2021-08-25T17:20:14.4214161Z dade5f001a5f: Pull complete
+2021-08-25T17:20:15.5520800Z db96275fa313: Pull complete
+2021-08-25T17:20:15.6334406Z 64ded84c8f3d: Pull complete
+2021-08-25T17:20:15.7066416Z ceaa4ab271a2: Pull complete
+2021-08-25T17:20:15.7795548Z d235daa59d1e: Pull complete
+2021-08-25T17:20:15.7837539Z Digest: sha256:17b07dc3c62d2f0613968af43a5d44087dcab50879e875d99bbb0c6b8d47b714
+2021-08-25T17:20:15.7867287Z Status: Downloaded newer image for ghcr.io/splunk/appinspect-cli-action:latest
+2021-08-25T17:20:15.7885900Z  ---> 708492f21e3b
+2021-08-25T17:20:15.7886473Z Step 2/3 : COPY entrypoint.sh /entrypoint.sh
+2021-08-25T17:20:17.1219485Z  ---> 1391b8b3a1d7
+2021-08-25T17:20:17.1220101Z Step 3/3 : ENTRYPOINT ["/entrypoint.sh"]
+2021-08-25T17:20:17.1455088Z  ---> Running in ca0257b90f4b
+2021-08-25T17:20:18.3916499Z Removing intermediate container ca0257b90f4b
+2021-08-25T17:20:18.3917058Z  ---> c87b35c4de24
+2021-08-25T17:20:18.3917499Z Successfully built c87b35c4de24
+2021-08-25T17:20:18.3951541Z Successfully tagged c9e036:fa277171103c5e9adbaf104c21d5cf85
+2021-08-25T17:20:18.3981533Z ##[endgroup]
+2021-08-25T17:20:18.4065358Z ##[command]/usr/bin/docker run --name c9e036fa277171103c5e9adbaf104c21d5cf85_f0997a --label c9e036 --workdir /github/workspace --rm -e INPUT_APP-PATH -e INPUT_RESULT-FILE -e HOME -e GITHUB_JOB -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY -e GITHUB_REPOSITORY_OWNER -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_RETENTION_DAYS -e GITHUB_ACTOR -e GITHUB_WORKFLOW -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GITHUB_EVENT_NAME -e GITHUB_SERVER_URL -e GITHUB_API_URL -e GITHUB_GRAPHQL_URL -e GITHUB_WORKSPACE -e GITHUB_ACTION -e GITHUB_EVENT_PATH -e GITHUB_ACTION_REPOSITORY -e GITHUB_ACTION_REF -e GITHUB_PATH -e GITHUB_ENV -e RUNNER_OS -e RUNNER_TOOL_CACHE -e RUNNER_TEMP -e RUNNER_WORKSPACE -e ACTIONS_RUNTIME_URL -e ACTIONS_RUNTIME_TOKEN -e ACTIONS_CACHE_URL -e GITHUB_ACTIONS=true -e CI=true -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" -v "/home/runner/work/_temp/_runner_file_commands":"/github/file_commands" -v "/home/runner/work/github_app_for_splunk/github_app_for_splunk":"/github/workspace" c9e036:fa277171103c5e9adbaf104c21d5cf85  "github_app_for_splunk/" "appinspect_result.json"
+2021-08-25T17:20:26.7582206Z App Inspect Passed!
+2021-08-25T17:20:26.7584395Z {'error': 0, 'failure': 0, 'skipped': 0, 'manual_check': 16, 'not_applicable': 129, 'warning': 2, 'success': 179}
+2021-08-25T17:20:26.7588117Z Warning List:
+2021-08-25T17:20:26.7590078Z Embed all your app's front-end JS dependencies in the /appserver directory. If you import files from Splunk Web, your app might fail when Splunk Web updates. File: /github/workspace/github_app_for_splunk/appserver/static/tabs.js
+2021-08-25T17:20:26.7592815Z Embed all your app's front-end JS dependencies in the /appserver directory. If you import files from Splunk Web, your app might fail when Splunk Web updates. File: /github/workspace/github_app_for_splunk/appserver/static/tabs.js
+2021-08-25T17:20:26.7595393Z Change the version attribute in the root node of your Simple XML dashboard default/data/ui/views/value_stream_analytics.xml to `<version=1.1>`. Earlier dashboard versions introduce security vulnerabilities into your apps and are not permitted in Splunk Cloud File: default/data/ui/views/value_stream_analytics.xml
+2021-08-25T17:20:26.8903942Z ##[group]Run ls -al /home/runner/runners/*/_diag/pages/*.log
+2021-08-25T17:20:26.8904682Z [36;1mls -al /home/runner/runners/*/_diag/pages/*.log[0m
+2021-08-25T17:20:26.8905340Z [36;1mcat /home/runner/runners/*/_diag/pages/*.log[0m
+2021-08-25T17:20:26.8976627Z shell: /usr/bin/bash -e {0}
+2021-08-25T17:20:26.8977009Z ##[endgroup]
+2021-08-25T17:20:26.9051652Z -rw-r--r-- 1 runner docker 36864 Aug 25 17:20 /home/runner/runners/2.280.3/_diag/pages/f63d2b7a-f6cc-44b0-a6b7-5e9ba6acb6b0_2c65b5eb-539a-5dc9-dc23-323aa895c8c9_1.log
+2021-08-25T17:20:26.9053576Z -rw-r--r-- 1 runner docker     0 Aug 25 17:20 /home/runner/runners/2.280.3/_diag/pages/f63d2b7a-f6cc-44b0-a6b7-5e9ba6acb6b0_adca556a-a7ef-5233-38c4-670b80bcc63f_1.log
+2021-08-25T17:20:26.9055430Z -rw-r--r-- 1 runner docker  8186 Aug 25 17:20 /home/runner/runners/2.280.3/_diag/pages/f63d2b7a-f6cc-44b0-a6b7-5e9ba6acb6b0_fa277171-103c-5e9a-dbaf-104c21d5cf85_1.log
+2021-08-25T17:20:26.9068985Z ﻿2021-08-25T17:19:03.2559793Z Current runner version: '2.280.3'
+2021-08-25T17:20:26.9071214Z ##[group]Operating System
+2021-08-25T17:20:26.9071858Z 2021-08-25T17:19:03.2592402Z Ubuntu
+2021-08-25T17:20:26.9072391Z 2021-08-25T17:19:03.2592867Z 20.04.2
+2021-08-25T17:20:26.9072883Z 2021-08-25T17:19:03.2593353Z LTS
+2021-08-25T17:20:26.9074023Z ##[endgroup]
+2021-08-25T17:20:26.9075202Z ##[group]Virtual Environment
+2021-08-25T17:20:26.9075897Z 2021-08-25T17:19:03.2595179Z Environment: ubuntu-20.04
+2021-08-25T17:20:26.9076552Z 2021-08-25T17:19:03.2595806Z Version: 20210816.1
+2021-08-25T17:20:26.9078605Z 2021-08-25T17:19:03.2597016Z Included Software: https://github.com/actions/virtual-environments/blob/ubuntu20/20210816.1/images/linux/Ubuntu2004-README.md
+2021-08-25T17:20:26.9080249Z 2021-08-25T17:19:03.2598625Z Image Release: https://github.com/actions/virtual-environments/releases/tag/ubuntu20%2F20210816.1
+2021-08-25T17:20:26.9082095Z ##[endgroup]
+2021-08-25T17:20:26.9083328Z ##[group]Virtual Environment Provisioner
+2021-08-25T17:20:26.9084074Z 2021-08-25T17:19:03.2600932Z 1.0.0.0-master-20210816-1
+2021-08-25T17:20:26.9085317Z ##[endgroup]
+2021-08-25T17:20:26.9086408Z ##[group]GITHUB_TOKEN Permissions
+2021-08-25T17:20:26.9087020Z 2021-08-25T17:19:03.2605072Z Actions: write
+2021-08-25T17:20:26.9087564Z 2021-08-25T17:19:03.2605679Z Checks: write
+2021-08-25T17:20:26.9088299Z 2021-08-25T17:19:03.2606226Z Contents: write
+2021-08-25T17:20:26.9088888Z 2021-08-25T17:19:03.2606774Z Deployments: write
+2021-08-25T17:20:26.9089503Z 2021-08-25T17:19:03.2607424Z Discussions: write
+2021-08-25T17:20:26.9090069Z 2021-08-25T17:19:03.2607940Z Issues: write
+2021-08-25T17:20:26.9090624Z 2021-08-25T17:19:03.2608489Z Metadata: read
+2021-08-25T17:20:26.9091182Z 2021-08-25T17:19:03.2609044Z Packages: write
+2021-08-25T17:20:26.9091794Z 2021-08-25T17:19:03.2609601Z PullRequests: write
+2021-08-25T17:20:26.9092476Z 2021-08-25T17:19:03.2610308Z RepositoryProjects: write
+2021-08-25T17:20:26.9093186Z 2021-08-25T17:19:03.2610945Z SecurityEvents: write
+2021-08-25T17:20:26.9093809Z 2021-08-25T17:19:03.2611550Z Statuses: write
+2021-08-25T17:20:26.9094876Z ##[endgroup]
+2021-08-25T17:20:26.9095466Z 2021-08-25T17:19:03.2615500Z Prepare workflow directory
+2021-08-25T17:20:26.9096153Z 2021-08-25T17:19:03.3436670Z Prepare all required actions
+2021-08-25T17:20:26.9096828Z 2021-08-25T17:19:03.3448173Z Getting action download info
+2021-08-25T17:20:26.9097896Z 2021-08-25T17:19:03.7876565Z Download action repository 'actions/checkout@v2' (SHA:5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f)
+2021-08-25T17:20:26.9099726Z 2021-08-25T17:19:05.7164298Z Download action repository 'CultureHQ/actions-yarn@master' (SHA:63c4ac29d15ad50856e763a252874ced41b6cbb9)
+2021-08-25T17:20:26.9101637Z ##[group]Pull down action image 'culturehq/actions-yarn:latest'
+2021-08-25T17:20:26.9102854Z 2021-08-25T17:19:06.3141994Z ##[command]/usr/bin/docker pull culturehq/actions-yarn:latest
+2021-08-25T17:20:26.9103933Z 2021-08-25T17:19:07.7153772Z latest: Pulling from culturehq/actions-yarn
+2021-08-25T17:20:26.9104981Z 2021-08-25T17:19:07.7217319Z 8f91359f1fff: Pulling fs layer
+2021-08-25T17:20:26.9105788Z 2021-08-25T17:19:07.7218294Z 3bfc330579f6: Pulling fs layer
+2021-08-25T17:20:26.9106439Z 2021-08-25T17:19:07.7218951Z c960067b0736: Pulling fs layer
+2021-08-25T17:20:26.9107082Z 2021-08-25T17:19:07.7219907Z 614b99d26fc9: Pulling fs layer
+2021-08-25T17:20:26.9107717Z 2021-08-25T17:19:07.7220950Z 5f1c18961594: Pulling fs layer
+2021-08-25T17:20:26.9109306Z 2021-08-25T17:19:07.7222221Z ae340d2ea83a: Pulling fs layer
+2021-08-25T17:20:26.9110186Z 2021-08-25T17:19:07.7223095Z 71030804c8ab: Pulling fs layer
+2021-08-25T17:20:26.9110877Z 2021-08-25T17:19:07.7223672Z 614b99d26fc9: Waiting
+2021-08-25T17:20:26.9111531Z 2021-08-25T17:19:07.7224202Z 5f1c18961594: Waiting
+2021-08-25T17:20:26.9112439Z 2021-08-25T17:19:07.7224846Z ae340d2ea83a: Waiting
+2021-08-25T17:20:26.9113050Z 2021-08-25T17:19:07.7225360Z 71030804c8ab: Waiting
+2021-08-25T17:20:26.9113731Z 2021-08-25T17:19:07.7225902Z 3bfc330579f6: Verifying Checksum
+2021-08-25T17:20:26.9114477Z 2021-08-25T17:19:07.7226524Z 3bfc330579f6: Download complete
+2021-08-25T17:20:26.9115195Z 2021-08-25T17:19:07.8381284Z 8f91359f1fff: Verifying Checksum
+2021-08-25T17:20:26.9115921Z 2021-08-25T17:19:07.8382625Z 8f91359f1fff: Download complete
+2021-08-25T17:20:26.9116626Z 2021-08-25T17:19:08.0239028Z c960067b0736: Verifying Checksum
+2021-08-25T17:20:26.9117350Z 2021-08-25T17:19:08.0239808Z c960067b0736: Download complete
+2021-08-25T17:20:26.9118524Z 2021-08-25T17:19:08.0411586Z 614b99d26fc9: Verifying Checksum
+2021-08-25T17:20:26.9119257Z 2021-08-25T17:19:08.0412142Z 614b99d26fc9: Download complete
+2021-08-25T17:20:26.9119964Z 2021-08-25T17:19:08.1079782Z 5f1c18961594: Verifying Checksum
+2021-08-25T17:20:26.9120680Z 2021-08-25T17:19:08.1080316Z 5f1c18961594: Download complete
+2021-08-25T17:20:26.9121483Z 2021-08-25T17:19:08.2658614Z 71030804c8ab: Verifying Checksum
+2021-08-25T17:20:26.9122131Z 2021-08-25T17:19:08.2659550Z 71030804c8ab: Download complete
+2021-08-25T17:20:26.9122816Z 2021-08-25T17:19:08.3299691Z ae340d2ea83a: Verifying Checksum
+2021-08-25T17:20:26.9123624Z 2021-08-25T17:19:08.3301361Z ae340d2ea83a: Download complete
+2021-08-25T17:20:26.9124340Z 2021-08-25T17:19:08.8544900Z 8f91359f1fff: Pull complete
+2021-08-25T17:20:26.9125013Z 2021-08-25T17:19:09.5023446Z 3bfc330579f6: Pull complete
+2021-08-25T17:20:26.9125694Z 2021-08-25T17:19:11.5029883Z c960067b0736: Pull complete
+2021-08-25T17:20:26.9126663Z 2021-08-25T17:19:11.6293279Z 614b99d26fc9: Pull complete
+2021-08-25T17:20:26.9127303Z 2021-08-25T17:19:11.6964458Z 5f1c18961594: Pull complete
+2021-08-25T17:20:26.9127954Z 2021-08-25T17:19:11.7660069Z ae340d2ea83a: Pull complete
+2021-08-25T17:20:26.9128581Z 2021-08-25T17:19:11.8362572Z 71030804c8ab: Pull complete
+2021-08-25T17:20:26.9129725Z 2021-08-25T17:19:11.8432070Z Digest: sha256:e434d9710bb71fb48999d1feedda97b24b2f2405b683a4a94d4dd7e08680435f
+2021-08-25T17:20:26.9130993Z 2021-08-25T17:19:11.8455142Z Status: Downloaded newer image for culturehq/actions-yarn:latest
+2021-08-25T17:20:26.9132000Z 2021-08-25T17:19:11.8490067Z docker.io/culturehq/actions-yarn:latest
+2021-08-25T17:20:26.9133427Z ##[endgroup]
+2021-08-25T17:20:26.9134753Z ##[group]Run actions/checkout@v2
+2021-08-25T17:20:26.9135394Z 2021-08-25T17:19:11.8800513Z with:
+2021-08-25T17:20:26.9136145Z 2021-08-25T17:19:11.8800999Z   repository: splunk/github_app_for_splunk
+2021-08-25T17:20:26.9136967Z 2021-08-25T17:19:11.8801999Z   token: ***
+2021-08-25T17:20:26.9137948Z 2021-08-25T17:19:11.8802386Z   ssh-strict: true
+2021-08-25T17:20:26.9138659Z 2021-08-25T17:19:11.8802907Z   persist-credentials: true
+2021-08-25T17:20:26.9139457Z 2021-08-25T17:19:11.8803388Z   clean: true
+2021-08-25T17:20:26.9140062Z 2021-08-25T17:19:11.8803792Z   fetch-depth: 1
+2021-08-25T17:20:26.9140797Z 2021-08-25T17:19:11.8804177Z   lfs: false
+2021-08-25T17:20:26.9141423Z 2021-08-25T17:19:11.8804574Z   submodules: false
+2021-08-25T17:20:26.9142647Z ##[endgroup]
+2021-08-25T17:20:26.9143643Z 2021-08-25T17:19:12.1405834Z Syncing repository: splunk/github_app_for_splunk
+2021-08-25T17:20:26.9145153Z ##[group]Getting Git version info
+2021-08-25T17:20:26.9146220Z 2021-08-25T17:19:12.1408386Z Working directory is '/home/runner/work/github_app_for_splunk/github_app_for_splunk'
+2021-08-25T17:20:26.9147225Z 2021-08-25T17:19:12.1473582Z [command]/usr/bin/git version
+2021-08-25T17:20:26.9147876Z 2021-08-25T17:19:12.1618000Z git version 2.32.0
+2021-08-25T17:20:26.9149067Z ##[endgroup]
+2021-08-25T17:20:26.9150169Z 2021-08-25T17:19:12.1653477Z Deleting the contents of '/home/runner/work/github_app_for_splunk/github_app_for_splunk'
+2021-08-25T17:20:26.9151630Z ##[group]Initializing the repository
+2021-08-25T17:20:26.9152514Z 2021-08-25T17:19:12.1665233Z [command]/usr/bin/git init /home/runner/work/github_app_for_splunk/github_app_for_splunk
+2021-08-25T17:20:26.9153516Z 2021-08-25T17:19:12.1742599Z hint: Using 'master' as the name for the initial branch. This default branch name
+2021-08-25T17:20:26.9154471Z 2021-08-25T17:19:12.1743888Z hint: is subject to change. To configure the initial branch name to use in all
+2021-08-25T17:20:26.9155454Z 2021-08-25T17:19:12.1745048Z hint: of your new repositories, which will suppress this warning, call:
+2021-08-25T17:20:26.9156155Z 2021-08-25T17:19:12.1745901Z hint:
+2021-08-25T17:20:26.9156880Z 2021-08-25T17:19:12.1747419Z hint: 	git config --global init.defaultBranch <name>
+2021-08-25T17:20:26.9157561Z 2021-08-25T17:19:12.1748221Z hint:
+2021-08-25T17:20:26.9158594Z 2021-08-25T17:19:12.1749342Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2021-08-25T17:20:26.9159634Z 2021-08-25T17:19:12.1750396Z hint: 'development'. The just-created branch can be renamed via this command:
+2021-08-25T17:20:26.9160405Z 2021-08-25T17:19:12.1751083Z hint:
+2021-08-25T17:20:26.9161115Z 2021-08-25T17:19:12.1751772Z hint: 	git branch -m <name>
+2021-08-25T17:20:26.9162043Z 2021-08-25T17:19:12.1759500Z Initialized empty Git repository in /home/runner/work/github_app_for_splunk/github_app_for_splunk/.git/
+2021-08-25T17:20:26.9163213Z 2021-08-25T17:19:12.1771208Z [command]/usr/bin/git remote add origin https://github.com/splunk/github_app_for_splunk
+2021-08-25T17:20:26.9164532Z ##[endgroup]
+2021-08-25T17:20:26.9165707Z ##[group]Disabling automatic garbage collection
+2021-08-25T17:20:26.9166468Z 2021-08-25T17:19:12.1824889Z [command]/usr/bin/git config --local gc.auto 0
+2021-08-25T17:20:26.9167789Z ##[endgroup]
+2021-08-25T17:20:26.9168841Z ##[group]Setting up auth
+2021-08-25T17:20:26.9169651Z 2021-08-25T17:19:12.1878789Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2021-08-25T17:20:26.9171067Z 2021-08-25T17:19:12.1911704Z [command]/usr/bin/git submodule foreach --recursive git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :
+2021-08-25T17:20:26.9172497Z 2021-08-25T17:19:12.2300190Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2021-08-25T17:20:26.9174224Z 2021-08-25T17:19:12.2333726Z [command]/usr/bin/git submodule foreach --recursive git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :
+2021-08-25T17:20:26.9175960Z 2021-08-25T17:19:12.2559379Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2021-08-25T17:20:26.9177414Z ##[endgroup]
+2021-08-25T17:20:26.9178519Z ##[group]Fetching the repository
+2021-08-25T17:20:26.9179992Z 2021-08-25T17:19:12.2620021Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=1 origin +1fbf5d7eb36123aa46847f13a2b44651eb0a29c6:refs/remotes/origin/main
+2021-08-25T17:20:26.9181389Z 2021-08-25T17:19:12.5734433Z remote: Enumerating objects: 88, done.
+2021-08-25T17:20:26.9182125Z 2021-08-25T17:19:12.5737023Z remote: Counting objects:   1% (1/88)
+2021-08-25T17:20:26.9182825Z 2021-08-25T17:19:12.5749385Z remote: Counting objects:   2% (2/88)
+2021-08-25T17:20:26.9183610Z 2021-08-25T17:19:12.5754425Z remote: Counting objects:   3% (3/88)
+2021-08-25T17:20:26.9184360Z 2021-08-25T17:19:12.5755505Z remote: Counting objects:   4% (4/88)
+2021-08-25T17:20:26.9185053Z 2021-08-25T17:19:12.5756549Z remote: Counting objects:   5% (5/88)
+2021-08-25T17:20:26.9185737Z 2021-08-25T17:19:12.5757372Z remote: Counting objects:   6% (6/88)
+2021-08-25T17:20:26.9186447Z 2021-08-25T17:19:12.5758411Z remote: Counting objects:   7% (7/88)
+2021-08-25T17:20:26.9187136Z 2021-08-25T17:19:12.5759106Z remote: Counting objects:   9% (8/88)
+2021-08-25T17:20:26.9187837Z 2021-08-25T17:19:12.5759740Z remote: Counting objects:  10% (9/88)
+2021-08-25T17:20:26.9188523Z 2021-08-25T17:19:12.5760458Z remote: Counting objects:  11% (10/88)
+2021-08-25T17:20:26.9189230Z 2021-08-25T17:19:12.5761284Z remote: Counting objects:  12% (11/88)
+2021-08-25T17:20:26.9189934Z 2021-08-25T17:19:12.5762067Z remote: Counting objects:  13% (12/88)
+2021-08-25T17:20:26.9190623Z 2021-08-25T17:19:12.5762792Z remote: Counting objects:  14% (13/88)
+2021-08-25T17:20:26.9191326Z 2021-08-25T17:19:12.5763507Z remote: Counting objects:  15% (14/88)
+2021-08-25T17:20:26.9192014Z 2021-08-25T17:19:12.5764321Z remote: Counting objects:  17% (15/88)
+2021-08-25T17:20:26.9192714Z 2021-08-25T17:19:12.5765434Z remote: Counting objects:  18% (16/88)
+2021-08-25T17:20:26.9193402Z 2021-08-25T17:19:12.5766040Z remote: Counting objects:  19% (17/88)
+2021-08-25T17:20:26.9194096Z 2021-08-25T17:19:12.5766739Z remote: Counting objects:  20% (18/88)
+2021-08-25T17:20:26.9194796Z 2021-08-25T17:19:12.5767335Z remote: Counting objects:  21% (19/88)
+2021-08-25T17:20:26.9195474Z 2021-08-25T17:19:12.5768019Z remote: Counting objects:  22% (20/88)
+2021-08-25T17:20:26.9196175Z 2021-08-25T17:19:12.5768610Z remote: Counting objects:  23% (21/88)
+2021-08-25T17:20:26.9196864Z 2021-08-25T17:19:12.5769250Z remote: Counting objects:  25% (22/88)
+2021-08-25T17:20:26.9197561Z 2021-08-25T17:19:12.5769834Z remote: Counting objects:  26% (23/88)
+2021-08-25T17:20:26.9198846Z 2021-08-25T17:19:12.5770643Z remote: Counting objects:  27% (24/88)
+2021-08-25T17:20:26.9199601Z 2021-08-25T17:19:12.5771341Z remote: Counting objects:  28% (25/88)
+2021-08-25T17:20:26.9200498Z 2021-08-25T17:19:12.5771948Z remote: Counting objects:  29% (26/88)
+2021-08-25T17:20:26.9201342Z 2021-08-25T17:19:12.5772823Z remote: Counting objects:  30% (27/88)
+2021-08-25T17:20:26.9202043Z 2021-08-25T17:19:12.5773486Z remote: Counting objects:  31% (28/88)
+2021-08-25T17:20:26.9202722Z 2021-08-25T17:19:12.5774092Z remote: Counting objects:  32% (29/88)
+2021-08-25T17:20:26.9203422Z 2021-08-25T17:19:12.5774684Z remote: Counting objects:  34% (30/88)
+2021-08-25T17:20:26.9204107Z 2021-08-25T17:19:12.5775307Z remote: Counting objects:  35% (31/88)
+2021-08-25T17:20:26.9204806Z 2021-08-25T17:19:12.5775870Z remote: Counting objects:  36% (32/88)
+2021-08-25T17:20:26.9205490Z 2021-08-25T17:19:12.5776492Z remote: Counting objects:  37% (33/88)
+2021-08-25T17:20:26.9206180Z 2021-08-25T17:19:12.5777312Z remote: Counting objects:  38% (34/88)
+2021-08-25T17:20:26.9206879Z 2021-08-25T17:19:12.5777868Z remote: Counting objects:  39% (35/88)
+2021-08-25T17:20:26.9207570Z 2021-08-25T17:19:12.5778431Z remote: Counting objects:  40% (36/88)
+2021-08-25T17:20:26.9208270Z 2021-08-25T17:19:12.5778954Z remote: Counting objects:  42% (37/88)
+2021-08-25T17:20:26.9209420Z 2021-08-25T17:19:12.5779635Z remote: Counting objects:  43% (38/88)
+2021-08-25T17:20:26.9210380Z 2021-08-25T17:19:12.5780171Z remote: Counting objects:  44% (39/88)
+2021-08-25T17:20:26.9211186Z 2021-08-25T17:19:12.5780914Z remote: Counting objects:  45% (40/88)
+2021-08-25T17:20:26.9211970Z 2021-08-25T17:19:12.5781475Z remote: Counting objects:  46% (41/88)
+2021-08-25T17:20:26.9212967Z 2021-08-25T17:19:12.5782088Z remote: Counting objects:  47% (42/88)
+2021-08-25T17:20:26.9213713Z 2021-08-25T17:19:12.5782642Z remote: Counting objects:  48% (43/88)
+2021-08-25T17:20:26.9214414Z 2021-08-25T17:19:12.5783243Z remote: Counting objects:  50% (44/88)
+2021-08-25T17:20:26.9215101Z 2021-08-25T17:19:12.5783866Z remote: Counting objects:  51% (45/88)
+2021-08-25T17:20:26.9215800Z 2021-08-25T17:19:12.5784422Z remote: Counting objects:  52% (46/88)
+2021-08-25T17:20:26.9216495Z 2021-08-25T17:19:12.5785037Z remote: Counting objects:  53% (47/88)
+2021-08-25T17:20:26.9217185Z 2021-08-25T17:19:12.5785589Z remote: Counting objects:  54% (48/88)
+2021-08-25T17:20:26.9217884Z 2021-08-25T17:19:12.5786187Z remote: Counting objects:  55% (49/88)
+2021-08-25T17:20:26.9218571Z 2021-08-25T17:19:12.5786740Z remote: Counting objects:  56% (50/88)
+2021-08-25T17:20:26.9219270Z 2021-08-25T17:19:12.5787385Z remote: Counting objects:  57% (51/88)
+2021-08-25T17:20:26.9219954Z 2021-08-25T17:19:12.5788177Z remote: Counting objects:  59% (52/88)
+2021-08-25T17:20:26.9220652Z 2021-08-25T17:19:12.5788782Z remote: Counting objects:  60% (53/88)
+2021-08-25T17:20:26.9221341Z 2021-08-25T17:19:12.5789383Z remote: Counting objects:  61% (54/88)
+2021-08-25T17:20:26.9222045Z 2021-08-25T17:19:12.5790091Z remote: Counting objects:  62% (55/88)
+2021-08-25T17:20:26.9222743Z 2021-08-25T17:19:12.5790735Z remote: Counting objects:  63% (56/88)
+2021-08-25T17:20:26.9223429Z 2021-08-25T17:19:12.5791288Z remote: Counting objects:  64% (57/88)
+2021-08-25T17:20:26.9224124Z 2021-08-25T17:19:12.5791890Z remote: Counting objects:  65% (58/88)
+2021-08-25T17:20:26.9224807Z 2021-08-25T17:19:12.5792522Z remote: Counting objects:  67% (59/88)
+2021-08-25T17:20:26.9225506Z 2021-08-25T17:19:12.5793139Z remote: Counting objects:  68% (60/88)
+2021-08-25T17:20:26.9226191Z 2021-08-25T17:19:12.5793842Z remote: Counting objects:  69% (61/88)
+2021-08-25T17:20:26.9226890Z 2021-08-25T17:19:12.5794425Z remote: Counting objects:  70% (62/88)
+2021-08-25T17:20:26.9227585Z 2021-08-25T17:19:12.5795005Z remote: Counting objects:  71% (63/88)
+2021-08-25T17:20:26.9228266Z 2021-08-25T17:19:12.5795537Z remote: Counting objects:  72% (64/88)
+2021-08-25T17:20:26.9229086Z 2021-08-25T17:19:12.5796349Z remote: Counting objects:  73% (65/88)
+2021-08-25T17:20:26.9229779Z 2021-08-25T17:19:12.5796917Z remote: Counting objects:  75% (66/88)
+2021-08-25T17:20:26.9230472Z 2021-08-25T17:19:12.5797497Z remote: Counting objects:  76% (67/88)
+2021-08-25T17:20:26.9231159Z 2021-08-25T17:19:12.5798252Z remote: Counting objects:  77% (68/88)
+2021-08-25T17:20:26.9231862Z 2021-08-25T17:19:12.5798789Z remote: Counting objects:  78% (69/88)
+2021-08-25T17:20:26.9232559Z 2021-08-25T17:19:12.5799380Z remote: Counting objects:  79% (70/88)
+2021-08-25T17:20:26.9233247Z 2021-08-25T17:19:12.5799967Z remote: Counting objects:  80% (71/88)
+2021-08-25T17:20:26.9233951Z 2021-08-25T17:19:12.5800556Z remote: Counting objects:  81% (72/88)
+2021-08-25T17:20:26.9234637Z 2021-08-25T17:19:12.5801090Z remote: Counting objects:  82% (73/88)
+2021-08-25T17:20:26.9235336Z 2021-08-25T17:19:12.5801669Z remote: Counting objects:  84% (74/88)
+2021-08-25T17:20:26.9236017Z 2021-08-25T17:19:12.5802219Z remote: Counting objects:  85% (75/88)
+2021-08-25T17:20:26.9236714Z 2021-08-25T17:19:12.5802823Z remote: Counting objects:  86% (76/88)
+2021-08-25T17:20:26.9237403Z 2021-08-25T17:19:12.5803404Z remote: Counting objects:  87% (77/88)
+2021-08-25T17:20:26.9238406Z 2021-08-25T17:19:12.5803936Z remote: Counting objects:  88% (78/88)
+2021-08-25T17:20:26.9239147Z 2021-08-25T17:19:12.5804640Z remote: Counting objects:  89% (79/88)
+2021-08-25T17:20:26.9239878Z 2021-08-25T17:19:12.5805166Z remote: Counting objects:  90% (80/88)
+2021-08-25T17:20:26.9240731Z 2021-08-25T17:19:12.5805745Z remote: Counting objects:  92% (81/88)
+2021-08-25T17:20:26.9241595Z 2021-08-25T17:19:12.5806270Z remote: Counting objects:  93% (82/88)
+2021-08-25T17:20:26.9242293Z 2021-08-25T17:19:12.5806828Z remote: Counting objects:  94% (83/88)
+2021-08-25T17:20:26.9242987Z 2021-08-25T17:19:12.5807343Z remote: Counting objects:  95% (84/88)
+2021-08-25T17:20:26.9243682Z 2021-08-25T17:19:12.5807916Z remote: Counting objects:  96% (85/88)
+2021-08-25T17:20:26.9244381Z 2021-08-25T17:19:12.5808504Z remote: Counting objects:  97% (86/88)
+2021-08-25T17:20:26.9245067Z 2021-08-25T17:19:12.5809020Z remote: Counting objects:  98% (87/88)
+2021-08-25T17:20:26.9245768Z 2021-08-25T17:19:12.5809577Z remote: Counting objects: 100% (88/88)
+2021-08-25T17:20:26.9246482Z 2021-08-25T17:19:12.5810116Z remote: Counting objects: 100% (88/88), done.
+2021-08-25T17:20:26.9247229Z 2021-08-25T17:19:12.5810745Z remote: Compressing objects:   1% (1/80)
+2021-08-25T17:20:26.9247983Z 2021-08-25T17:19:12.5811339Z remote: Compressing objects:   2% (2/80)
+2021-08-25T17:20:26.9248763Z 2021-08-25T17:19:12.5811975Z remote: Compressing objects:   3% (3/80)
+2021-08-25T17:20:26.9249527Z 2021-08-25T17:19:12.5812540Z remote: Compressing objects:   5% (4/80)
+2021-08-25T17:20:26.9250264Z 2021-08-25T17:19:12.5814830Z remote: Compressing objects:   6% (5/80)
+2021-08-25T17:20:26.9251008Z 2021-08-25T17:19:12.5815473Z remote: Compressing objects:   7% (6/80)
+2021-08-25T17:20:26.9251742Z 2021-08-25T17:19:12.5816853Z remote: Compressing objects:   8% (7/80)
+2021-08-25T17:20:26.9252485Z 2021-08-25T17:19:12.5817499Z remote: Compressing objects:  10% (8/80)
+2021-08-25T17:20:26.9253228Z 2021-08-25T17:19:12.5818072Z remote: Compressing objects:  11% (9/80)
+2021-08-25T17:20:26.9253959Z 2021-08-25T17:19:12.5818712Z remote: Compressing objects:  12% (10/80)
+2021-08-25T17:20:26.9254710Z 2021-08-25T17:19:12.5819280Z remote: Compressing objects:  13% (11/80)
+2021-08-25T17:20:26.9255443Z 2021-08-25T17:19:12.5819928Z remote: Compressing objects:  15% (12/80)
+2021-08-25T17:20:26.9256184Z 2021-08-25T17:19:12.5820500Z remote: Compressing objects:  16% (13/80)
+2021-08-25T17:20:26.9256917Z 2021-08-25T17:19:12.5821122Z remote: Compressing objects:  17% (14/80)
+2021-08-25T17:20:26.9257800Z 2021-08-25T17:19:12.5821729Z remote: Compressing objects:  18% (15/80)
+2021-08-25T17:20:26.9258544Z 2021-08-25T17:19:12.5822290Z remote: Compressing objects:  20% (16/80)
+2021-08-25T17:20:26.9259274Z 2021-08-25T17:19:12.5822918Z remote: Compressing objects:  21% (17/80)
+2021-08-25T17:20:26.9260020Z 2021-08-25T17:19:12.5823486Z remote: Compressing objects:  22% (18/80)
+2021-08-25T17:20:26.9260753Z 2021-08-25T17:19:12.5824252Z remote: Compressing objects:  23% (19/80)
+2021-08-25T17:20:26.9261491Z 2021-08-25T17:19:12.5824814Z remote: Compressing objects:  25% (20/80)
+2021-08-25T17:20:26.9262235Z 2021-08-25T17:19:12.5825437Z remote: Compressing objects:  26% (21/80)
+2021-08-25T17:20:26.9262982Z 2021-08-25T17:19:12.5826032Z remote: Compressing objects:  27% (22/80)
+2021-08-25T17:20:26.9263722Z 2021-08-25T17:19:12.5826849Z remote: Compressing objects:  28% (23/80)
+2021-08-25T17:20:26.9264460Z 2021-08-25T17:19:12.5827895Z remote: Compressing objects:  30% (24/80)
+2021-08-25T17:20:26.9265203Z 2021-08-25T17:19:12.5828639Z remote: Compressing objects:  31% (25/80)
+2021-08-25T17:20:26.9265934Z 2021-08-25T17:19:12.5829291Z remote: Compressing objects:  32% (26/80)
+2021-08-25T17:20:26.9266674Z 2021-08-25T17:19:12.5830586Z remote: Compressing objects:  33% (27/80)
+2021-08-25T17:20:26.9267403Z 2021-08-25T17:19:12.5831963Z remote: Compressing objects:  35% (28/80)
+2021-08-25T17:20:26.9268144Z 2021-08-25T17:19:12.5834477Z remote: Compressing objects:  36% (29/80)
+2021-08-25T17:20:26.9268948Z 2021-08-25T17:19:12.5835056Z remote: Compressing objects:  37% (30/80)
+2021-08-25T17:20:26.9269718Z 2021-08-25T17:19:12.5835668Z remote: Compressing objects:  38% (31/80)
+2021-08-25T17:20:26.9270460Z 2021-08-25T17:19:12.5836345Z remote: Compressing objects:  40% (32/80)
+2021-08-25T17:20:26.9271193Z 2021-08-25T17:19:12.5905035Z remote: Compressing objects:  41% (33/80)
+2021-08-25T17:20:26.9271945Z 2021-08-25T17:19:12.5905730Z remote: Compressing objects:  42% (34/80)
+2021-08-25T17:20:26.9272676Z 2021-08-25T17:19:12.5906298Z remote: Compressing objects:  43% (35/80)
+2021-08-25T17:20:26.9273419Z 2021-08-25T17:19:12.5906925Z remote: Compressing objects:  45% (36/80)
+2021-08-25T17:20:26.9274158Z 2021-08-25T17:19:12.6625636Z remote: Compressing objects:  46% (37/80)
+2021-08-25T17:20:26.9274886Z 2021-08-25T17:19:12.6628725Z remote: Compressing objects:  47% (38/80)
+2021-08-25T17:20:26.9275623Z 2021-08-25T17:19:12.6629454Z remote: Compressing objects:  48% (39/80)
+2021-08-25T17:20:26.9276356Z 2021-08-25T17:19:12.6630286Z remote: Compressing objects:  50% (40/80)
+2021-08-25T17:20:26.9277099Z 2021-08-25T17:19:12.6630898Z remote: Compressing objects:  51% (41/80)
+2021-08-25T17:20:26.9278136Z 2021-08-25T17:19:12.7113609Z remote: Compressing objects:  52% (42/80)
+2021-08-25T17:20:26.9278995Z 2021-08-25T17:19:12.7489445Z remote: Compressing objects:  53% (43/80)
+2021-08-25T17:20:26.9279784Z 2021-08-25T17:19:12.7580901Z remote: Compressing objects:  55% (44/80)
+2021-08-25T17:20:26.9280563Z 2021-08-25T17:19:12.8051568Z remote: Compressing objects:  56% (45/80)
+2021-08-25T17:20:26.9281446Z 2021-08-25T17:19:12.8052396Z remote: Compressing objects:  57% (46/80)
+2021-08-25T17:20:26.9282172Z 2021-08-25T17:19:12.8053218Z remote: Compressing objects:  58% (47/80)
+2021-08-25T17:20:26.9282910Z 2021-08-25T17:19:12.8054089Z remote: Compressing objects:  60% (48/80)
+2021-08-25T17:20:26.9283648Z 2021-08-25T17:19:12.8054805Z remote: Compressing objects:  61% (49/80)
+2021-08-25T17:20:26.9284388Z 2021-08-25T17:19:12.8055520Z remote: Compressing objects:  62% (50/80)
+2021-08-25T17:20:26.9285127Z 2021-08-25T17:19:12.8056465Z remote: Compressing objects:  63% (51/80)
+2021-08-25T17:20:26.9285861Z 2021-08-25T17:19:12.8057252Z remote: Compressing objects:  65% (52/80)
+2021-08-25T17:20:26.9286779Z 2021-08-25T17:19:12.8058115Z remote: Compressing objects:  66% (53/80)
+2021-08-25T17:20:26.9287509Z 2021-08-25T17:19:12.8058949Z remote: Compressing objects:  67% (54/80)
+2021-08-25T17:20:26.9288391Z 2021-08-25T17:19:12.8059809Z remote: Compressing objects:  68% (55/80)
+2021-08-25T17:20:26.9289171Z 2021-08-25T17:19:12.8060533Z remote: Compressing objects:  70% (56/80)
+2021-08-25T17:20:26.9290093Z 2021-08-25T17:19:12.8061223Z remote: Compressing objects:  71% (57/80)
+2021-08-25T17:20:26.9290908Z 2021-08-25T17:19:12.8062000Z remote: Compressing objects:  72% (58/80)
+2021-08-25T17:20:26.9291721Z 2021-08-25T17:19:12.8062673Z remote: Compressing objects:  73% (59/80)
+2021-08-25T17:20:26.9292681Z 2021-08-25T17:19:12.8154098Z remote: Compressing objects:  75% (60/80)
+2021-08-25T17:20:26.9293517Z 2021-08-25T17:19:12.8155254Z remote: Compressing objects:  76% (61/80)
+2021-08-25T17:20:26.9294372Z 2021-08-25T17:19:12.8156025Z remote: Compressing objects:  77% (62/80)
+2021-08-25T17:20:26.9295207Z 2021-08-25T17:19:12.8156850Z remote: Compressing objects:  78% (63/80)
+2021-08-25T17:20:26.9296052Z 2021-08-25T17:19:12.8157547Z remote: Compressing objects:  80% (64/80)
+2021-08-25T17:20:26.9296894Z 2021-08-25T17:19:12.8158487Z remote: Compressing objects:  81% (65/80)
+2021-08-25T17:20:26.9297728Z 2021-08-25T17:19:12.8159483Z remote: Compressing objects:  82% (66/80)
+2021-08-25T17:20:26.9298574Z 2021-08-25T17:19:12.8160293Z remote: Compressing objects:  83% (67/80)
+2021-08-25T17:20:26.9299488Z 2021-08-25T17:19:12.8161465Z remote: Compressing objects:  85% (68/80)
+2021-08-25T17:20:26.9300371Z 2021-08-25T17:19:12.8162268Z remote: Compressing objects:  86% (69/80)
+2021-08-25T17:20:26.9301210Z 2021-08-25T17:19:12.8163185Z remote: Compressing objects:  87% (70/80)
+2021-08-25T17:20:26.9302052Z 2021-08-25T17:19:12.8164217Z remote: Compressing objects:  88% (71/80)
+2021-08-25T17:20:26.9302902Z 2021-08-25T17:19:12.8270114Z remote: Compressing objects:  90% (72/80)
+2021-08-25T17:20:26.9303736Z 2021-08-25T17:19:12.8270676Z remote: Compressing objects:  91% (73/80)
+2021-08-25T17:20:26.9304579Z 2021-08-25T17:19:12.8271208Z remote: Compressing objects:  92% (74/80)
+2021-08-25T17:20:26.9305414Z 2021-08-25T17:19:12.8272037Z remote: Compressing objects:  93% (75/80)
+2021-08-25T17:20:26.9306355Z 2021-08-25T17:19:12.8272616Z remote: Compressing objects:  95% (76/80)
+2021-08-25T17:20:26.9307163Z 2021-08-25T17:19:12.8273168Z remote: Compressing objects:  96% (77/80)
+2021-08-25T17:20:26.9307983Z 2021-08-25T17:19:12.8273709Z remote: Compressing objects:  97% (78/80)
+2021-08-25T17:20:26.9308802Z 2021-08-25T17:19:12.8274267Z remote: Compressing objects:  98% (79/80)
+2021-08-25T17:20:26.9313609Z 2021-08-25T17:19:12.8274807Z remote: Compressing objects: 100% (80/80)
+2021-08-25T17:20:26.9314840Z 2021-08-25T17:19:12.8275497Z remote: Compressing objects: 100% (80/80), done.
+2021-08-25T17:20:26.9315935Z 2021-08-25T17:19:13.7187835Z remote: Total 88 (delta 5), reused 61 (delta 0), pack-reused 0
+2021-08-25T17:20:26.9316967Z 2021-08-25T17:19:13.7414992Z From https://github.com/splunk/github_app_for_splunk
+2021-08-25T17:20:26.9318533Z 2021-08-25T17:19:13.7418278Z  * [new ref]         1fbf5d7eb36123aa46847f13a2b44651eb0a29c6 -> origin/main
+2021-08-25T17:20:26.9320128Z ##[endgroup]
+2021-08-25T17:20:26.9321519Z ##[group]Determining the checkout info
+2021-08-25T17:20:26.9322732Z ##[endgroup]
+2021-08-25T17:20:26.9323903Z ##[group]Checking out the ref
+2021-08-25T17:20:26.9324836Z 2021-08-25T17:19:13.7470390Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2021-08-25T17:20:26.9325754Z 2021-08-25T17:19:13.8475865Z Switched to a new branch 'main'
+2021-08-25T17:20:26.9326596Z 2021-08-25T17:19:13.8499625Z Branch 'main' set up to track remote branch 'main' from 'origin'.
+2021-08-25T17:20:26.9328123Z ##[endgroup]
+2021-08-25T17:20:26.9328795Z 2021-08-25T17:19:13.8546791Z [command]/usr/bin/git log -1 --format='%H'
+2021-08-25T17:20:26.9329718Z 2021-08-25T17:19:13.8568186Z '1fbf5d7eb36123aa46847f13a2b44651eb0a29c6'
+2021-08-25T17:20:26.9331595Z ##[group]Run CultureHQ/actions-yarn@master
+2021-08-25T17:20:26.9332303Z 2021-08-25T17:19:13.8778280Z with:
+2021-08-25T17:20:26.9332885Z 2021-08-25T17:19:13.8778658Z   args: install
+2021-08-25T17:20:26.9334082Z ##[endgroup]
+2021-08-25T17:20:26.9339010Z 2021-08-25T17:19:13.8815431Z ##[command]/usr/bin/docker run --name culturehqactionsyarnlatest_d53b9a --label c9e036 --workdir /github/workspace --rm -e INPUT_ARGS -e HOME -e GITHUB_JOB -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY -e GITHUB_REPOSITORY_OWNER -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_RETENTION_DAYS -e GITHUB_ACTOR -e GITHUB_WORKFLOW -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GITHUB_EVENT_NAME -e GITHUB_SERVER_URL -e GITHUB_API_URL -e GITHUB_GRAPHQL_URL -e GITHUB_WORKSPACE -e GITHUB_ACTION -e GITHUB_EVENT_PATH -e GITHUB_ACTION_REPOSITORY -e GITHUB_ACTION_REF -e GITHUB_PATH -e GITHUB_ENV -e RUNNER_OS -e RUNNER_TOOL_CACHE -e RUNNER_TEMP -e RUNNER_WORKSPACE -e ACTIONS_RUNTIME_URL -e ACTIONS_RUNTIME_TOKEN -e ACTIONS_CACHE_URL -e GITHUB_ACTIONS=true -e CI=true -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" -v "/home/runner/work/_temp/_runner_file_commands":"/github/file_commands" -v "/home/runner/work/github_app_for_splunk/github_app_for_splunk":"/github/workspace" culturehq/actions-yarn:latest install
+2021-08-25T17:20:26.9343550Z 2021-08-25T17:19:14.7392833Z yarn install v1.17.3
+2021-08-25T17:20:26.9344350Z 2021-08-25T17:19:14.8526963Z [1/5] Validating package.json...
+2021-08-25T17:20:26.9345152Z 2021-08-25T17:19:14.8566182Z [2/5] Resolving packages...
+2021-08-25T17:20:26.9347546Z 2021-08-25T17:19:18.0079015Z warning @splunk/react-ui > react-sortable-hoc > babel-runtime > core-js@2.6.12: core-js@<3.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
+2021-08-25T17:20:26.9350113Z 2021-08-25T17:19:20.1076400Z warning onchange > chokidar@1.7.0: Chokidar 2 will break on node v14+. Upgrade to chokidar 3 with 15x less dependencies.
+2021-08-25T17:20:26.9351628Z 2021-08-25T17:19:20.1849223Z warning onchange > chokidar > fsevents@1.2.13: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
+2021-08-25T17:20:26.9353237Z 2021-08-25T17:19:20.9357441Z warning splunk-slap > tar-pack > tar@2.2.2: This version of tar is no longer supported, and will not receive security updates. Please upgrade asap.
+2021-08-25T17:20:26.9354361Z 2021-08-25T17:19:21.6185673Z [3/5] Fetching packages...
+2021-08-25T17:20:26.9355288Z 2021-08-25T17:19:39.9952054Z info fsevents@1.2.13: The platform "linux" is incompatible with this module.
+2021-08-25T17:20:26.9356677Z 2021-08-25T17:19:40.0076520Z info "fsevents@1.2.13" is an optional dependency and failed compatibility check. Excluding it from installation.
+2021-08-25T17:20:26.9358141Z 2021-08-25T17:19:40.0077609Z info fsevents@2.1.3: The platform "linux" is incompatible with this module.
+2021-08-25T17:20:26.9359523Z 2021-08-25T17:19:40.0078775Z info "fsevents@2.1.3" is an optional dependency and failed compatibility check. Excluding it from installation.
+2021-08-25T17:20:26.9360638Z 2021-08-25T17:19:40.0079622Z [4/5] Linking dependencies...
+2021-08-25T17:20:26.9361518Z 2021-08-25T17:19:46.6263944Z [5/5] Building fresh packages...
+2021-08-25T17:20:26.9362383Z 2021-08-25T17:19:49.0489093Z success Saved lockfile.
+2021-08-25T17:20:26.9363036Z 2021-08-25T17:19:49.0540829Z Done in 34.32s.
+2021-08-25T17:20:26.9364417Z ##[group]Run CultureHQ/actions-yarn@master
+2021-08-25T17:20:26.9365374Z 2021-08-25T17:19:52.0564795Z with:
+2021-08-25T17:20:26.9365935Z 2021-08-25T17:19:52.0565111Z   args: lint
+2021-08-25T17:20:26.9367082Z ##[endgroup]
+2021-08-25T17:20:26.9372328Z 2021-08-25T17:19:52.0580978Z ##[command]/usr/bin/docker run --name culturehqactionsyarnlatest_a77255 --label c9e036 --workdir /github/workspace --rm -e INPUT_ARGS -e HOME -e GITHUB_JOB -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY -e GITHUB_REPOSITORY_OWNER -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_RETENTION_DAYS -e GITHUB_ACTOR -e GITHUB_WORKFLOW -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GITHUB_EVENT_NAME -e GITHUB_SERVER_URL -e GITHUB_API_URL -e GITHUB_GRAPHQL_URL -e GITHUB_WORKSPACE -e GITHUB_ACTION -e GITHUB_EVENT_PATH -e GITHUB_ACTION_REPOSITORY -e GITHUB_ACTION_REF -e GITHUB_PATH -e GITHUB_ENV -e RUNNER_OS -e RUNNER_TOOL_CACHE -e RUNNER_TEMP -e RUNNER_WORKSPACE -e ACTIONS_RUNTIME_URL -e ACTIONS_RUNTIME_TOKEN -e ACTIONS_CACHE_URL -e GITHUB_ACTIONS=true -e CI=true -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" -v "/home/runner/work/_temp/_runner_file_commands":"/github/file_commands" -v "/home/runner/work/github_app_for_splunk/github_app_for_splunk":"/github/workspace" culturehq/actions-yarn:latest lint
+2021-08-25T17:20:26.9377332Z 2021-08-25T17:19:52.7196767Z yarn run v1.17.3
+2021-08-25T17:20:26.9378030Z 2021-08-25T17:19:52.7595607Z $ lerna run lint --no-sort
+2021-08-25T17:20:26.9378736Z 2021-08-25T17:19:53.0585854Z lerna info version 2.11.0
+2021-08-25T17:20:26.9379670Z 2021-08-25T17:19:53.0659776Z lerna WARN No packages found with the npm script 'lint'
+2021-08-25T17:20:26.9380555Z 2021-08-25T17:19:53.0784018Z Done in 0.36s.
+2021-08-25T17:20:26.9381952Z ##[group]Run CultureHQ/actions-yarn@master
+2021-08-25T17:20:26.9382616Z 2021-08-25T17:19:53.2291914Z with:
+2021-08-25T17:20:26.9383184Z 2021-08-25T17:19:53.2292280Z   args: build
+2021-08-25T17:20:26.9384319Z ##[endgroup]
+2021-08-25T17:20:26.9389114Z 2021-08-25T17:19:53.2310853Z ##[command]/usr/bin/docker run --name culturehqactionsyarnlatest_176e23 --label c9e036 --workdir /github/workspace --rm -e INPUT_ARGS -e HOME -e GITHUB_JOB -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY -e GITHUB_REPOSITORY_OWNER -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_RETENTION_DAYS -e GITHUB_ACTOR -e GITHUB_WORKFLOW -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GITHUB_EVENT_NAME -e GITHUB_SERVER_URL -e GITHUB_API_URL -e GITHUB_GRAPHQL_URL -e GITHUB_WORKSPACE -e GITHUB_ACTION -e GITHUB_EVENT_PATH -e GITHUB_ACTION_REPOSITORY -e GITHUB_ACTION_REF -e GITHUB_PATH -e GITHUB_ENV -e RUNNER_OS -e RUNNER_TOOL_CACHE -e RUNNER_TEMP -e RUNNER_WORKSPACE -e ACTIONS_RUNTIME_URL -e ACTIONS_RUNTIME_TOKEN -e ACTIONS_CACHE_URL -e GITHUB_ACTIONS=true -e CI=true -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" -v "/home/runner/work/_temp/_runner_file_commands":"/github/file_commands" -v "/home/runner/work/github_app_for_splunk/github_app_for_splunk":"/github/workspace" culturehq/actions-yarn:latest build
+2021-08-25T17:20:26.9393306Z 2021-08-25T17:19:53.9237028Z yarn run v1.17.3
+2021-08-25T17:20:26.9393924Z 2021-08-25T17:19:53.9569417Z $ lerna run build
+2021-08-25T17:20:26.9394576Z 2021-08-25T17:19:54.2583255Z lerna info version 2.11.0
+2021-08-25T17:20:26.9395385Z 2021-08-25T17:19:54.2658413Z lerna WARN No packages found with the npm script 'build'
+2021-08-25T17:20:26.9396118Z 2021-08-25T17:19:54.2791179Z Done in 0.36s.
+2021-08-25T17:20:26.9397505Z ##[group]Run chmod +x ./.github/actions/appinspect_cli/entrypoint.sh
+2021-08-25T17:20:26.9398909Z 2021-08-25T17:19:54.4290627Z [36;1mchmod +x ./.github/actions/appinspect_cli/entrypoint.sh[0m
+2021-08-25T17:20:26.9399774Z 2021-08-25T17:19:54.4333537Z shell: /usr/bin/bash -e {0}
+2021-08-25T17:20:26.9401134Z ##[endgroup]
+2021-08-25T17:20:26.9402282Z ##[group]Run old_str="X.Y.Z"
+2021-08-25T17:20:26.9403091Z 2021-08-25T17:19:54.4461959Z [36;1mold_str="X.Y.Z"[0m
+2021-08-25T17:20:26.9403710Z 2021-08-25T17:19:54.4462896Z [36;1mnew_str="1.0.0"[0m
+2021-08-25T17:20:26.9404463Z 2021-08-25T17:19:54.4463415Z [36;1msed -i "s/$old_str/$new_str/g" package.json[0m
+2021-08-25T17:20:26.9405414Z 2021-08-25T17:19:54.4464091Z [36;1msed -i "s/$old_str/$new_str/g" ./github_app_for_splunk/default/app.conf[0m
+2021-08-25T17:20:26.9406273Z 2021-08-25T17:19:54.4464717Z [36;1mls -al /home/runner/work[0m
+2021-08-25T17:20:26.9407000Z 2021-08-25T17:19:54.4465207Z [36;1mls -al /home/runner/factory[0m
+2021-08-25T17:20:26.9407714Z 2021-08-25T17:19:54.4502171Z shell: /usr/bin/bash -e {0}
+2021-08-25T17:20:26.9408916Z ##[endgroup]
+2021-08-25T17:20:26.9409479Z 2021-08-25T17:19:54.4785519Z total 24
+2021-08-25T17:20:26.9411105Z 2021-08-25T17:19:54.4786780Z drwxr-xr-x  6 runner root   4096 Aug 25 17:19 .
+2021-08-25T17:20:26.9412086Z 2021-08-25T17:19:54.4787354Z drwxrwxrwx 11 runner docker 4096 Aug 25 17:18 ..
+2021-08-25T17:20:26.9413052Z 2021-08-25T17:19:54.4788215Z drwxr-xr-x  3 runner docker 4096 Aug 25 17:19 _PipelineMapping
+2021-08-25T17:20:26.9414087Z 2021-08-25T17:19:54.4789081Z drwxr-xr-x  4 runner docker 4096 Aug 25 17:19 _actions
+2021-08-25T17:20:26.9414940Z 2021-08-25T17:19:54.4789887Z drwxr-xr-x  5 runner docker 4096 Aug 25 17:19 _temp
+2021-08-25T17:20:26.9415833Z 2021-08-25T17:19:54.4790720Z drwxr-xr-x  3 runner docker 4096 Aug 25 17:19 github_app_for_splunk
+2021-08-25T17:20:26.9416550Z 2021-08-25T17:19:54.4807495Z total 8
+2021-08-25T17:20:26.9417227Z 2021-08-25T17:19:54.4808332Z drwxr-xr-x  2 runner root   4096 Aug 23 15:36 .
+2021-08-25T17:20:26.9418162Z 2021-08-25T17:19:54.4808898Z drwxrwxrwx 11 runner docker 4096 Aug 25 17:18 ..
+2021-08-25T17:20:26.9419632Z ##[group]Run ./.github/actions/appinspect_cli
+2021-08-25T17:20:26.9420301Z 2021-08-25T17:19:54.4874525Z with:
+2021-08-25T17:20:26.9420965Z 2021-08-25T17:19:54.4874970Z   app-path: github_app_for_splunk/
+2021-08-25T17:20:26.9421789Z 2021-08-25T17:19:54.4875548Z   result-file: appinspect_result.json
+2021-08-25T17:20:26.9423154Z ##[endgroup]
+2021-08-25T17:20:26.9424355Z ##[group]Building docker image
+2021-08-25T17:20:26.9425465Z 2021-08-25T17:19:54.4879888Z Dockerfile for action: '/home/runner/work/github_app_for_splunk/github_app_for_splunk/./.github/actions/appinspect_cli/Dockerfile'.
+2021-08-25T17:20:26.9427532Z 2021-08-25T17:19:54.4885438Z ##[command]/usr/bin/docker build -t c9e036:fa277171103c5e9adbaf104c21d5cf85 -f "/home/runner/work/github_app_for_splunk/github_app_for_splunk/./.github/actions/appinspect_cli/Dockerfile" "/home/runner/work/github_app_for_splunk/github_app_for_splunk/.github/actions/appinspect_cli"
+2021-08-25T17:20:26.9429140Z 2021-08-25T17:19:54.5301474Z Sending build context to Docker daemon  6.656kB
+2021-08-25T17:20:26.9429766Z 2021-08-25T17:19:54.5302356Z
+2021-08-25T17:20:26.9430589Z 2021-08-25T17:19:54.5886384Z Step 1/3 : FROM ghcr.io/splunk/appinspect-cli-action:latest
+2021-08-25T17:20:26.9431625Z 2021-08-25T17:19:55.2620611Z latest: Pulling from splunk/appinspect-cli-action
+2021-08-25T17:20:26.9432470Z 2021-08-25T17:19:55.2636630Z 0bc3020d05f1: Pulling fs layer
+2021-08-25T17:20:26.9433162Z 2021-08-25T17:19:55.2637159Z a110e5871660: Pulling fs layer
+2021-08-25T17:20:26.9433840Z 2021-08-25T17:19:55.2637645Z 83d3c0fa203a: Pulling fs layer
+2021-08-25T17:20:26.9434542Z 2021-08-25T17:19:55.2638323Z a8fd09c11b02: Pulling fs layer
+2021-08-25T17:20:26.9435232Z 2021-08-25T17:19:55.2638846Z 14feb89c4a52: Pulling fs layer
+2021-08-25T17:20:26.9435910Z 2021-08-25T17:19:55.2639301Z 70752631d778: Pulling fs layer
+2021-08-25T17:20:26.9436560Z 2021-08-25T17:19:55.2639749Z a834932271ab: Pulling fs layer
+2021-08-25T17:20:26.9437259Z 2021-08-25T17:19:55.2640226Z 4ebf65e8e0bf: Pulling fs layer
+2021-08-25T17:20:26.9438324Z 2021-08-25T17:19:55.2640820Z 8649b4f64c8b: Pulling fs layer
+2021-08-25T17:20:26.9439061Z 2021-08-25T17:19:55.2641320Z dade5f001a5f: Pulling fs layer
+2021-08-25T17:20:26.9439796Z 2021-08-25T17:19:55.2641813Z db96275fa313: Pulling fs layer
+2021-08-25T17:20:26.9440690Z 2021-08-25T17:19:55.2642303Z 64ded84c8f3d: Pulling fs layer
+2021-08-25T17:20:26.9441553Z 2021-08-25T17:19:55.2642799Z ceaa4ab271a2: Pulling fs layer
+2021-08-25T17:20:26.9442256Z 2021-08-25T17:19:55.2643311Z d235daa59d1e: Pulling fs layer
+2021-08-25T17:20:26.9442936Z 2021-08-25T17:19:55.2643781Z 4ebf65e8e0bf: Waiting
+2021-08-25T17:20:26.9443561Z 2021-08-25T17:19:55.2644214Z 8649b4f64c8b: Waiting
+2021-08-25T17:20:26.9444198Z 2021-08-25T17:19:55.2644779Z dade5f001a5f: Waiting
+2021-08-25T17:20:26.9444841Z 2021-08-25T17:19:55.2645224Z db96275fa313: Waiting
+2021-08-25T17:20:26.9445459Z 2021-08-25T17:19:55.2645634Z 64ded84c8f3d: Waiting
+2021-08-25T17:20:26.9446113Z 2021-08-25T17:19:55.2646077Z ceaa4ab271a2: Waiting
+2021-08-25T17:20:26.9446751Z 2021-08-25T17:19:55.2646504Z d235daa59d1e: Waiting
+2021-08-25T17:20:26.9447506Z 2021-08-25T17:19:55.2648792Z a8fd09c11b02: Waiting
+2021-08-25T17:20:26.9448153Z 2021-08-25T17:19:55.2649505Z 14feb89c4a52: Waiting
+2021-08-25T17:20:26.9448848Z 2021-08-25T17:19:55.2650047Z 70752631d778: Waiting
+2021-08-25T17:20:26.9449453Z 2021-08-25T17:19:55.2650439Z a834932271ab: Waiting
+2021-08-25T17:20:26.9450151Z 2021-08-25T17:19:55.6271207Z 83d3c0fa203a: Verifying Checksum
+2021-08-25T17:20:26.9450912Z 2021-08-25T17:19:55.6271806Z 83d3c0fa203a: Download complete
+2021-08-25T17:20:26.9451649Z 2021-08-25T17:19:55.6370533Z a110e5871660: Verifying Checksum
+2021-08-25T17:20:26.9452386Z 2021-08-25T17:19:55.6371094Z a110e5871660: Download complete
+2021-08-25T17:20:26.9453116Z 2021-08-25T17:19:55.9109625Z 0bc3020d05f1: Verifying Checksum
+2021-08-25T17:20:26.9453866Z 2021-08-25T17:19:55.9110211Z 0bc3020d05f1: Download complete
+2021-08-25T17:20:26.9454679Z 2021-08-25T17:19:56.2880817Z 70752631d778: Verifying Checksum
+2021-08-25T17:20:26.9455442Z 2021-08-25T17:19:56.2896354Z 70752631d778: Download complete
+2021-08-25T17:20:26.9456165Z 2021-08-25T17:19:56.4380779Z a8fd09c11b02: Verifying Checksum
+2021-08-25T17:20:26.9456927Z 2021-08-25T17:19:56.4381426Z a8fd09c11b02: Download complete
+2021-08-25T17:20:26.9457712Z 2021-08-25T17:19:56.7390846Z 4ebf65e8e0bf: Verifying Checksum
+2021-08-25T17:20:26.9458479Z 2021-08-25T17:19:56.7393755Z 4ebf65e8e0bf: Download complete
+2021-08-25T17:20:26.9459232Z 2021-08-25T17:19:56.8305098Z a834932271ab: Verifying Checksum
+2021-08-25T17:20:26.9459941Z 2021-08-25T17:19:56.8318772Z a834932271ab: Download complete
+2021-08-25T17:20:26.9460700Z 2021-08-25T17:19:57.0825484Z dade5f001a5f: Verifying Checksum
+2021-08-25T17:20:26.9461474Z 2021-08-25T17:19:57.0826111Z dade5f001a5f: Download complete
+2021-08-25T17:20:26.9462231Z 2021-08-25T17:19:57.3818037Z 8649b4f64c8b: Verifying Checksum
+2021-08-25T17:20:26.9462957Z 2021-08-25T17:19:57.3818657Z 8649b4f64c8b: Download complete
+2021-08-25T17:20:26.9463709Z 2021-08-25T17:19:57.6427864Z db96275fa313: Verifying Checksum
+2021-08-25T17:20:26.9464596Z 2021-08-25T17:19:57.6428449Z db96275fa313: Download complete
+2021-08-25T17:20:26.9465370Z 2021-08-25T17:19:57.6439284Z 64ded84c8f3d: Verifying Checksum
+2021-08-25T17:20:26.9466158Z 2021-08-25T17:19:57.6439864Z 64ded84c8f3d: Download complete
+2021-08-25T17:20:26.9466944Z 2021-08-25T17:19:57.8842620Z d235daa59d1e: Verifying Checksum
+2021-08-25T17:20:26.9467733Z 2021-08-25T17:19:57.8843203Z d235daa59d1e: Download complete
+2021-08-25T17:20:26.9468527Z 2021-08-25T17:19:57.9271666Z ceaa4ab271a2: Verifying Checksum
+2021-08-25T17:20:26.9469336Z 2021-08-25T17:19:57.9272281Z ceaa4ab271a2: Download complete
+2021-08-25T17:20:26.9470139Z 2021-08-25T17:19:58.2860516Z 14feb89c4a52: Verifying Checksum
+2021-08-25T17:20:26.9470911Z 2021-08-25T17:19:58.2861224Z 14feb89c4a52: Download complete
+2021-08-25T17:20:26.9471667Z 2021-08-25T17:19:58.7513264Z 0bc3020d05f1: Pull complete
+2021-08-25T17:20:26.9472388Z 2021-08-25T17:20:01.2116388Z a110e5871660: Pull complete
+2021-08-25T17:20:26.9473458Z 2021-08-25T17:20:01.5286754Z 83d3c0fa203a: Pull complete
+2021-08-25T17:20:26.9474349Z 2021-08-25T17:20:04.3552563Z a8fd09c11b02: Pull complete
+2021-08-25T17:20:26.9475099Z 2021-08-25T17:20:12.8506198Z 14feb89c4a52: Pull complete
+2021-08-25T17:20:26.9476001Z 2021-08-25T17:20:13.2243079Z 70752631d778: Pull complete
+2021-08-25T17:20:26.9476711Z 2021-08-25T17:20:14.0088641Z a834932271ab: Pull complete
+2021-08-25T17:20:26.9477564Z 2021-08-25T17:20:14.0831137Z 4ebf65e8e0bf: Pull complete
+2021-08-25T17:20:26.9478591Z 2021-08-25T17:20:14.3542084Z 8649b4f64c8b: Pull complete
+2021-08-25T17:20:26.9479343Z 2021-08-25T17:20:14.4214161Z dade5f001a5f: Pull complete
+2021-08-25T17:20:26.9480085Z 2021-08-25T17:20:15.5520800Z db96275fa313: Pull complete
+2021-08-25T17:20:26.9480823Z 2021-08-25T17:20:15.6334406Z 64ded84c8f3d: Pull complete
+2021-08-25T17:20:26.9481657Z 2021-08-25T17:20:15.7066416Z ceaa4ab271a2: Pull complete
+2021-08-25T17:20:26.9482400Z 2021-08-25T17:20:15.7795548Z d235daa59d1e: Pull complete
+2021-08-25T17:20:26.9483622Z 2021-08-25T17:20:15.7837539Z Digest: sha256:17b07dc3c62d2f0613968af43a5d44087dcab50879e875d99bbb0c6b8d47b714
+2021-08-25T17:20:26.9485090Z 2021-08-25T17:20:15.7867287Z Status: Downloaded newer image for ghcr.io/splunk/appinspect-cli-action:latest
+2021-08-25T17:20:26.9486015Z 2021-08-25T17:20:15.7885900Z  ---> 708492f21e3b
+2021-08-25T17:20:26.9486773Z 2021-08-25T17:20:15.7886473Z Step 2/3 : COPY entrypoint.sh /entrypoint.sh
+2021-08-25T17:20:26.9487520Z 2021-08-25T17:20:17.1219485Z  ---> 1391b8b3a1d7
+2021-08-25T17:20:26.9488248Z 2021-08-25T17:20:17.1220101Z Step 3/3 : ENTRYPOINT ["/entrypoint.sh"]
+2021-08-25T17:20:26.9489024Z 2021-08-25T17:20:17.1455088Z  ---> Running in ca0257b90f4b
+2021-08-25T17:20:26.9489825Z 2021-08-25T17:20:18.3916499Z Removing intermediate container ca0257b90f4b
+2021-08-25T17:20:26.9490573Z 2021-08-25T17:20:18.3917058Z  ---> c87b35c4de24
+2021-08-25T17:20:26.9491371Z 2021-08-25T17:20:18.3917499Z Successfully built c87b35c4de24
+2021-08-25T17:20:26.9492368Z 2021-08-25T17:20:18.3951541Z Successfully tagged c9e036:fa277171103c5e9adbaf104c21d5cf85
+2021-08-25T17:20:26.9493788Z ##[endgroup]
+2021-08-25T17:20:26.9496734Z 2021-08-25T17:20:18.4065358Z ##[command]/usr/bin/docker run --name c9e036fa277171103c5e9adbaf104c21d5cf85_f0997a --label c9e036 --workdir /github/workspace --rm -e INPUT_APP-PATH -e INPUT_RESULT-FILE -e HOME -e GITHUB_JOB -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY -e GITHUB_REPOSITORY_OWNER -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_RETENTION_DAYS -e GITHUB_ACTOR -e GITHUB_WORKFLOW -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GITHUB_EVENT_NAME -e GITHUB_SERVER_URL -e GITHUB_API_URL -e GITHUB_GRAPHQL_URL -e GITHUB_WORKSPACE -e GITHUB_ACTION -e GITHUB_EVENT_﻿2021-08-25T17:19:54.4873996Z ##[group]Run ./.github/actions/appinspect_cli
+2021-08-25T17:20:26.9499442Z 2021-08-25T17:19:54.4874520Z with:
+2021-08-25T17:20:26.9500157Z 2021-08-25T17:19:54.4874966Z   app-path: github_app_for_splunk/
+2021-08-25T17:20:26.9501025Z 2021-08-25T17:19:54.4875544Z   result-file: appinspect_result.json
+2021-08-25T17:20:26.9502368Z ##[endgroup]
+2021-08-25T17:20:26.9503596Z ##[group]Building docker image
+2021-08-25T17:20:26.9504786Z 2021-08-25T17:19:54.4879883Z Dockerfile for action: '/home/runner/work/github_app_for_splunk/github_app_for_splunk/./.github/actions/appinspect_cli/Dockerfile'.
+2021-08-25T17:20:26.9507025Z 2021-08-25T17:19:54.4885420Z ##[command]/usr/bin/docker build -t c9e036:fa277171103c5e9adbaf104c21d5cf85 -f "/home/runner/work/github_app_for_splunk/github_app_for_splunk/./.github/actions/appinspect_cli/Dockerfile" "/home/runner/work/github_app_for_splunk/github_app_for_splunk/.github/actions/appinspect_cli"
+2021-08-25T17:20:26.9508748Z 2021-08-25T17:19:54.5301422Z Sending build context to Docker daemon  6.656kB
+2021-08-25T17:20:26.9509429Z 2021-08-25T17:19:54.5302342Z
+2021-08-25T17:20:26.9510295Z 2021-08-25T17:19:54.5886350Z Step 1/3 : FROM ghcr.io/splunk/appinspect-cli-action:latest
+2021-08-25T17:20:26.9512343Z 2021-08-25T17:19:55.2617394Z latest: Pulling from splunk/appinspect-cli-action
+2021-08-25T17:20:26.9513272Z 2021-08-25T17:19:55.2636604Z 0bc3020d05f1: Pulling fs layer
+2021-08-25T17:20:26.9514013Z 2021-08-25T17:19:55.2637154Z a110e5871660: Pulling fs layer
+2021-08-25T17:20:26.9514740Z 2021-08-25T17:19:55.2637641Z 83d3c0fa203a: Pulling fs layer
+2021-08-25T17:20:26.9515707Z 2021-08-25T17:19:55.2638318Z a8fd09c11b02: Pulling fs layer
+2021-08-25T17:20:26.9516463Z 2021-08-25T17:19:55.2638842Z 14feb89c4a52: Pulling fs layer
+2021-08-25T17:20:26.9517177Z 2021-08-25T17:19:55.2639297Z 70752631d778: Pulling fs layer
+2021-08-25T17:20:26.9518092Z 2021-08-25T17:19:55.2639745Z a834932271ab: Pulling fs layer
+2021-08-25T17:20:26.9518882Z 2021-08-25T17:19:55.2640223Z 4ebf65e8e0bf: Pulling fs layer
+2021-08-25T17:20:26.9519635Z 2021-08-25T17:19:55.2640814Z 8649b4f64c8b: Pulling fs layer
+2021-08-25T17:20:26.9520372Z 2021-08-25T17:19:55.2641316Z dade5f001a5f: Pulling fs layer
+2021-08-25T17:20:26.9521141Z 2021-08-25T17:19:55.2641810Z db96275fa313: Pulling fs layer
+2021-08-25T17:20:26.9521889Z 2021-08-25T17:19:55.2642299Z 64ded84c8f3d: Pulling fs layer
+2021-08-25T17:20:26.9522645Z 2021-08-25T17:19:55.2642796Z ceaa4ab271a2: Pulling fs layer
+2021-08-25T17:20:26.9523416Z 2021-08-25T17:19:55.2643307Z d235daa59d1e: Pulling fs layer
+2021-08-25T17:20:26.9524140Z 2021-08-25T17:19:55.2643774Z 4ebf65e8e0bf: Waiting
+2021-08-25T17:20:26.9524818Z 2021-08-25T17:19:55.2644210Z 8649b4f64c8b: Waiting
+2021-08-25T17:20:26.9525491Z 2021-08-25T17:19:55.2644766Z dade5f001a5f: Waiting
+2021-08-25T17:20:26.9526185Z 2021-08-25T17:19:55.2645220Z db96275fa313: Waiting
+2021-08-25T17:20:26.9526852Z 2021-08-25T17:19:55.2645630Z 64ded84c8f3d: Waiting
+2021-08-25T17:20:26.9527545Z 2021-08-25T17:19:55.2646074Z ceaa4ab271a2: Waiting
+2021-08-25T17:20:26.9528227Z 2021-08-25T17:19:55.2646500Z d235daa59d1e: Waiting
+2021-08-25T17:20:26.9528910Z 2021-08-25T17:19:55.2648778Z a8fd09c11b02: Waiting
+2021-08-25T17:20:26.9529711Z 2021-08-25T17:19:55.2649499Z 14feb89c4a52: Waiting
+2021-08-25T17:20:26.9530404Z 2021-08-25T17:19:55.2650040Z 70752631d778: Waiting
+2021-08-25T17:20:26.9531040Z 2021-08-25T17:19:55.2650435Z a834932271ab: Waiting
+2021-08-25T17:20:26.9531757Z 2021-08-25T17:19:55.6271165Z 83d3c0fa203a: Verifying Checksum
+2021-08-25T17:20:26.9532547Z 2021-08-25T17:19:55.6271787Z 83d3c0fa203a: Download complete
+2021-08-25T17:20:26.9533322Z 2021-08-25T17:19:55.6370503Z a110e5871660: Verifying Checksum
+2021-08-25T17:20:26.9534091Z 2021-08-25T17:19:55.6371089Z a110e5871660: Download complete
+2021-08-25T17:20:26.9534851Z 2021-08-25T17:19:55.9109584Z 0bc3020d05f1: Verifying Checksum
+2021-08-25T17:20:26.9535628Z 2021-08-25T17:19:55.9110206Z 0bc3020d05f1: Download complete
+2021-08-25T17:20:26.9536389Z 2021-08-25T17:19:56.2880775Z 70752631d778: Verifying Checksum
+2021-08-25T17:20:26.9537110Z 2021-08-25T17:19:56.2896334Z 70752631d778: Download complete
+2021-08-25T17:20:26.9537873Z 2021-08-25T17:19:56.4380740Z a8fd09c11b02: Verifying Checksum
+2021-08-25T17:20:26.9538762Z 2021-08-25T17:19:56.4381392Z a8fd09c11b02: Download complete
+2021-08-25T17:20:26.9539544Z 2021-08-25T17:19:56.7390795Z 4ebf65e8e0bf: Verifying Checksum
+2021-08-25T17:20:26.9540317Z 2021-08-25T17:19:56.7393740Z 4ebf65e8e0bf: Download complete
+2021-08-25T17:20:26.9541074Z 2021-08-25T17:19:56.8305050Z a834932271ab: Verifying Checksum
+2021-08-25T17:20:26.9541919Z 2021-08-25T17:19:56.8318592Z a834932271ab: Download complete
+2021-08-25T17:20:26.9542662Z 2021-08-25T17:19:57.0825444Z dade5f001a5f: Verifying Checksum
+2021-08-25T17:20:26.9543425Z 2021-08-25T17:19:57.0826106Z dade5f001a5f: Download complete
+2021-08-25T17:20:26.9544150Z 2021-08-25T17:19:57.3817996Z 8649b4f64c8b: Verifying Checksum
+2021-08-25T17:20:26.9544863Z 2021-08-25T17:19:57.3818651Z 8649b4f64c8b: Download complete
+2021-08-25T17:20:26.9545577Z 2021-08-25T17:19:57.6427830Z db96275fa313: Verifying Checksum
+2021-08-25T17:20:26.9546305Z 2021-08-25T17:19:57.6428444Z db96275fa313: Download complete
+2021-08-25T17:20:26.9547102Z 2021-08-25T17:19:57.6439265Z 64ded84c8f3d: Verifying Checksum
+2021-08-25T17:20:26.9547974Z 2021-08-25T17:19:57.6439859Z 64ded84c8f3d: Download complete
+2021-08-25T17:20:26.9548744Z 2021-08-25T17:19:57.8842582Z d235daa59d1e: Verifying Checksum
+2021-08-25T17:20:26.9549501Z 2021-08-25T17:19:57.8843197Z d235daa59d1e: Download complete
+2021-08-25T17:20:26.9550442Z 2021-08-25T17:19:57.9271633Z ceaa4ab271a2: Verifying Checksum
+2021-08-25T17:20:26.9551221Z 2021-08-25T17:19:57.9272277Z ceaa4ab271a2: Download complete
+2021-08-25T17:20:26.9551999Z 2021-08-25T17:19:58.2860238Z 14feb89c4a52: Verifying Checksum
+2021-08-25T17:20:26.9552749Z 2021-08-25T17:19:58.2861219Z 14feb89c4a52: Download complete
+2021-08-25T17:20:26.9553481Z 2021-08-25T17:19:58.7513218Z 0bc3020d05f1: Pull complete
+2021-08-25T17:20:26.9554316Z 2021-08-25T17:20:01.2116341Z a110e5871660: Pull complete
+2021-08-25T17:20:26.9555048Z 2021-08-25T17:20:01.5286710Z 83d3c0fa203a: Pull complete
+2021-08-25T17:20:26.9555790Z 2021-08-25T17:20:04.3552520Z a8fd09c11b02: Pull complete
+2021-08-25T17:20:26.9556626Z 2021-08-25T17:20:12.8506154Z 14feb89c4a52: Pull complete
+2021-08-25T17:20:26.9557321Z 2021-08-25T17:20:13.2243038Z 70752631d778: Pull complete
+2021-08-25T17:20:26.9558266Z 2021-08-25T17:20:14.0088597Z a834932271ab: Pull complete
+2021-08-25T17:20:26.9559012Z 2021-08-25T17:20:14.0831098Z 4ebf65e8e0bf: Pull complete
+2021-08-25T17:20:26.9559841Z 2021-08-25T17:20:14.3542041Z 8649b4f64c8b: Pull complete
+2021-08-25T17:20:26.9560688Z 2021-08-25T17:20:14.4214116Z dade5f001a5f: Pull complete
+2021-08-25T17:20:26.9561427Z 2021-08-25T17:20:15.5520759Z db96275fa313: Pull complete
+2021-08-25T17:20:26.9562167Z 2021-08-25T17:20:15.6334366Z 64ded84c8f3d: Pull complete
+2021-08-25T17:20:26.9562929Z 2021-08-25T17:20:15.7066375Z ceaa4ab271a2: Pull complete
+2021-08-25T17:20:26.9563673Z 2021-08-25T17:20:15.7795508Z d235daa59d1e: Pull complete
+2021-08-25T17:20:26.9565017Z 2021-08-25T17:20:15.7837514Z Digest: sha256:17b07dc3c62d2f0613968af43a5d44087dcab50879e875d99bbb0c6b8d47b714
+2021-08-25T17:20:26.9566740Z 2021-08-25T17:20:15.7867232Z Status: Downloaded newer image for ghcr.io/splunk/appinspect-cli-action:latest
+2021-08-25T17:20:26.9567687Z 2021-08-25T17:20:15.7885878Z  ---> 708492f21e3b
+2021-08-25T17:20:26.9568425Z 2021-08-25T17:20:15.7886467Z Step 2/3 : COPY entrypoint.sh /entrypoint.sh
+2021-08-25T17:20:26.9569150Z 2021-08-25T17:20:17.1219396Z  ---> 1391b8b3a1d7
+2021-08-25T17:20:26.9569859Z 2021-08-25T17:20:17.1220094Z Step 3/3 : ENTRYPOINT ["/entrypoint.sh"]
+2021-08-25T17:20:26.9570819Z 2021-08-25T17:20:17.1455050Z  ---> Running in ca0257b90f4b
+2021-08-25T17:20:26.9571622Z 2021-08-25T17:20:18.3916458Z Removing intermediate container ca0257b90f4b
+2021-08-25T17:20:26.9572341Z 2021-08-25T17:20:18.3917053Z  ---> c87b35c4de24
+2021-08-25T17:20:26.9573020Z 2021-08-25T17:20:18.3917494Z Successfully built c87b35c4de24
+2021-08-25T17:20:26.9573925Z 2021-08-25T17:20:18.3951523Z Successfully tagged c9e036:fa277171103c5e9adbaf104c21d5cf85
+2021-08-25T17:20:26.9575320Z ##[endgroup]
+2021-08-25T17:20:26.9581342Z 2021-08-25T17:20:18.4065271Z ##[command]/usr/bin/docker run --name c9e036fa277171103c5e9adbaf104c21d5cf85_f0997a --label c9e036 --workdir /github/workspace --rm -e INPUT_APP-PATH -e INPUT_RESULT-FILE -e HOME -e GITHUB_JOB -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY -e GITHUB_REPOSITORY_OWNER -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_RETENTION_DAYS -e GITHUB_ACTOR -e GITHUB_WORKFLOW -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GITHUB_EVENT_NAME -e GITHUB_SERVER_URL -e GITHUB_API_URL -e GITHUB_GRAPHQL_URL -e GITHUB_WORKSPACE -e GITHUB_ACTION -e GITHUB_EVENT_PATH -e GITHUB_ACTION_REPOSITORY -e GITHUB_ACTION_REF -e GITHUB_PATH -e GITHUB_ENV -e RUNNER_OS -e RUNNER_TOOL_CACHE -e RUNNER_TEMP -e RUNNER_WORKSPACE -e ACTIONS_RUNTIME_URL -e ACTIONS_RUNTIME_TOKEN -e ACTIONS_CACHE_URL -e GITHUB_ACTIONS=true -e CI=true -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" -v "/home/runner/work/_temp/_runner_file_commands":"/github/file_commands" -v "/home/runner/work/github_app_for_splunk/github_app_for_splunk":"/github/workspace" c9e036:fa277171103c5e9adbaf104c21d5cf85  "github_app_for_splunk/" "appinspect_result.json"
+2021-08-25T17:20:26.9586201Z 2021-08-25T17:20:26.7582162Z App Inspect Passed!
+2021-08-25T17:20:26.9587154Z 2021-08-25T17:20:26.7584348Z {'error': 0, 'failure': 0, 'skipped': 0, 'manual_check': 16, 'not_applicable': 129, 'warning': 2, 'success': 179}
+2021-08-25T17:20:26.9588183Z 2021-08-25T17:20:26.7588103Z Warning List:
+2021-08-25T17:20:26.9589697Z 2021-08-25T17:20:26.7590066Z Embed all your app's front-end JS dependencies in the /appserver directory. If you import files from Splunk Web, your app might fail when Splunk Web updates. File: /github/workspace/github_app_for_splunk/appserver/static/tabs.js
+2021-08-25T17:20:26.9591932Z 2021-08-25T17:20:26.7592802Z Embed all your app's front-end JS dependencies in the /appserver directory. If you import files from Splunk Web, your app might fail when Splunk Web updates. File: /github/workspace/github_app_for_splunk/appserver/static/tabs.js
+2021-08-25T17:20:26.9594510Z 2021-08-25T17:20:26.7595384Z Change the version attribute in the root node of your Simple XML dashboard default/data/ui/views/value_stream_analytics.xml to `<version=1.1>`. Earlier dashboard versions introduce security vulnerabilities into your apps and are not permitted in Splunk Cloud File: default/data/ui/views/value_stream_analytics.xml
+2021-08-25T17:20:26.9667472Z Post job cleanup.
+2021-08-25T17:20:27.0826464Z [command]/usr/bin/git version
+2021-08-25T17:20:27.0901360Z git version 2.32.0
+2021-08-25T17:20:27.0988279Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2021-08-25T17:20:27.1024472Z [command]/usr/bin/git submodule foreach --recursive git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :
+2021-08-25T17:20:27.1293822Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2021-08-25T17:20:27.1331133Z http.https://github.com/.extraheader
+2021-08-25T17:20:27.1343603Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2021-08-25T17:20:27.1377304Z [command]/usr/bin/git submodule foreach --recursive git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :
+2021-08-25T17:20:27.1660324Z Cleaning up orphan processes
