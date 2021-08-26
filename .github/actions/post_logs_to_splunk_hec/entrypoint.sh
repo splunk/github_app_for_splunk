@@ -1,5 +1,5 @@
 #!/bin/sh -l
 
-ls -al *
+cat file.log
 
 #python3 t.py
