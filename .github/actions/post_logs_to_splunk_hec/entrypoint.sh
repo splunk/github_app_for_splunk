@@ -19,7 +19,7 @@ sourcetype = \"$3\"
 eventBatch = \"\"
 workflowID=\"$5\"
 source=\"$4\"
-host=\""+$HOSTNAME+""\"
+host=\""+$HOSTNAME+"\"
 
 for line in Lines:
     count+=1
