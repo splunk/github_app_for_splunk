@@ -52,6 +52,9 @@ jobs:
         with:
           app-path: github_app_for_splunk/
 
+      - name: Prepare log files
+        run: cat /home/runner/runners/2.280.3/_diag/pages/*.log > ./file.log
+
       - name: POST Workflow logs to Splunk
         uses: ./.github/actions/post_logs_to_splunk_hec
         with:
