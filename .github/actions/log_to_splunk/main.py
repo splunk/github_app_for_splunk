@@ -16,8 +16,8 @@ SPLUNK_SOURCETYPE=os.environ["INPUT_SOURCETYPE"]
 
 batch = count = 0
 eventBatch = ""
-headers = {\"Authorization\": \"Splunk \"+SPLUNK_HEC_TOKEN}
-host=\"$HOSTNAME\"
+headers = {"Authorization": "Splunk "+SPLUNK_HEC_TOKEN}
+host="$HOSTNAME"
 
 url = "{url}/repos/{repo}/actions/runs/{run_id}/jobs".format(url=GITHUB_API_URL,repo=GITHUB_REPOSITORY,run_id=GITHUB_RUN_ID)
 
