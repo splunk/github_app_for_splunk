@@ -15,7 +15,7 @@ SPLUNK_SOURCE=os.environ["INPUT_SOURCE"]
 SPLUNK_SOURCETYPE=os.environ["INPUT_SOURCETYPE"]
 
 batch = count = 0
-eventBatch = \"\"
+eventBatch = ""
 headers = {\"Authorization\": \"Splunk \"+SPLUNK_HEC_TOKEN}
 host=\"$HOSTNAME\"
 
