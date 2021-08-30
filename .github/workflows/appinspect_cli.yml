@@ -52,9 +52,11 @@ jobs:
           app-path: github_app_for_splunk/
 
       - name: Prepare log files
+        if: ${{ always() }}
         run: cat /home/runner/runners/2.280.3/_diag/pages/*.log > ./file.log
 
       - name: POST Workflow logs to Splunk
+        if: ${{ always() }}
         uses: ./.github/actions/post_logs_to_splunk_hec
         with:
           splunk-url: http://54.189.34.108:8088/
