@@ -5,7 +5,7 @@ FROM python:3.8-slim-buster
 ADD . /app
 WORKDIR /app
 
-RUN pip install --target/app requests
+RUN pip install --target=/app requests
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
 FROM gcr.io/distroless/python3-debian10
