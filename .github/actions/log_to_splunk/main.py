@@ -47,9 +47,7 @@ def main():
         print(f"::set-output name=result::{output}")
         return
 
-    response = json.loads(x.headers)
-
-    print(response)
+    print(x.headers)
 
 if __name__ == '__main__':
     main()
