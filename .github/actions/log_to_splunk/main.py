@@ -2,49 +2,54 @@ import os
 import requests
 import json
 
-GITHUB_REF=os.environ["GITHUB_REF"]
-GITHUB_REPOSITORY=os.environ["GITHUB_REPOSITORY"]
-GITHUB_RUN_ID=os.environ["GITHUB_RUN_ID"]
-GITHUB_API_URL=os.environ["GITHUB_API_URL"]
-GITHUB_WORKFLOWID=os.environ["INPUT_WORKFLOWID"]
-GITHUB_TOKEN = os.environ.get("INPUT_GITHUB-TOKEN")
+def main():
 
-SPLUNK_HEC_URL=os.environ["INPUT_SPLUNK-URL"]+"services/collector/event"
-SPLUNK_HEC_TOKEN=os.environ["INPUT_HEC-TOKEN"]
-SPLUNK_SOURCE=os.environ["INPUT_SOURCE"]
-SPLUNK_SOURCETYPE=os.environ["INPUT_SOURCETYPE"]
+    GITHUB_REF=os.environ["GITHUB_REF"]
+    GITHUB_REPOSITORY=os.environ["GITHUB_REPOSITORY"]
+    GITHUB_RUN_ID=os.environ["GITHUB_RUN_ID"]
+    GITHUB_API_URL=os.environ["GITHUB_API_URL"]
+    GITHUB_WORKFLOWID=os.environ["INPUT_WORKFLOWID"]
+    GITHUB_TOKEN = os.environ.get("INPUT_GITHUB-TOKEN")
 
-batch = count = 0
-eventBatch = ""
-headers = {"Authorization": "Splunk "+SPLUNK_HEC_TOKEN}
-host="$HOSTNAME"
+    SPLUNK_HEC_URL=os.environ["INPUT_SPLUNK-URL"]+"services/collector/event"
+    SPLUNK_HEC_TOKEN=os.environ["INPUT_HEC-TOKEN"]
+    SPLUNK_SOURCE=os.environ["INPUT_SOURCE"]
+    SPLUNK_SOURCETYPE=os.environ["INPUT_SOURCETYPE"]
 
-url = "{url}/repos/{repo}/actions/runs/{run_id}/jobs".format(url=GITHUB_API_URL,repo=GITHUB_REPOSITORY,run_id=GITHUB_RUN_ID)
+    batch = count = 0
+    eventBatch = ""
+    headers = {"Authorization": "Splunk "+SPLUNK_HEC_TOKEN}
+    host="$HOSTNAME"
 
-try:
-    x.requests.get(url, auth=('username',GITHUB_TOKEN))
+    url = "{url}/repos/{repo}/actions/runs/{run_id}/jobs".format(url=GITHUB_API_URL,repo=GITHUB_REPOSITORY,run_id=GITHUB_RUN_ID)
 
-except requests.exceptions.HTTPError as errh:
-    output = "GITHUB API Http Error:" + str(errh)
-    print(f"Error: {output}")
-    print(f"::set-output name=result::{output}")
-    return
-except requests.exceptions.ConnectionError as errc:
-    output = "GITHUB API Error Connecting:" + str(errc)
-    print(f"Error: {output}")
-    print(f"::set-output name=result::{output}")
-    return
-except requests.exceptions.Timeout as errt:
-    output = "Timeout Error:" + str(errt)
-    print(f"Error: {output}")
-    print(f"::set-output name=result::{output}")
-    return
-except requests.exceptions.RequestException as err:
-    output = "GITHUB API Non catched error conecting:" + str(err)
-    print(f"Error: {output}")
-    print(f"::set-output name=result::{output}")
-    return
+    try:
+        x.requests.get(url, auth=('username',GITHUB_TOKEN))
 
-response = json.loads(r.text)
+    except requests.exceptions.HTTPError as errh:
+        output = "GITHUB API Http Error:" + str(errh)
+        print(f"Error: {output}")
+        print(f"::set-output name=result::{output}")
+        return
+    except requests.exceptions.ConnectionError as errc:
+        output = "GITHUB API Error Connecting:" + str(errc)
+        print(f"Error: {output}")
+        print(f"::set-output name=result::{output}")
+        return
+    except requests.exceptions.Timeout as errt:
+        output = "Timeout Error:" + str(errt)
+        print(f"Error: {output}")
+        print(f"::set-output name=result::{output}")
+        return
+    except requests.exceptions.RequestException as err:
+        output = "GITHUB API Non catched error conecting:" + str(err)
+        print(f"Error: {output}")
+        print(f"::set-output name=result::{output}")
+        return
 
-print(response)
+    response = json.loads(r.text)
+
+    print(response)
+
+if __name__ == '__main__':
+    main()
