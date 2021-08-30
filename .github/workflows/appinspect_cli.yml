@@ -61,3 +61,11 @@ jobs:
         with:
           splunk-url: http://54.189.34.108:8088/
           hec-token: ${{ secrets.HEC_TOKEN }}
+
+      - name: Send Workflow logs to Splunk
+        if: ${{ always() }}
+        uses: ./.github/actions/log_to_splunk
+        with:
+          splunk-url: http://54.189.34.108:8088/
+          hec-token: ${{ secrets.HEC_TOKEN }}
+          github-token: ${{ secrets.API_TOKEN }}

@@ -1,41 +1,50 @@
 import os
 import requests
-import re
-from datetime import datetime
 import json
 
-logfile = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), \"file.log\"),'r')
-Lines = logfile.readlines()
+GITHUB_REF=os.environ["GITHUB_REF"]
+GITHUB_REPOSITORY=os.environ["GITHUB_REPOSITORY"]
+GITHUB_RUN_ID=os.environ["GITHUB_RUN_ID"]
+GITHUB_API_URL=os.environ["GITHUB_API_URL"]
+GITHUB_WORKFLOWID=os.environ["INPUT_WORKFLOWID"]
+GITHUB_TOKEN = os.environ.get("INPUT_GITHUB-TOKEN")
+
+SPLUNK_HEC_URL=os.environ["INPUT_SPLUNK-URL"]+"services/collector/event"
+SPLUNK_HEC_TOKEN=os.environ["INPUT_HEC-TOKEN"]
+SPLUNK_SOURCE=os.environ["INPUT_SOURCE"]
+SPLUNK_SOURCETYPE=os.environ["INPUT_SOURCETYPE"]
 
 batch = count = 0
-url = \"$1services/collector/event\"
-token=\"$2\"
-headers = {\"Authorization\": \"Splunk \"+token}
-sourcetype = \"$3\"
 eventBatch = \"\"
-workflowID=\"$5\"
-source=\"$4\"
+headers = {\"Authorization\": \"Splunk \"+SPLUNK_HEC_TOKEN}
 host=\"$HOSTNAME\"
 
-for line in Lines:
-    count+=1
-    timestamp = re.search(\"\d{4}-\d{2}-\d{2}T\d+:\d+:\d+.\d+Z\",line.strip())
-    timestamp = re.sub(\"\dZ\",\"\",timestamp.group())
-    timestamp = datetime.strptime(timestamp,\"%Y-%m-%dT%H:%M:%S.%f\")
-    timestamp = (timestamp - datetime(1970,1,1)).total_seconds()
-    x = re.sub(\"\d{4}-\d{2}-\d{2}T\d+:\d+:\d+.\d+Z\",\"\",line.strip())
-    x=x.strip()
-    fields = {'lineNumber':count,'workflowID':workflowID}
-    if x:
-        batch+=1
-        event={'event':x,'sourcetype':sourcetype,'source':source,'host':host,'time':timestamp,'fields':fields}
-        eventBatch=eventBatch+json.dumps(event)
-    else:
-        print(\"skipped line \"+str(count))
+url = "{url}/repos/{repo}/actions/runs/{run_id}/jobs".format(url=GITHUB_API_URL,repo=GITHUB_REPOSITORY,run_id=GITHUB_RUN_ID)
 
-    if batch>=1000:
-        batch=0
-        x=requests.post(url, data=eventBatch, headers=headers)
-        eventBatch=\"\"
+try:
+    x.requests.get(url, auth=('username',GITHUB_TOKEN))
 
-x=requests.post(url, data=eventBatch, headers=headers)
+except requests.exceptions.HTTPError as errh:
+    output = "GITHUB API Http Error:" + str(errh)
+    print(f"Error: {output}")
+    print(f"::set-output name=result::{output}")
+    return
+except requests.exceptions.ConnectionError as errc:
+    output = "GITHUB API Error Connecting:" + str(errc)
+    print(f"Error: {output}")
+    print(f"::set-output name=result::{output}")
+    return
+except requests.exceptions.Timeout as errt:
+    output = "Timeout Error:" + str(errt)
+    print(f"Error: {output}")
+    print(f"::set-output name=result::{output}")
+    return
+except requests.exceptions.RequestException as err:
+    output = "GITHUB API Non catched error conecting:" + str(err)
+    print(f"Error: {output}")
+    print(f"::set-output name=result::{output}")
+    return
+
+response = json.loads(r.text)
+
+print(response)

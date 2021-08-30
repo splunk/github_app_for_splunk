@@ -7,7 +7,6 @@ WORKDIR /app
 
 RUN pip install --target/app requests
 
-
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
 FROM gcr.io/distroless/python3-debian10
 COPY --from=builder /app /app
