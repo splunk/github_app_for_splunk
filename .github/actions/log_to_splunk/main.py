@@ -47,7 +47,7 @@ def main():
         print(f"::set-output name=result::{output}")
         return
 
-    response = json.loads(x.text)
+    response = json.loads(x.headers)
 
     print(response)
 
