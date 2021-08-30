@@ -1,0 +1,31 @@
+# action.yml
+name: 'Send Workflow Logs to Splunk'
+description: 'Upload GitHub Workflow logs to Splunk HEC'
+inputs:
+  splunk-url:
+    description: 'Full URL for Splunk HEC endpoint'
+    required: true
+  hec-token:
+    description: 'Splunk HEC Token'
+    required: true
+  sourcetype:
+    description: 'Splunk Sourcetype'
+    default: 'github_workflow_log'
+  source:
+    description: 'GitHub Workflow name'
+    default: ${{ github.workflow }}
+  workflowID:
+    description: 'The Workflow Run number'
+    default: ${{ github.run_number}}
+outputs:
+  status:
+    description: 'value is success/fail based on POST result'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.splunk-url }}
+    - ${{ inputs.hec-token }}
+    - ${{ inputs.sourcetype }}
+    - ${{ inputs.source }}
+    - ${{ inputs.workflowID }}
