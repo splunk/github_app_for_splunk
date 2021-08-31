@@ -47,7 +47,7 @@ def main():
         print(f"::set-output name=result::{output}")
         return
 
-    print(x.headers['Location'])
+    print(x.headers)
     print(x.content)
 
 if __name__ == '__main__':
