@@ -48,6 +48,7 @@ def main():
         return
 
     print(x.headers)
+    print(x.content)
 
 if __name__ == '__main__':
     main()
