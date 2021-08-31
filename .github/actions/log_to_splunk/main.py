@@ -24,7 +24,7 @@ def main():
     url = "{url}/repos/{repo}/actions/runs/{run_id}/logs".format(url=GITHUB_API_URL,repo=GITHUB_REPOSITORY,run_id=GITHUB_RUN_ID)
 
     try:
-        x = requests.get(url, auth=('username',GITHUB_TOKEN))
+        x = requests.get(url, stream=True, auth=('token',GITHUB_TOKEN))
 
     except requests.exceptions.HTTPError as errh:
         output = "GITHUB API Http Error:" + str(errh)
