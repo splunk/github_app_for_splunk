@@ -3,6 +3,7 @@ import requests
 import json
 import zipfile
 import io
+import glob
 
 def main():
 
@@ -57,6 +58,8 @@ def main():
     z.extractall()
 
     print(os.listdir())
+    for name in glob.glob('./*.txt'):
+        print(name)
 
 if __name__ == '__main__':
     main()
