@@ -1,0 +1,23 @@
+name: Send Workflow Logs to Splunk
+
+# Controls when the action will run.
+on:
+  workflow_run:
+    workflows: [!"Send Workflow Logs to Splunk"]
+    types:
+      - completed
+
+jobs:
+  WriteLogs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Send Workflow logs to Splunk
+        if: ${{ always() }}
+        uses: ./.github/actions/log_to_splunk
+        with:
+          splunk-url: http://54.189.34.108:8088/
+          hec-token: ${{ secrets.HEC_TOKEN }}
+          github-token: ${{ secrets.API_TOKEN }}
