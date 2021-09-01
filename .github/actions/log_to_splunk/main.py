@@ -1,6 +1,8 @@
 import os
 import requests
 import json
+import zipfile
+import StringIO
 
 def main():
 
@@ -50,7 +52,11 @@ def main():
 
     print(x.headers)
     print(x.status_code)
-    print(x.content)
+
+    z = zipfile.ZipFile(io.BytesIO(x.content))
+    z.extractall(".")
+
+    print(os.listdir())
 
 if __name__ == '__main__':
     main()
