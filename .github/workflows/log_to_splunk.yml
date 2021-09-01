@@ -15,6 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Output Job ID
+        run: echo ${{ github.event.workflow_run.id }}
+
       - name: Send Workflow logs to Splunk
         if: ${{ always() }}
         uses: ./.github/actions/log_to_splunk
