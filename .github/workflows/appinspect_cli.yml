@@ -62,6 +62,10 @@ jobs:
           splunk-url: http://54.189.34.108:8088/
           hec-token: ${{ secrets.HEC_TOKEN }}
 
+  WriteLogs:
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Send Workflow logs to Splunk
         if: ${{ always() }}
         uses: ./.github/actions/log_to_splunk
