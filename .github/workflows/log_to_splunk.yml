@@ -3,7 +3,7 @@ name: Send Workflow Logs to Splunk
 # Controls when the action will run.
 on:
   workflow_run:
-    workflows: [!"Send Workflow Logs to Splunk"]
+    workflows: !["Send Workflow Logs to Splunk"]
     types:
       - completed
 
