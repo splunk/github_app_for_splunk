@@ -7,6 +7,9 @@ on:
     types:
       - completed
 
+env:
+  triggerID: ${{ github.event.workflow_run.id }}
+
 jobs:
   WriteLogs:
     runs-on: ubuntu-latest
@@ -17,8 +20,6 @@ jobs:
 
       - name: Output Job ID
         run: echo ${{ github.event.workflow_run.id }}
-        env:
-          triggerID: ${{ github.event.workflow_run.id }}
 
       - name: Send Workflow logs to Splunk
         if: ${{ always() }}
