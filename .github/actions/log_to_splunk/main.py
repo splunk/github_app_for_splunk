@@ -55,10 +55,7 @@ def main():
     print(x.status_code)
 
     z = zipfile.ZipFile(io.BytesIO(x.content))
-    z.extractall()
-
-    print(os.listdir())
-    print(os.getcwd())
+    z.extractall('/app')
 
     for name in glob.glob('*.txt'):
         logfile = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), name.replace('./','')),'r')
