@@ -59,7 +59,10 @@ def main():
 
     print(os.listdir())
     for name in glob.glob('./*.txt'):
-        print(name)
+        logfile = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), name),'r')
+        Lines = logfile.readlines()
+        for line in Lines:
+            print(line)
 
 if __name__ == '__main__':
     main()
