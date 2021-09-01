@@ -57,7 +57,7 @@ def main():
     z = zipfile.ZipFile(io.BytesIO(x.content))
     z.extractall('/app')
 
-    for name in glob.glob('*.txt'):
+    for name in glob.glob('/app/*.txt'):
         logfile = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), name.replace('./','')),'r')
         Lines = logfile.readlines()
         for line in Lines:
