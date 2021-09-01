@@ -22,7 +22,8 @@ def main():
     host="$HOSTNAME"
 
     url = "{url}/repos/{repo}/actions/runs/{run_id}/logs".format(url=GITHUB_API_URL,repo=GITHUB_REPOSITORY,run_id=GITHUB_RUN_ID)
-
+    print(url)
+    
     try:
         x = requests.get(url, stream=True, auth=('token',GITHUB_TOKEN))
 
