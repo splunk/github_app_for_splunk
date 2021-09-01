@@ -3,13 +3,13 @@ name: Send Workflow Logs to Splunk
 # Controls when the action will run.
 on:
   workflow_run:
-    workflows: !["Send Workflow Logs to Splunk"]
     types:
       - completed
 
 jobs:
   WriteLogs:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.name!='WriteLogs'}}
 
     steps:
       - uses: actions/checkout@v2
