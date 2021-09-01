@@ -18,12 +18,12 @@ def main():
 
     batch = count = 0
     eventBatch = ""
-    headers = {"Authorization": "Splunk "+SPLUNK_HEC_TOKEN}
+    headers = {"Authorization": "Splunk "+SPLUNK_HEC_TOKEN, "Accept": "application/vnd.github.v3+json"}
     host="$HOSTNAME"
 
     url = "{url}/repos/{repo}/actions/runs/{run_id}/logs".format(url=GITHUB_API_URL,repo=GITHUB_REPOSITORY,run_id=GITHUB_RUN_ID)
     print(url)
-    
+
     try:
         x = requests.get(url, stream=True, auth=('token',GITHUB_TOKEN))
 
@@ -49,6 +49,7 @@ def main():
         return
 
     print(x.headers)
+    print(x.status_code)
     print(x.content)
 
 if __name__ == '__main__':
