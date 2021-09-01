@@ -17,6 +17,8 @@ jobs:
 
       - name: Output Job ID
         run: echo ${{ github.event.workflow_run.id }}
+        env:
+          triggerID: ${{ github.event.workflow_run.id }}
 
       - name: Send Workflow logs to Splunk
         if: ${{ always() }}
@@ -25,4 +27,4 @@ jobs:
           splunk-url: http://54.189.34.108:8088/
           hec-token: ${{ secrets.HEC_TOKEN }}
           github-token: ${{ secrets.API_TOKEN }}
-          workflowID: ${{ github.event.workflow_run.id }}
+          workflowID: ${{ env.triggerID }}
