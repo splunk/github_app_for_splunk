@@ -2,7 +2,7 @@ import os
 import requests
 import json
 import zipfile
-import StringIO
+import io
 
 def main():
 
@@ -54,7 +54,7 @@ def main():
     print(x.status_code)
 
     z = zipfile.ZipFile(io.BytesIO(x.content))
-    z.extractall(".")
+    z.extractall()
 
     print(os.listdir())
 
