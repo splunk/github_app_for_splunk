@@ -77,7 +77,7 @@ def main():
                 event={'event':x,'sourcetype':SPLUNK_SOURCETYPE,'source':SPLUNK_SOURCE,'host':host,'time':timestamp,'fields':fields}
                 eventBatch=eventBatch+json.dumps(event)
             else:
-                print(\"skipped line \"+str(count))
+                print("skipped line "+str(count))
 
             if batch>=1000:
                 batch=0
