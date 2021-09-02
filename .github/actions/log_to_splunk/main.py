@@ -67,6 +67,9 @@ def main():
         Lines = logfile.readlines()
         for line in Lines:
             if line:
+                print(count)
+                print(line)
+                
                 count+=1
                 timestamp = re.search("\d{4}-\d{2}-\d{2}T\d+:\d+:\d+.\d+Z",line.strip())
                 timestamp = re.sub("\dZ","",timestamp.group())
