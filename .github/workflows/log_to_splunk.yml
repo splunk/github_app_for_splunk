@@ -9,6 +9,7 @@ on:
 
 env:
   triggerID: ${{ github.event.workflow_run.id }}
+  triggerJob: ${{ github.event.workflow_run.name }}
 
 jobs:
   WriteLogs:
@@ -29,3 +30,4 @@ jobs:
           hec-token: ${{ secrets.HEC_TOKEN }}
           github-token: ${{ secrets.API_TOKEN }}
           workflowID: ${{ env.triggerID }}
+          source: ${{ env.triggerJob }}

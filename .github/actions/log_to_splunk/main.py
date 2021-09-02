@@ -64,7 +64,6 @@ def main():
             print(line)
 
     print(SPLUNK_HEC_URL)
-    print(SPLUNK_HEC_TOKEN)
     print(SPLUNK_SOURCE)
     print(SPLUNK_SOURCETYPE)
 
