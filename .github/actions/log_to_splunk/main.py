@@ -67,7 +67,6 @@ def main():
         logfile = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), name.replace('./','')),'r')
         Lines = logfile.readlines()
         for line in Lines:
-            print(count)
 
             if line:
                 count+=1
