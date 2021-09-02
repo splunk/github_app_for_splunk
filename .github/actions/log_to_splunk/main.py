@@ -61,6 +61,7 @@ def main():
 
     batch = count = 0
     headers = {"Authorization": "Splunk "+SPLUNK_HEC_TOKEN}
+    timestamp=0
 
     for name in glob.glob('/app/*.txt'):
         logfile = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), name.replace('./','')),'r')
@@ -80,7 +81,7 @@ def main():
                     timestamp = (timestamp - datetime(1970,1,1)).total_seconds()
                 else:
                     timestamp=t2
-                    
+
                 x = re.sub("\d{4}-\d{2}-\d{2}T\d+:\d+:\d+.\d+Z","",line.strip())
                 x=x.strip()
                 fields = {'lineNumber':count,'workflowID':GITHUB_WORKFLOWID}
