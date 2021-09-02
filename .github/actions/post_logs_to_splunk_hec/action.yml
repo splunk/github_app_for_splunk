@@ -10,7 +10,7 @@ inputs:
     required: true
   sourcetype:
     description: 'Splunk Sourcetype'
-    default: 'github_workflow_log'
+    default: 'github_workflow_log_job'
   source:
     description: 'GitHub Workflow name'
     default: ${{ github.workflow }}
