@@ -66,25 +66,26 @@ def main():
         logfile = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), name.replace('./','')),'r')
         Lines = logfile.readlines()
         for line in Lines:
-            count+=1
-            timestamp = re.search("\d{4}-\d{2}-\d{2}T\d+:\d+:\d+.\d+Z",line.strip())
-            timestamp = re.sub("\dZ","",timestamp.group())
-            timestamp = datetime.strptime(timestamp,"%Y-%m-%dT%H:%M:%S.%f")
-            timestamp = (timestamp - datetime(1970,1,1)).total_seconds()
-            x = re.sub("\d{4}-\d{2}-\d{2}T\d+:\d+:\d+.\d+Z","",line.strip())
-            x=x.strip()
-            fields = {'lineNumber':count,'workflowID':GITHUB_WORKFLOWID}
-            if x:
-                batch+=1
-                event={'event':x,'sourcetype':SPLUNK_SOURCETYPE,'source':SPLUNK_SOURCE,'host':host,'time':timestamp,'fields':fields}
-                eventBatch=eventBatch+json.dumps(event)
-            else:
-                print("skipped line "+str(count))
+            if line:
+                count+=1
+                timestamp = re.search("\d{4}-\d{2}-\d{2}T\d+:\d+:\d+.\d+Z",line.strip())
+                timestamp = re.sub("\dZ","",timestamp.group())
+                timestamp = datetime.strptime(timestamp,"%Y-%m-%dT%H:%M:%S.%f")
+                timestamp = (timestamp - datetime(1970,1,1)).total_seconds()
+                x = re.sub("\d{4}-\d{2}-\d{2}T\d+:\d+:\d+.\d+Z","",line.strip())
+                x=x.strip()
+                fields = {'lineNumber':count,'workflowID':GITHUB_WORKFLOWID}
+                if x:
+                    batch+=1
+                    event={'event':x,'sourcetype':SPLUNK_SOURCETYPE,'source':SPLUNK_SOURCE,'host':host,'time':timestamp,'fields':fields}
+                    eventBatch=eventBatch+json.dumps(event)
+                else:
+                    print("skipped line "+str(count))
 
-            if batch>=1000:
-                batch=0
-                x=requests.post(SPLUNK_HEC_URL, data=eventBatch, headers=headers)
-                eventBatch=""
+                if batch>=1000:
+                    batch=0
+                    x=requests.post(SPLUNK_HEC_URL, data=eventBatch, headers=headers)
+                    eventBatch=""
 
         x=requests.post(SPLUNK_HEC_URL, data=eventBatch, headers=headers)
 
