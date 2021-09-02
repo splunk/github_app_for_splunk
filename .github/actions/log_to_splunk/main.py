@@ -60,7 +60,6 @@ def main():
     timestamp = batch = count = 0
 
     for name in glob.glob('/app/*.txt'):
-        print("Sending file "+name)
         logfile = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), name.replace('./','')),'r')
         Lines = logfile.readlines()
         for line in Lines:
@@ -84,7 +83,6 @@ def main():
                 if x:
                     batch+=1
                     event={'event':x,'sourcetype':SPLUNK_SOURCETYPE,'source':name,'host':host,'time':timestamp,'fields':fields}
-                    print(event)
                     eventBatch=eventBatch+json.dumps(event)
                 else:
                     print("skipped line "+str(count))
@@ -94,7 +92,7 @@ def main():
                     x=requests.post(SPLUNK_HEC_URL, data=eventBatch, headers=headers)
                     eventBatch=""
 
-        x=requests.post(SPLUNK_HEC_URL, data=eventBatch, headers=headers)
+    x=requests.post(SPLUNK_HEC_URL, data=eventBatch, headers=headers)
 
 if __name__ == '__main__':
     main()
