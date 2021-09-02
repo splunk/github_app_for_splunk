@@ -16,7 +16,7 @@ inputs:
     default: ${{ github.workflow }}
   workflowID:
     description: 'The Workflow Run number'
-    default: ${{ github.run_number}}
+    default: ${{ github.run_id}}
 outputs:
   status:
     description: 'value is success/fail based on app inspect result'
