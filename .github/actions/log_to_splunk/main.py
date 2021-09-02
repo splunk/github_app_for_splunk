@@ -53,9 +53,6 @@ def main():
         print(f"::set-output name=result::{output}")
         return
 
-    print(x.headers)
-    print(x.status_code)
-
     z = zipfile.ZipFile(io.BytesIO(x.content))
     z.extractall('/app')
 
@@ -87,6 +84,7 @@ def main():
                 if x:
                     batch+=1
                     event={'event':x,'sourcetype':SPLUNK_SOURCETYPE,'source':name,'host':host,'time':timestamp,'fields':fields}
+                    print(event)
                     eventBatch=eventBatch+json.dumps(event)
                 else:
                     print("skipped line "+str(count))
