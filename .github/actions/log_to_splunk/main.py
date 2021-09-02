@@ -70,10 +70,17 @@ def main():
 
             if line:
                 count+=1
+                if timestamp:
+                    t2=timestamp
                 timestamp = re.search("\d{4}-\d{2}-\d{2}T\d+:\d+:\d+.\d+Z",line.strip())
-                timestamp = re.sub("\dZ","",timestamp.group())
-                timestamp = datetime.strptime(timestamp,"%Y-%m-%dT%H:%M:%S.%f")
-                timestamp = (timestamp - datetime(1970,1,1)).total_seconds()
+
+                if timestamp.group():
+                    timestamp = re.sub("\dZ","",timestamp.group())
+                    timestamp = datetime.strptime(timestamp,"%Y-%m-%dT%H:%M:%S.%f")
+                    timestamp = (timestamp - datetime(1970,1,1)).total_seconds()
+                else:
+                    timestamp=t2
+                    
                 x = re.sub("\d{4}-\d{2}-\d{2}T\d+:\d+:\d+.\d+Z","",line.strip())
                 x=x.strip()
                 fields = {'lineNumber':count,'workflowID':GITHUB_WORKFLOWID}
