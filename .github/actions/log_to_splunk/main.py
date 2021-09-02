@@ -21,7 +21,7 @@ def main():
 
     batch = count = 0
     eventBatch = ""
-    headers = {"Authorization": "Splunk "+SPLUNK_HEC_TOKEN, "Accept": "application/vnd.github.v3+json"}
+    headers = {"Authorization": "Splunk "+SPLUNK_HEC_TOKEN}
     host="$HOSTNAME"
 
     url = "{url}/repos/{repo}/actions/runs/{run_id}/logs".format(url=GITHUB_API_URL,repo=GITHUB_REPOSITORY,run_id=GITHUB_WORKFLOWID)
@@ -62,6 +62,11 @@ def main():
         Lines = logfile.readlines()
         for line in Lines:
             print(line)
+
+    print(SPLUNK_HEC_URL)
+    print(SPLUNK_HEC_TOKEN)
+    print(SPLUNK_SOURCE)
+    print(SPLUNK_SOURCETYPE)
 
 if __name__ == '__main__':
     main()
