@@ -63,7 +63,6 @@ def main():
     timestamp = batch = count = 0
 
     for name in glob.glob('/app/*.txt'):
-        count=0
         logfile = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), name.replace('./','')),'r')
         Lines = logfile.readlines()
         for line in Lines:
@@ -86,7 +85,7 @@ def main():
                 fields = {'lineNumber':count,'workflowID':GITHUB_WORKFLOWID}
                 if x:
                     batch+=1
-                    event={'event':x,'sourcetype':SPLUNK_SOURCETYPE,'source':SPLUNK_SOURCE,'host':host,'time':timestamp,'fields':fields}
+                    event={'event':x,'sourcetype':SPLUNK_SOURCETYPE,'source':name,'host':host,'time':timestamp,'fields':fields}
                     eventBatch=eventBatch+json.dumps(event)
                 else:
                     print("skipped line "+str(count))
