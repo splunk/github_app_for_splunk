@@ -63,6 +63,7 @@ def main():
     timestamp = batch = count = 0
 
     for name in glob.glob('/app/*.txt'):
+        print("Sending file "+name)
         logfile = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), name.replace('./','')),'r')
         Lines = logfile.readlines()
         for line in Lines:
