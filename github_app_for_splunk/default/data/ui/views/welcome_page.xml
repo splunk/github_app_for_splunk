@@ -1,0 +1,95 @@
+<dashboard>
+  <label>Welcome Page</label>
+  <row>
+    <panel>
+      <html>
+        <style>
+          .welcome-header {
+            padding: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #F4F6F7;
+          }
+        </style>
+        <div class="welcome-header">
+          <h1>Welcome to the GitHub App for Splunk!</h1>
+          <p>
+            This Splunk app is meant to be your single pane of glass for anything GitHub. Whether you're looking for audit log analytics, GitHub Enterprise Server monitoring, or other GitHub metrics, you're in the right place!
+          </p>
+        </div>  
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <style>
+          .welcome-header {
+            padding: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #F4F6F7;
+          }
+        </style>
+        <div>
+          <h2><b>GitHub Enterprise Server</b></h2>
+          <p>
+            GitHub Enterprise Server users have several different parts of the App that may be helpful.
+            <ol>
+              <li>The "Enterprise Server Monitor" drop down has several dashboards that report on the health and performance of your GHES environment</li>
+              <li>"Audit" drop down works for GHES as well as GitHub.com audit logs</li>
+              <li>The <a href="alerts">Alerts</a> menu item contains all GitHub recommended alerts</li>
+            </ol>
+          </p>
+        </div>  
+      </html>
+    </panel>
+    <panel>
+      <html>
+        <style>
+          .welcome-header {
+            padding: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #F4F6F7;
+          }
+        </style>
+        <div>
+          <h2><b>Audit and Security</b></h2>
+          <p>
+            Security users will probably be most interested in the Audit dashboards
+            <ol>
+              <li><a href="audit_log_activity">Audit Log Activity</a> provides a highlevel overview of what activity is going on in GitHub.</li>
+              <li><a href="repository_audit">Repository Audit</a> lets you review changes to individual or groups of repositories </li>
+              <li><a href="user_audit">User Change Audit</a> is the best place to review actions taken by or made to individual users.</li>
+            </ol>
+          </p>
+        </div>  
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <style>
+          .welcome-header {
+            padding: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #F4F6F7;
+          }
+        </style>
+        <div>
+          <h2><b>How to collect GitHub Data</b></h2>
+          <p>
+            GitHub has several ways to collect data from their services depending on your needs. Information is available within the App on how to collect different types of data from GitHub:
+            <ol>
+              <li><a href="api_config">Audit Log</a> data is available through a Splunk Add-On</li>
+              <li><a href="webhook_config">Rich commit and pull request</a> data is available through GitHub Webhooks</li>
+            </ol>
+          </p>
+        </div>  
+      </html>
+    </panel>
+  </row>
+</dashboard>

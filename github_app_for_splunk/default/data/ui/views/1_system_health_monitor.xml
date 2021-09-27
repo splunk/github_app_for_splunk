@@ -1,4 +1,4 @@
-<form version="1.1">
+<form>
   <label>System Health Monitor</label>
   <fieldset submitButton="false" autoRun="true">
     <input type="time" token="timeTkn" searchWhenChanged="true">
@@ -137,9 +137,8 @@
       <chart>
         <title>Forks</title>
         <search>
-          <query>| mstats avg(_value) prestats=true WHERE `github_collectd` AND metric_name="processes.fork_rate.value" AND host="$envTkn$" span=10s BY metric_name
-| eval metric_name=mvindex(split(metric_name,"."),1)
-| timechart avg(_value) as "Avg" span=10sec by metric_name</query>
+          <query>| mstats rate_avg("processes.fork_rate.value") as "Rate (Avg) /s" chart=true WHERE `github_collectd` host="$envTkn$" span=10s
+| fields - _span*</query>
           <earliest>$timeTkn.earliest$</earliest>
           <latest>$timeTkn.latest$</latest>
         </search>

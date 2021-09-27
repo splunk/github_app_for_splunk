@@ -1,6 +1,13 @@
-<form>
+<form theme="dark">
+  <search id="baseSearch">
+    <query>
+      index=github_webhook (eventtype="GitHub::Issue" (action IN("opened","milestoned")) OR (action="labeled" AND label.name IN("in progress","to do"))) OR (eventtype="GitHub::Push" issueNumber=*) OR (eventtype="GitHub::PullRequest" action IN("opened","closed") issueNumber=*) repository.name IN("$repoTkn$") issueNumber!=9 | eval openTime=if(action=="opened",_time,NULL) | eval inProgressTime=if(action=="labeled",if('label.name'=="to do",_time,NULL),if(action=="milestoned",_time,NULL)) | eval workTime=if(action="labeled",if('label.name'="in progress",_time,NULL),if(eventtype=="GitHub::Push",_time,NULL)) | eval mergeTime=if(eventtype="GitHub::PullRequest",if(action=="opened",_time,NULL),if(eventtype="GitHub::Push",if(ref="refs/heads/main",_time,NULL),NULL)) | eval reviewTime=if(eventtype="GitHub::PullRequest",if('pull_request.merged'="true",_time,NULL),if(eventtype="GitHub::Push",if(ref="refs/heads/main",_time,NULL),NULL)) | eval sha=after | join type=left max=0 sha [ search index="github_webhook" eventtype="GitHub::Workflow" | eval sha='workflow_job.head_sha' | stats min(_time) as startTestTime, max(_time) as endTestTime by sha, workflow_job.id | eval testTimeDiff=endTestTime-startTestTime] | eval release='milestone.title' | join type=left release [search index=github_webhook eventtype="GitHub::Release" | eval release='release.tag_name' | stats max(_time) as releaseTime by release] | stats  max(issue.title) as issue.title, latest(milestone.title) as release, min(openTime) as opened, min(inProgressTime) as in_progress, min(workTime) as working , max(mergeTime) as merge, max(reviewTime) as review, avg(testTimeDiff) as avgTestDuration, max(endTestTime) as endTestTime, max(releaseTime) as releaseTime by repository.name,issueNumber | search opened=*
+    </query>
+    <earliest>$timeTkn.earliest$</earliest>
+    <latest>$timeTkn.latest$</latest>
+  </search>
   <label>Value Stream Analytics</label>
-  <fieldset submitButton="false">
+  <fieldset submitButton="false" autoRun="true">
     <input type="time" token="timeTkn" searchWhenChanged="true">
       <label></label>
       <default>
@@ -27,12 +34,36 @@
   </fieldset>
   <row>
     <panel>
+      <title>Total Time</title>
+      <single>
+        <search base="baseSearch">
+          <query> | eval totalTimeDiff=releaseTime-opened | stats avg(totalTimeDiff) as totalTime | eval totalTime=toString(round(totalTime),"Duration")</query>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051", "0x0877a6", "0xf8be34", "0xf1813f", "0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">0</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
       <title>Step 1: Time to Accept</title>
       <single>
-        <search>
-          <query>`github_webhooks` (eventtype="GitHub::Issue" (action IN("opened","milestoned")) OR (action="labeled" AND label.name="in progress")) OR (eventtype="GitHub::Push" issueNumber=*) repository.name IN($repoTkn$) | eval openTime=if(action=="opened",_time,NULL) | eval inProgressTime=if(action=="labeled",_time,if(action="milestoned",_time,NULL)) | eval workTime=if(eventtype=="GitHub::Push",_time,NULL) | stats min(openTime) as opened, min(inProgressTime) as in_progress, min(workTime) as working by repository.name,issueNumber | search opened=* | eval acceptTimeDiff=in_progress-opened | eval workingTimeDiff=working-in_progress | search acceptTimeDiff=* | stats avg(acceptTimeDiff) as acceptTime | eval acceptTime=toString(round(acceptTime),"Duration")</query>
-          <earliest>$timeTkn.earliest$</earliest>
-          <latest>$timeTkn.latest$</latest>
+        <search base="baseSearch">
+          <query> | eval acceptTimeDiff=in_progress-opened | stats avg(acceptTimeDiff) as acceptTime | eval acceptTime=toString(round(acceptTime),"Duration")</query>
         </search>
         <option name="drilldown">none</option>
         <option name="refresh.display">progressbar</option>
@@ -41,10 +72,50 @@
     <panel>
       <title>Step 2: Time to Work</title>
       <single>
-        <search>
-          <query>`github_webhooks` (eventtype="GitHub::Issue" (action IN("opened","milestoned")) OR (action="labeled" AND label.name="in progress")) OR (eventtype="GitHub::Push" issueNumber=*) repository.name IN($repoTkn$) | eval openTime=if(action=="opened",_time,NULL) | eval inProgressTime=if(action=="labeled",_time,if(action="milestoned",_time,NULL)) | eval workTime=if(eventtype=="GitHub::Push",_time,NULL) | stats min(openTime) as opened, min(inProgressTime) as in_progress, min(workTime) as working by repository.name,issueNumber | search opened=* | eval acceptTimeDiff=in_progress-opened | eval workingTimeDiff=working-in_progress | search workingTimeDiff&gt;0 | stats avg(workingTimeDiff) as workingTime | eval workingTime=toString(round(workingTime),"Duration")</query>
-          <earliest>$timeTkn.earliest$</earliest>
-          <latest>$timeTkn.latest$</latest>
+        <search base="baseSearch">
+          <query>| eval workingTimeDiff=working-in_progress | search workingTimeDiff&gt;0 | stats avg(workingTimeDiff) as workingTime | eval workingTime=toString(round(workingTime),"Duration")</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Step 3: Time to Merge</title>
+      <single>
+        <search base="baseSearch">
+          <query>| eval mergeTimeDiff=merge-working | stats avg(mergeTimeDiff) as mergeTime | eval mergeTime=toString(round(mergeTime),"Duration")</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Step 4: Time to Review</title>
+      <single>
+        <search base="baseSearch">
+          <query>| eval reviewTimeDiff=review-merge | stats avg(reviewTimeDiff) as reviewTime | eval reviewTime=toString(round(reviewTime),"Duration") </query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Step 5: Time to Test</title>
+      <single>
+        <search base="baseSearch">
+          <query>| eval testTimeDiff=endTestTime-review | stats avg(testTimeDiff) as testTime | eval testTime=toString(round(testTime),"Duration") </query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Step 6: Time to Release</title>
+      <single>
+        <search base="baseSearch">
+          <query>| eval releaseTimeDiff=releaseTime-endTestTime | stats avg(releaseTimeDiff) as releaseTime | eval releaseTime=toString(round(releaseTime),"Duration")</query>
         </search>
         <option name="drilldown">none</option>
         <option name="refresh.display">progressbar</option>
@@ -54,11 +125,8 @@
   <row>
     <panel>
       <table>
-        <search>
-          <query>`github_webhooks` repository.name IN($repoTkn$) (eventtype="GitHub::Issue" (action IN("opened","milestoned")) OR (action="labeled" AND label.name="in progress")) OR (eventtype="GitHub::Push" issueNumber=*) | eval openTime=if(action=="opened",_time,NULL) | eval inProgressTime=if(action=="labeled",_time,if(action="milestoned",_time,NULL)) | eval workTime=if(eventtype=="GitHub::Push",_time,NULL) | stats max(issue.title) as issue.title, min(openTime) as opened, min(inProgressTime) as in_progress, max(workTime) as working by repository.name,issueNumber | search opened=* | eval acceptTimeDiff=in_progress-opened | eval workingTimeDiff=working-in_progress | eval acceptTime=toString(round(acceptTimeDiff),"Duration"), workingTime=toString(round(workingTimeDiff),"Duration") | fields repository.name, issueNumber, issue.title, acceptTime, workingTime</query>
-          <earliest>$timeTkn.earliest$</earliest>
-          <latest>$timeTkn.latest$</latest>
-          <sampleRatio>1</sampleRatio>
+        <search base="baseSearch">
+          <query>| eval  acceptTimeDiff=in_progress-opened  | eval  workingTimeDiff=working-in_progress  | eval  mergeTimeDiff=merge-working  | eval  reviewTimeDiff=review-merge | eval releaseTimeDiff=releaseTime-endTestTime | eval totalTimeDiff=releaseTime-opened  | eval  acceptTime=toString(round(acceptTimeDiff),"Duration"), workingTime=toString(round(workingTimeDiff),"Duration"), mergeTime=toString(round(mergeTimeDiff),"Duration"),reviewTime=toString(round(reviewTimeDiff),"Duration"), testTime=toString(round(endTestTime-review),"Duration"), testDuration=toString(round(avgTestDuration),"Duration"), releaseTime=toString(round(releaseTimeDiff),"Duration"), totalTime=toString(round(totalTimeDiff),"Duration")  | eval  opened=strftime(opened,"%m/%d/%Y %H:%M")  | fields  repository.name, issueNumber, issue.title, opened, acceptTime, workingTime, mergeTime, reviewTime, testTime, testDuration, releaseTime, totalTime</query>
         </search>
         <option name="count">20</option>
         <option name="dataOverlayMode">none</option>
