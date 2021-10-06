@@ -24,7 +24,7 @@ def main():
     batch = count = 0
     eventBatch = ""
     headers = {"Authorization": "Splunk "+SPLUNK_HEC_TOKEN}
-    host="$HOSTNAME"
+    host=os.uname()[1]
 
     url = "{url}/repos/{repo}/actions/runs/{run_id}/logs".format(url=GITHUB_API_URL,repo=GITHUB_REPOSITORY,run_id=GITHUB_WORKFLOWID)
     print(url)
@@ -79,10 +79,11 @@ def main():
 
                 x = re.sub("\d{4}-\d{2}-\d{2}T\d+:\d+:\d+.\d+Z","",line.strip())
                 x=x.strip()
-                fields = {'lineNumber':count,'workflowID':GITHUB_WORKFLOWID}
+                job_name=re.search("\/\d+\_(?<job>.*)\.txt",name)
+                fields = {'lineNumber':count,'workflowID':GITHUB_WORKFLOWID,'job':job_name}
                 if x:
                     batch+=1
-                    event={'event':x,'sourcetype':SPLUNK_SOURCETYPE,'source':name,'host':host,'time':timestamp,'fields':fields}
+                    event={'event':x,'sourcetype':SPLUNK_SOURCETYPE,'source':SPLUNK_SOURCE,'host':host,'time':timestamp,'fields':fields}
                     eventBatch=eventBatch+json.dumps(event)
                 else:
                     print("skipped line "+str(count))
