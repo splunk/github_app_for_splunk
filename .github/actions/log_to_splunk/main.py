@@ -31,8 +31,6 @@ def main():
     try:
         x = requests.get(summary_url, stream=True, auth=('token',GITHUB_TOKEN))
 
-    print(x.text)
-
     except requests.exceptions.HTTPError as errh:
         output = "GITHUB API Http Error:" + str(errh)
         print(f"Error: {output}")
@@ -53,6 +51,8 @@ def main():
         print(f"Error: {output}")
         print(f"::set-output name=result::{output}")
         return
+
+    print(x.text)
 
     url = "{url}/repos/{repo}/actions/runs/{run_id}/logs".format(url=GITHUB_API_URL,repo=GITHUB_REPOSITORY,run_id=GITHUB_WORKFLOWID)
     print(url)
