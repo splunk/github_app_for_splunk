@@ -54,14 +54,12 @@ def main():
 
     summary = json.loads(x.text)
 
-    for element in summary:
-        element.pop('repository', None)
+    summary.pop('repository')
 
     summary["repository"]=summary["head_repository"]["name"]
     summary["repository_full"]=summary["head_repository"]["full_name"]
 
-    for element in summary:
-        element.pop('head_repository', None)
+    summary.pop('head_repository')
 
 
     url = "{url}/repos/{repo}/actions/runs/{run_id}/logs".format(url=GITHUB_API_URL,repo=GITHUB_REPOSITORY,run_id=GITHUB_WORKFLOWID)
