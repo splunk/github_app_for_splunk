@@ -52,7 +52,7 @@ def main():
         print(f"::set-output name=result::{output}")
         return
 
-    summary = json.loads(x)
+    summary = json.loads(x.text)
 
     for element in summary:
         element.pop('repository', None)
