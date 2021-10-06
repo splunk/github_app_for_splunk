@@ -61,6 +61,8 @@ def main():
 
     summary.pop('head_repository')
 
+    print(summary)
+
 
     url = "{url}/repos/{repo}/actions/runs/{run_id}/logs".format(url=GITHUB_API_URL,repo=GITHUB_REPOSITORY,run_id=GITHUB_WORKFLOWID)
     print(url)
