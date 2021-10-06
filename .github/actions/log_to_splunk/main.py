@@ -61,8 +61,12 @@ def main():
 
     summary.pop('head_repository')
 
+    print(summary)
+
     event={'event':json.dumps(summary),'sourcetype':SPLUNK_SOURCETYPE,'source':'workflow_sumary','host':host,'time':summary["updated_at"]}
     event=json.dumps(event)
+
+    print(event)
 
     x=requests.post(SPLUNK_HEC_URL, data=event, headers=headers)
 
