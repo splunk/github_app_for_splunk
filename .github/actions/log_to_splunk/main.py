@@ -61,15 +61,11 @@ def main():
 
     summary.pop('head_repository')
 
-    print(json.dumps(summary))
-
     utc_time = datetime.strptime(summary["updated_at"], "%Y-%m-%dT%H:%M:%SZ")
     epoch_time = (utc_time - datetime(1970, 1, 1)).total_seconds()
 
-    event={'event':json.dumps(summary),'sourcetype':SPLUNK_SOURCETYPE,'source':'workflow_sumary','host':host,'time':epoch_time}
+    event={'event':json.dumps(summary),'sourcetype':SPLUNK_SOURCETYPE,'source':'workflow_summary','host':host,'time':epoch_time}
     event=json.dumps(event)
-
-    print(event)
 
     x=requests.post(SPLUNK_HEC_URL, data=event, headers=headers)
 
