@@ -26,6 +26,34 @@ def main():
     headers = {"Authorization": "Splunk "+SPLUNK_HEC_TOKEN}
     host=os.uname()[1]
 
+    summary_url = "{url}/repos/{repo}/actions/runs/{run_id}".format(url=GITHUB_API_URL,repo=GITHUB_REPOSITORY,run_id=GITHUB_WORKFLOWID)
+
+    try:
+        x = requests.get(summary_url, stream=True, auth=('token',GITHUB_TOKEN))
+
+    print(x.text)
+
+    except requests.exceptions.HTTPError as errh:
+        output = "GITHUB API Http Error:" + str(errh)
+        print(f"Error: {output}")
+        print(f"::set-output name=result::{output}")
+        return
+    except requests.exceptions.ConnectionError as errc:
+        output = "GITHUB API Error Connecting:" + str(errc)
+        print(f"Error: {output}")
+        print(f"::set-output name=result::{output}")
+        return
+    except requests.exceptions.Timeout as errt:
+        output = "Timeout Error:" + str(errt)
+        print(f"Error: {output}")
+        print(f"::set-output name=result::{output}")
+        return
+    except requests.exceptions.RequestException as err:
+        output = "GITHUB API Non catched error conecting:" + str(err)
+        print(f"Error: {output}")
+        print(f"::set-output name=result::{output}")
+        return
+
     url = "{url}/repos/{repo}/actions/runs/{run_id}/logs".format(url=GITHUB_API_URL,repo=GITHUB_REPOSITORY,run_id=GITHUB_WORKFLOWID)
     print(url)
 
