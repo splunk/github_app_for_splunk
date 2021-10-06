@@ -79,7 +79,8 @@ def main():
 
                 x = re.sub("\d{4}-\d{2}-\d{2}T\d+:\d+:\d+.\d+Z","",line.strip())
                 x=x.strip()
-                job_name=re.search("\/\d+\_(?<job>.*)\.txt",name)
+                job_name=re.search("\/\d+\_(?P<job>.*)\.txt",name)
+                job_name=job_name.group('job')
                 fields = {'lineNumber':count,'workflowID':GITHUB_WORKFLOWID,'job':job_name}
                 if x:
                     batch+=1
