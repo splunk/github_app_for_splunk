@@ -52,7 +52,7 @@ def main():
         print(f"::set-output name=result::{output}")
         return
 
-    summary = json.loads(x.text)
+    summary = x.json()
 
     summary.pop('repository')
 
@@ -61,7 +61,7 @@ def main():
 
     summary.pop('head_repository')
 
-    print(summary)
+    print(json.dumps(summary))
 
     event={'event':json.dumps(summary),'sourcetype':SPLUNK_SOURCETYPE,'source':'workflow_sumary','host':host,'time':summary["updated_at"]}
     event=json.dumps(event)
