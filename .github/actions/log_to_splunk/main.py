@@ -61,7 +61,10 @@ def main():
 
     summary.pop('head_repository')
 
-    print(summary)
+    event={'event':json.dumps(summary),'sourcetype':SPLUNK_SOURCETYPE,'source':'workflow_sumary','host':host,'time':summary["updated_at"]}
+    event=json.dumps(event)
+
+    x=requests.post(SPLUNK_HEC_URL, data=event, headers=headers)
 
 
     url = "{url}/repos/{repo}/actions/runs/{run_id}/logs".format(url=GITHUB_API_URL,repo=GITHUB_REPOSITORY,run_id=GITHUB_WORKFLOWID)
@@ -94,7 +97,6 @@ def main():
     z = zipfile.ZipFile(io.BytesIO(x.content))
     z.extractall('/app')
 
-    headers = {"Authorization": "Splunk "+SPLUNK_HEC_TOKEN}
     timestamp = batch = count = 0
 
     for name in glob.glob('/app/*.txt'):
