@@ -1,14 +1,24 @@
 <nav search_view="search" color="#24292e">
-  <collection label="Enterprise Server Monitor"  default='true'>
+  <view name="welcome_page" default='true'/>
+  <collection label="Enterprise Server Monitor">
     <view source="all" match="monitor" />
   </collection>
-  <collection label="Audit"  default='true'>
-    <view source="all" match="audit" />
+  <collection label="Audit">
+    <view name="audit_log_activity" />
+    <view name="repository_audit" />
+    <view name="user_audit" />
   </collection>
-  <view name="integration_monitoring"/>
+  <collection label="Security">
+    <view name="security_alert_overview" />
+  </collection>
+  <collection label="Developer Insights">
+    <view name="value_stream_analytics" />
+    <view name="workflow_analytics" />
+  </collection>
   <collection label="Config">
     <view source="all" match="config" />
   </collection>
-  <view name="search" />
+  <view name="search"/>
   <view name="dashboards" />
+  <view name="alerts" />
 </nav>
