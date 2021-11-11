@@ -3,10 +3,10 @@
   <row>
     <panel>
       <html>
-        <h1>Using Github Webhooks</h1>
-        <p>Github Webhooks are a great way to collect rich information as it occurs. You can easily enable webhooks within the Github UI and can even select specific actions on which to trigger a webhook call to Splunk. This is only available at the Organization level and will require this to be done for each Org as desired. To do so, you'll need to configure Splunk as a receiver and then setup the webhooks within Github.</p>
+        <h1>Using GitHub Webhooks</h1>
+        <p>GitHub Webhooks are a great way to collect rich information as it occurs. You can easily enable webhooks within the GitHub UI and can even select specific actions on which to trigger a webhook call to Splunk. This is only available at the Organization level and will require this to be done for each Org as desired. To do so, you'll need to configure Splunk as a receiver and then setup the webhooks within GitHub.</p>
         <h2><b>Configuring Splunk to receive Webhooks</b></h2>
-        <p>Splunk's HTTP Event Collector (HEC) is a quick and easy endpoint built to receive data from other producers like Github.</p>
+        <p>Splunk's HTTP Event Collector (HEC) is a quick and easy endpoint built to receive data from other producers like GitHub.</p>
         <p><b>Steps</b>
         <ol>
           <li>Under Settings &gt; Data Inputs, click <code>HTTP Event Collector</code></li>
@@ -15,13 +15,13 @@
           <li>Unless required by your SPlunk administrator, the rest of this page can be left as is and continue onto the next step.</li>
           <li>You'll want to click <code>select</code> for Source Type, and a new selection box will appear below that.</li>
           <li>Under the Application option, there should be an entry for <code>github_json</code>, however you may need to use the little search bar to find it.</li>
-          <li>For App Context, you'll want to select <code>Splunk App for Github</code></li>
+          <li>For App Context, you'll want to select <code>Splunk App for GitHub</code></li>
           <li>Next select the index created for this data. If none exist, create a new Index. Names like <code>github</code> or the like are recommended, depending on corporate naming conventions.</li>
           <li>Lastly, click the Review button and confirm the data is correct and hit Submit.</li>
         </ol></p>
         <p>Your token is now available to collect data, however we'll need to enable that token to allow Query String Authentication using that token. For this, you'll need command line access to your Splunk environment or be using a deployment server to deploy apps to Splunk.</p>
-        <p>To enable Query String Authentication, you'll need to update the <code>inputs.conf</code> file within the Splunk App for Github local directory. In that file, there will be a stanza with the name and value of the token you created. At the end of that stanza, you'll need to add <code>allowQueryStringAuth = true</code> and then restart Splunk. This is best done with the help of your Splunk team, so please reach out to them for assistance on this step.</p>
-        <h2><b>Setting Up Github Webhooks</b></h2>
+        <p>To enable Query String Authentication, you'll need to update the <code>inputs.conf</code> file within the Splunk App for GitHub local directory. In that file, there will be a stanza with the name and value of the token you created. At the end of that stanza, you'll need to add <code>allowQueryStringAuth = true</code> and then restart Splunk. This is best done with the help of your Splunk team, so please reach out to them for assistance on this step.</p>
+        <h2><b>Setting Up GitHub Webhooks</b></h2>
         <p>Webhooks are a simple push mechanism that will send an event each time the webhook is triggered. Unfortunately, Webhooks are unique to each Organization and will need to be setup for each Org as desired. To do this, a user will need to be an Admin for the Org.</p>
         <p><b>Steps</b></p>
         <ol>
@@ -41,26 +41,26 @@
         <table>
           <tr>
             <th>Splunk Eventtype</th>
-            <th>Github Webhook Event</th>
+            <th>GitHub Webhook Event</th>
             <th>Description</th>
           </tr>
           <tr>
-            <td>Github::Repo</td>
+            <td>GitHub::Repo</td>
             <td>Repositories</td>
             <td>Repository created, deleted, archived, unarchived, publicized, privatized, edited, renamed, or transferred.</td>
           </tr>
           <tr>
-            <td>Github::Push</td>
+            <td>GitHub::Push</td>
             <td>Pushes</td>
             <td>Git push to a repository.</td>
           </tr>
           <tr>
-            <td>Github::PullRequest</td>
+            <td>GitHub::PullRequest</td>
             <td>Pull requests</td>
             <td>Pull request opened, closed, reopened, edited, assigned, unassigned, review requested, review request removed, labeled, unlabeled, synchronized, ready for review, converted to draft, locked, unlocked, auto merge enabled, auto merge disabled, milestoned, or demilestoned.</td>
           </tr>
           <tr>
-            <td>Github::PullRequest::Review</td>
+            <td>GitHub::PullRequest::Review</td>
             <td>Pull request reviews</td>
             <td>Pull request review submitted, edited, or dismissed.</td>
           </tr>

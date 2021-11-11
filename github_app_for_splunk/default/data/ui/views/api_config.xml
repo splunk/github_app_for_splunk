@@ -12,7 +12,7 @@
 <h2 id="installation">Installation</h2>
 <ol>
 <li>
-            <p>Download the latest release of the Splunk Add-On for Github Enterprise Audit Logs from SplunkBase</p>
+            <p>Download the latest release of the Splunk Add-On for GitHub Enterprise Audit Logs from SplunkBase</p>
 </li>
 <li>
             <p>Go to Apps &gt; Manage Apps in the toolbar menu.</p>
@@ -24,7 +24,7 @@
             <p>Generate a Personal Access Token in GitHub Enterprise with the <code>site_admin</code> scope.</p>
 </li>
 <li>
-            <p>Under Settings &gt; Data inputs, there should be a new option called Github Audit Log Monitoring, click "+ Add new"</p>
+            <p>Under Settings &gt; Data inputs, there should be a new option called GitHub Audit Log Monitoring, click "+ Add new"</p>
 </li>
 <li>
             <p>Configure the Input by entering the necessary information in the input fields. Don't forget to define the Index for the data to be stored in. This option is under the "More settings" option.</p>

@@ -125,7 +125,7 @@ This modular input fetches events by calling the [Enterprise Audit Log API](http
 
 ### Activity dashboard example
 
-Along with this modular input we're providing a [Github App for Splunk](https://github.com/splunk/github_app_for_splunk) that makes use of the collected audit log events to give you an overview of the activities across your enterprise.
+Along with this modular input we're providing a [GitHub App for Splunk](https://github.com/splunk/github_app_for_splunk) that makes use of the collected audit log events to give you an overview of the activities across your enterprise.
 
 You can install it via the [Manage Apps page](https://docs.splunk.com/Documentation/Splunk/8.2.0/Admin/Deployappsandadd-ons).
 
