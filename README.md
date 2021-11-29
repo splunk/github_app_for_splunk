@@ -8,8 +8,8 @@ The GitHub App for Splunk is designed to work with the following data sources:
 
 * [GitHub Audit Log Monitoring Add-On For Splunk](./docs/ghe_audit_logs.MD): Audit logs from GitHub Enterprise Cloud.
 * [Github.com Webhooks](./docs/github_webhooks.MD): A select set of webhook events like Push, PullRequest, and Repo.
-* [GitHub Enterprise Server Syslog Forwarder](https://docs.github.com/en/enterprise-server/admin/user-management/monitoring-activity-in-your-enterprise/log-forwarding): Audit and Application logs from GitHub Enterprise Server.
-* [GitHub Enterprise Collectd monitoring](./docs/splunk_collectd_forwarding_for_ghes.MD): Performance and Infrastructure metrics from GitHub Enterprise Server.
+* [Github Enterprise Server Syslog Forwarder](./docs/ghes_syslog_setup.MD): Audit and Application logs from Github Enterprise Server.
+* [Github Enterprise Collectd monitoring](./docs/splunk_collectd_forwarding_for_ghes.MD): Performance and Infrastructure metrics from Github Enterprise Server.
 
 ## Dashboard Instructions
 
@@ -18,7 +18,7 @@ The GitHub App for Splunk is designed to work with the following data sources:
 The GitHub App for Splunk is available for download from [Splunkbase](https://splunkbase.splunk.com/app/5596/). For Splunk Cloud, refer to [Install apps in your Splunk Cloud deployment](https://docs.splunk.com/Documentation/SplunkCloud/latest/Admin/SelfServiceAppInstall). For non-Splunk Cloud deployments, refer to the standard methods for Splunk Add-on installs as documented for a [Single Server Install](http://docs.splunk.com/Documentation/AddOns/latest/Overview/Singleserverinstall) or a [Distributed Environment Install](http://docs.splunk.com/Documentation/AddOns/latest/Overview/Distributedinstall).
 
 **This app should be installed on both your search head tier as well as your indexer tier.**
- 
+
 ### Configuration
 
 ![Settings>Advanced Search>Search macros](./docs/images/macros.png)
