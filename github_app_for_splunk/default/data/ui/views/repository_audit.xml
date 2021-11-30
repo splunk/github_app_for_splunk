@@ -97,7 +97,7 @@
     <panel>
       <title>Repository Workflow Details</title>
       <table>
-        <title>Clicking an Workflow run will take you to Github to view the Workflow</title>
+        <title>Clicking an Workflow run will take you to GitHub to view the Workflow</title>
         <search>
           <query>`github_source` action IN("workflows.completed*") repo="*" | stats latest(conclusion) as status by org, actor, name, repo, head_branch, workflow_run_id</query>
           <earliest>$timeRng.earliest$</earliest>
