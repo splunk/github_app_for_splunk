@@ -8,8 +8,9 @@
     <view name="repository_audit" />
     <view name="user_audit" />
   </collection>
-  <collection label="Security">
+  <collection label="Code Scanning">
     <view name="security_alert_overview" />
+    <view name="code_scanning_overview" />
   </collection>
   <collection label="Developer Insights">
     <view name="value_stream_analytics" />
