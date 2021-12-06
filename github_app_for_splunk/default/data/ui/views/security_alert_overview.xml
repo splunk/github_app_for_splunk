@@ -2,7 +2,7 @@
   <label>Security Alert Overview</label>
   <search id="baseSearch">
     <query>
-      index="github_webhook" alert.created_at=* | eval reason=if(isnotnull('alert.affected_package_name'),'alert.affected_package_name','alert.rule.name'), id=if(isnotnull('alert.external_identifier'),'alert.external_identifier','alert.rule.id'), severity=if(isnotnull('alert.severity'),'alert.severity','alert.rule.security_severity_level'), type=if(isnotnull('alert.external_identifier'),"vulnerability alert","code scanning alert") | stats latest(action) as status, earliest(alert.created_at) as created_at by repository.name, reason, id, type, severity | eval age = toString(round(now() - strptime(created_at, "%Y-%m-%dT%H:%M:%S")),"Duration")
+      `github_webhooks` alert.created_at=* | eval reason=if(isnotnull('alert.affected_package_name'),'alert.affected_package_name','alert.rule.name'), id=if(isnotnull('alert.external_identifier'),'alert.external_identifier','alert.rule.id'), severity=if(isnotnull('alert.severity'),'alert.severity','alert.rule.security_severity_level'), type=if(isnotnull('alert.external_identifier'),"vulnerability alert","code scanning alert") | stats latest(action) as status, earliest(alert.created_at) as created_at by repository.name, reason, id, type, severity | eval age = toString(round(now() - strptime(created_at, "%Y-%m-%dT%H:%M:%S")),"Duration")
     </query>
     <earliest>$timeTkn.earliest$</earliest>
     <latest>$timeTkn.latest$</latest>
