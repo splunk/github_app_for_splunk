@@ -1,0 +1,176 @@
+<form theme="dark">
+  <label>Code Scanning</label>
+  <fieldset submitButton="true" autoRun="false">
+    <input type="time" token="field1" searchWhenChanged="true">
+      <label>Time Range</label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="tool_name" searchWhenChanged="true">
+      <label>Tool</label>
+      <fieldForLabel>alert.tool.name</fieldForLabel>
+      <fieldForValue>alert.tool.name</fieldForValue>
+      <search>
+        <query>index=* | table alert.tool.name | dedup alert.tool.name</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <single>
+        <title>Created</title>
+        <search>
+          <query>index=* alert.tool.name="$tool_name$" action="created"
+| stats count</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="height">50</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Fixed</title>
+        <search>
+          <query>index=* alert.tool.name="$tool_name$"  action="fixed"
+| stats count</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="height">50</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Reopened</title>
+        <search>
+          <query>index=* alert.tool.name="$tool_name$" action="reopened"
+| stats count</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="height">53</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Alert Found/Fixed Ratio</title>
+        <search>
+          <query>index=* alert.tool.name="$tool_name$" (action=created OR action=fixed)
+| timechart count(_raw)  by action 
+| accum created
+| accum fixed 
+| rename created as "Found" 
+| rename fixed as "Fixed"</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Commit/Alert Ratio</title>
+        <search>
+          <query>(index=* eventtype="GitHub::Push") OR (index=* eventtype="GitHub::PullRequest") OR (eventtype="GitHub::CodeScanning" index=* (action=created OR action=reopened) alert.tool.name="$tool_name$")
+| timechart count(_raw)  by eventtype
+| accum "GitHub::Push"
+| accum "GitHub::PullRequest"
+| accum "GitHub::CodeScanning"
+| rename GitHub::Push as "Pushs"
+| rename GitHub::PullRequest as "Pull Requests"
+| rename GitHub::CodeScanning as "Code Scanning Alerts"</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.axisY2.enabled">1</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.overlayFields">DC_cumulative</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="height">255</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>New Alerts by Tool</title>
+        <search>
+          <query>index=* alert.tool.name="$tool_name$" (action=created OR action=appeared_in_branch) | timechart count(_raw)  by alert.tool.name</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.drilldown">none</option>
+        <option name="height">271</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Alerts by Severity</title>
+        <search>
+          <query>index=* action=created OR action=reopened alert.tool.name="$tool_name$" | chart usenull=f count  over repository.name by alert.rule.security_severity_level</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <format type="color" field="critical">
+          <colorPalette type="minMidMax" maxColor="#DC4E41" minColor="#3C444D"></colorPalette>
+          <scale type="minMidMax"></scale>
+        </format>
+        <format type="color" field="high">
+          <colorPalette type="minMidMax" maxColor="#F8BE34" minColor="#3C444D"></colorPalette>
+          <scale type="minMidMax"></scale>
+        </format>
+        <format type="color" field="medium">
+          <colorPalette type="minMidMax" maxColor="#62B3B2" minColor="#3C444D"></colorPalette>
+          <scale type="minMidMax"></scale>
+        </format>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Alerts by Repo</title>
+        <search>
+          <query>index=* (action=created OR action=reopened) alert.tool.name="$tool_name$" | chart usenull=f count  over repository.name by alert.tool.name</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="totalsRow">false</option>
+        <format type="color" field="repository.name">
+          <colorPalette type="minMidMax" maxColor="#53A051" minColor="#FFFFFF"></colorPalette>
+          <scale type="minMidMax"></scale>
+        </format>
+      </table>
+    </panel>
+  </row>
+</form>
