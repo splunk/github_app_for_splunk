@@ -1,7 +1,16 @@
-<form theme="dark">
+<form theme="light">
   <label>Code Scanning</label>
+  <search id="baseSearch">
+    <query>
+      `github_webhooks` eventtype="GitHub::CodeScanning" | eval action='action', tool=if(isnotnull('alert.tool.name'),'alert.tool.name','unknown'), repository=if(isnotnull('repository.name'),'repository.name','unknown'), severity=if(isnotnull('alert.rule.security_severity_level'),'alert.rule.security_severity_level','none')
+    </query>
+    <earliest>$timeTkn.earliest$</earliest>
+    <latest>$timeTkn.latest$</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  
   <fieldset submitButton="true" autoRun="false">
-    <input type="time" token="field1" searchWhenChanged="true">
+    <input type="time" token="timeTkn" searchWhenChanged="true">
       <label>Time Range</label>
       <default>
         <earliest>-24h@h</earliest>
@@ -10,12 +19,12 @@
     </input>
     <input type="dropdown" token="tool_name" searchWhenChanged="true">
       <label>Tool</label>
-      <fieldForLabel>alert.tool.name</fieldForLabel>
-      <fieldForValue>alert.tool.name</fieldForValue>
-      <search>
-        <query>index=* | table alert.tool.name | dedup alert.tool.name</query>
-        <earliest>-24h@h</earliest>
-        <latest>now</latest>
+      <fieldForLabel>tool</fieldForLabel>
+      <fieldForValue>tool</fieldForValue>
+      <search base="baseSearch">
+        <query>| table tool | dedup tool</query>
+        <!--<earliest>-24h@h</earliest>-->
+        <!--<latest>now</latest>-->
       </search>
       <choice value="*">All</choice>
       <default>*</default>
@@ -26,11 +35,8 @@
     <panel>
       <single>
         <title>Created</title>
-        <search>
-          <query>index=* alert.tool.name="$tool_name$" action="created"
-| stats count</query>
-          <earliest>$field1.earliest$</earliest>
-          <latest>$field1.latest$</latest>
+        <search base="baseSearch">
+          <query>| search tool="$tool_name$" action="created" | stats count</query>
         </search>
         <option name="drilldown">none</option>
         <option name="height">50</option>
@@ -41,11 +47,8 @@
     <panel>
       <single>
         <title>Fixed</title>
-        <search>
-          <query>index=* alert.tool.name="$tool_name$"  action="fixed"
-| stats count</query>
-          <earliest>$field1.earliest$</earliest>
-          <latest>$field1.latest$</latest>
+        <search base="baseSearch">
+          <query>| search tool="$tool_name$"  action="fixed" | stats count</query>
         </search>
         <option name="drilldown">none</option>
         <option name="height">50</option>
@@ -55,11 +58,8 @@
     <panel>
       <single>
         <title>Reopened</title>
-        <search>
-          <query>index=* alert.tool.name="$tool_name$" action="reopened"
-| stats count</query>
-          <earliest>-24h@h</earliest>
-          <latest>now</latest>
+        <search base="baseSearch">
+          <query>| search tool="$tool_name$"  action="reopened" | stats count</query>
         </search>
         <option name="drilldown">none</option>
         <option name="height">53</option>
@@ -71,15 +71,13 @@
     <panel>
       <chart>
         <title>Alert Found/Fixed Ratio</title>
-        <search>
-          <query>index=* alert.tool.name="$tool_name$" (action=created OR action=fixed)
+        <search base="baseSearch">
+          <query>| search tool="$tool_name$" (action=created OR action=fixed)
 | timechart count(_raw)  by action 
 | accum created
 | accum fixed 
 | rename created as "Found" 
 | rename fixed as "Fixed"</query>
-          <earliest>$field1.earliest$</earliest>
-          <latest>$field1.latest$</latest>
         </search>
         <option name="charting.axisTitleX.visibility">collapsed</option>
         <option name="charting.chart">line</option>
@@ -116,10 +114,8 @@
     <panel>
       <chart>
         <title>New Alerts by Tool</title>
-        <search>
-          <query>index=* alert.tool.name="$tool_name$" (action=created OR action=appeared_in_branch) | timechart count(_raw)  by alert.tool.name</query>
-          <earliest>$field1.earliest$</earliest>
-          <latest>$field1.latest$</latest>
+        <search base="baseSearch">
+          <query>| search tool="$tool_name$" (action=created OR action=appeared_in_branch) | timechart count(_raw)  by tool</query>
         </search>
         <option name="charting.chart">column</option>
         <option name="charting.chart.stackMode">stacked</option>
@@ -133,8 +129,8 @@
     <panel>
       <table>
         <title>Alerts by Severity</title>
-        <search>
-          <query>index=* action=created OR action=reopened alert.tool.name="$tool_name$" | chart usenull=f count  over repository.name by alert.rule.security_severity_level</query>
+        <search base="baseSearch">
+          <query>| search (action=created OR action=reopened) tool="$tool_name$" | chart usenull=f count  over repository by severity</query>
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
         </search>
@@ -157,10 +153,8 @@
     <panel>
       <table>
         <title>Alerts by Repo</title>
-        <search>
-          <query>index=* (action=created OR action=reopened) alert.tool.name="$tool_name$" | chart usenull=f count  over repository.name by alert.tool.name</query>
-          <earliest>$field1.earliest$</earliest>
-          <latest>$field1.latest$</latest>
+        <search base="baseSearch">
+          <query>| search (action=created OR action=reopened) tool="$tool_name$"| chart usenull=f count over repository by tool</query>
         </search>
         <option name="drilldown">none</option>
         <option name="percentagesRow">false</option>
