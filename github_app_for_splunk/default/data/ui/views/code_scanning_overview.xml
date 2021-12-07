@@ -1,8 +1,8 @@
 <form theme="light">
-  <label>Code Scanning</label>
+  <label>Code Scanning Alerts</label>
   <search id="baseSearch">
     <query>
-      `github_webhooks` (eventtype="GitHub::CodeScanning" OR eventtype="GitHub::Push" OR eventtype="GitHub::PullRequest") | eval action='action', tool=if(isnotnull('alert.tool.name'),'alert.tool.name','unknown'), repository=if(isnotnull('repository.name'),'repository.name','unknown'), severity=if(isnotnull('alert.rule.security_severity_level'),'alert.rule.security_severity_level','none'), eventtype='eventtype'
+      `github_webhooks` (eventtype="GitHub::CodeScanning" OR eventtype="GitHub::Push") | eval action='action', tool=if(isnotnull('alert.tool.name'),'alert.tool.name','unknown'), repository=if(isnotnull('repository.name'),'repository.name','unknown'), severity=if(isnotnull('alert.rule.security_severity_level'),'alert.rule.security_severity_level','none'), create_time=if(isnotnull('alert.created_at'),'alert.created_at','unknown'), received_time='_time', alert_url=if(isnotnull('alert.html_url'),'alert.html_url','unknown'), eventtype='eventtype', created=strptime(create_time, "%Y-%m-%dT%H:%M:%S%Z"), duration=received_time - created, duration_str=tostring(avg(duration), "duration")
     </query>
     <earliest>$timeTkn.earliest$</earliest>
     <latest>$timeTkn.latest$</latest>
@@ -16,10 +16,12 @@
         <latest>now</latest>
       </default>
     </input>
-    <input type="dropdown" token="tool_name" searchWhenChanged="true">
+    <input type="multiselect" token="tool_name" searchWhenChanged="true">
       <label>Tool</label>
       <fieldForLabel>tool</fieldForLabel>
       <fieldForValue>tool</fieldForValue>
+      <valuePrefix>"</valuePrefix>
+      <valueSuffix>"</valueSuffix>
       <search base="baseSearch">
         <query>| table tool | dedup tool</query>
       </search>
@@ -27,13 +29,27 @@
       <default>*</default>
       <initialValue>*</initialValue>
     </input>
+    <input type="multiselect" token="repoTkn" searchWhenChanged="true">
+      <label>Repositories</label>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <valuePrefix>"</valuePrefix>
+      <valueSuffix>"</valueSuffix>
+      <delimiter>,</delimiter>
+      <fieldForLabel>repository</fieldForLabel>
+      <fieldForValue>repository</fieldForValue>
+      <search base="baseSearch">
+        <query>| dedup repository | table repository</query>
+      </search>
+    </input>
   </fieldset>
   <row>
     <panel>
       <single>
         <title>Created</title>
         <search base="baseSearch">
-          <query>| search tool="$tool_name$" action="created" | stats count</query>
+          <query>| search tool=$tool_name$ repository=$repoTkn$ action="created" | stats count</query>
         </search>
         <option name="drilldown">none</option>
         <option name="height">50</option>
@@ -45,7 +61,7 @@
       <single>
         <title>Fixed</title>
         <search base="baseSearch">
-          <query>| search tool="$tool_name$"  action="fixed" | stats count</query>
+          <query>| search tool=$tool_name$ repository=$repoTkn$ action="fixed" | stats count</query>
         </search>
         <option name="drilldown">none</option>
         <option name="height">50</option>
@@ -56,10 +72,10 @@
       <single>
         <title>Reopened</title>
         <search base="baseSearch">
-          <query>| search tool="$tool_name$"  action="reopened" | stats count</query>
+          <query>| search tool=$tool_name$ repository=$repoTkn$ action="reopened" | stats count</query>
         </search>
         <option name="drilldown">none</option>
-        <option name="height">53</option>
+        <option name="height">50</option>
         <option name="refresh.display">progressbar</option>
       </single>
     </panel>
@@ -69,7 +85,7 @@
       <chart>
         <title>Alert Found/Fixed Ratio</title>
         <search base="baseSearch">
-          <query>| search tool="$tool_name$" (action=created OR action=fixed)
+          <query>| search tool=$tool_name$ repository=$repoTkn$ (action=created OR action=fixed)
 | timechart count(_raw)  by action 
 | accum created
 | accum fixed 
@@ -80,33 +96,20 @@
         <option name="charting.chart">line</option>
         <option name="charting.drilldown">none</option>
         <option name="refresh.display">progressbar</option>
+        <option name="height">150</option>
       </chart>
     </panel>
     <panel>
       <chart>
         <title>Commit/Alert Ratio</title>
         <search base="baseSearch">
-          <query>| search (eventtype="GitHub::PullRequest" OR eventtype="GitHub::Push") OR ((action=created OR action=reopened) tool="$tool_name$")
+          <query>| search  (eventtype="GitHub::Push" repository=$repoTkn$) OR ((action=created OR action=reopened) tool=$tool_name$ repository=$repoTkn$ )
 | timechart count(_raw)  by eventtype
 | accum "GitHub::Push"
-| accum "GitHub::PullRequest"
 | accum "GitHub::CodeScanning"
-| rename GitHub::Push as "Pushs"
-| rename GitHub::PullRequest as "Pull Requests"
+| rename GitHub::Push as "Pushes"
 | rename GitHub::CodeScanning as "Code Scanning Alerts"</query>
         </search>
-        <!--        <search>-->
-        <!--          <query>(index=* eventtype="GitHub::Push") OR (index=* eventtype="GitHub::PullRequest") OR (eventtype="GitHub::CodeScanning" index=* (action=created OR action=reopened) alert.tool.name="$tool_name$")-->
-        <!--| timechart count(_raw)  by eventtype-->
-        <!--| accum "GitHub::Push"-->
-        <!--| accum "GitHub::PullRequest"-->
-        <!--| accum "GitHub::CodeScanning"-->
-        <!--| rename GitHub::Push as "Pushs"-->
-        <!--| rename GitHub::PullRequest as "Pull Requests"-->
-        <!--| rename GitHub::CodeScanning as "Code Scanning Alerts"</query>-->
-        <!--          <earliest>$field1.earliest$</earliest>-->
-        <!--          <latest>$field1.latest$</latest>-->
-        <!--        </search>-->
         <option name="charting.axisTitleX.visibility">collapsed</option>
         <option name="charting.axisY.scale">log</option>
         <option name="charting.axisY2.enabled">1</option>
@@ -114,7 +117,7 @@
         <option name="charting.chart.overlayFields">DC_cumulative</option>
         <option name="charting.drilldown">none</option>
         <option name="charting.legend.mode">standard</option>
-        <option name="height">255</option>
+        <option name="height">150</option>
         <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
@@ -122,12 +125,12 @@
       <chart>
         <title>New Alerts by Tool</title>
         <search base="baseSearch">
-          <query>| search tool="$tool_name$" (action=created OR action=appeared_in_branch) | timechart count(_raw)  by tool</query>
+          <query>| search tool=$tool_name$ repository=$repoTkn$ (action=created OR action=appeared_in_branch) | timechart count(_raw)  by tool</query>
         </search>
         <option name="charting.chart">column</option>
         <option name="charting.chart.stackMode">stacked</option>
         <option name="charting.drilldown">none</option>
-        <option name="height">271</option>
+        <option name="height">150</option>
         <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
@@ -135,9 +138,24 @@
   <row>
     <panel>
       <table>
+        <title>Fixed Alerts</title>
+        <search base="baseSearch">
+          <query> | search (action=fixed OR action=closed_by_user) repository=$repoTkn$ tool=$tool_name$
+| table repository, tool, alert_url,duration_str
+| rename repository AS "Repository" duration_str AS "Time to Resolution",tool AS "Tool", alert_url AS "Alert URL" 
+| sort -"Time to Resolution"
+          </query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
         <title>Alerts by Severity</title>
         <search base="baseSearch">
-          <query>| search (action=created OR action=reopened) tool="$tool_name$" | chart usenull=f count  over repository by severity</query>
+          <query>| search (action=created OR action=reopened) repository=$repoTkn$ tool=$tool_name$ | chart usenull=f count  over repository by severity</query>
         </search>
         <option name="drilldown">none</option>
         <format type="color" field="critical">
@@ -158,7 +176,7 @@
       <table>
         <title>Alerts by Repo</title>
         <search base="baseSearch">
-          <query>| search (action=created OR action=reopened) tool="$tool_name$"| chart usenull=f count over repository by tool</query>
+          <query>| search (action=created OR action=reopened)  repository=$repoTkn$ tool=$tool_name$| chart usenull=f count over repository by tool</query>
         </search>
         <option name="drilldown">none</option>
         <option name="percentagesRow">false</option>
