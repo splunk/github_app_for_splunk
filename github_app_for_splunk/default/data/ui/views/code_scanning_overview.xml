@@ -2,14 +2,13 @@
   <label>Code Scanning</label>
   <search id="baseSearch">
     <query>
-      `github_webhooks` eventtype="GitHub::CodeScanning" | eval action='action', tool=if(isnotnull('alert.tool.name'),'alert.tool.name','unknown'), repository=if(isnotnull('repository.name'),'repository.name','unknown'), severity=if(isnotnull('alert.rule.security_severity_level'),'alert.rule.security_severity_level','none')
+      `github_webhooks` (eventtype="GitHub::CodeScanning" OR eventtype="GitHub::Push" OR eventtype="GitHub::PullRequest") | eval action='action', tool=if(isnotnull('alert.tool.name'),'alert.tool.name','unknown'), repository=if(isnotnull('repository.name'),'repository.name','unknown'), severity=if(isnotnull('alert.rule.security_severity_level'),'alert.rule.security_severity_level','none'), eventtype='eventtype'
     </query>
     <earliest>$timeTkn.earliest$</earliest>
     <latest>$timeTkn.latest$</latest>
     <sampleRatio>1</sampleRatio>
   </search>
-  
-  <fieldset submitButton="true" autoRun="false">
+  <fieldset submitButton="false" autoRun="true">
     <input type="time" token="timeTkn" searchWhenChanged="true">
       <label>Time Range</label>
       <default>
@@ -23,8 +22,6 @@
       <fieldForValue>tool</fieldForValue>
       <search base="baseSearch">
         <query>| table tool | dedup tool</query>
-        <!--<earliest>-24h@h</earliest>-->
-        <!--<latest>now</latest>-->
       </search>
       <choice value="*">All</choice>
       <default>*</default>
@@ -88,8 +85,8 @@
     <panel>
       <chart>
         <title>Commit/Alert Ratio</title>
-        <search>
-          <query>(index=* eventtype="GitHub::Push") OR (index=* eventtype="GitHub::PullRequest") OR (eventtype="GitHub::CodeScanning" index=* (action=created OR action=reopened) alert.tool.name="$tool_name$")
+        <search base="baseSearch">
+          <query>| search (eventtype="GitHub::PullRequest" OR eventtype="GitHub::Push") OR ((action=created OR action=reopened) tool="$tool_name$")
 | timechart count(_raw)  by eventtype
 | accum "GitHub::Push"
 | accum "GitHub::PullRequest"
@@ -97,9 +94,19 @@
 | rename GitHub::Push as "Pushs"
 | rename GitHub::PullRequest as "Pull Requests"
 | rename GitHub::CodeScanning as "Code Scanning Alerts"</query>
-          <earliest>$field1.earliest$</earliest>
-          <latest>$field1.latest$</latest>
         </search>
+        <!--        <search>-->
+        <!--          <query>(index=* eventtype="GitHub::Push") OR (index=* eventtype="GitHub::PullRequest") OR (eventtype="GitHub::CodeScanning" index=* (action=created OR action=reopened) alert.tool.name="$tool_name$")-->
+        <!--| timechart count(_raw)  by eventtype-->
+        <!--| accum "GitHub::Push"-->
+        <!--| accum "GitHub::PullRequest"-->
+        <!--| accum "GitHub::CodeScanning"-->
+        <!--| rename GitHub::Push as "Pushs"-->
+        <!--| rename GitHub::PullRequest as "Pull Requests"-->
+        <!--| rename GitHub::CodeScanning as "Code Scanning Alerts"</query>-->
+        <!--          <earliest>$field1.earliest$</earliest>-->
+        <!--          <latest>$field1.latest$</latest>-->
+        <!--        </search>-->
         <option name="charting.axisTitleX.visibility">collapsed</option>
         <option name="charting.axisY.scale">log</option>
         <option name="charting.axisY2.enabled">1</option>
@@ -131,21 +138,18 @@
         <title>Alerts by Severity</title>
         <search base="baseSearch">
           <query>| search (action=created OR action=reopened) tool="$tool_name$" | chart usenull=f count  over repository by severity</query>
-          <earliest>$field1.earliest$</earliest>
-          <latest>$field1.latest$</latest>
         </search>
         <option name="drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
         <format type="color" field="critical">
-          <colorPalette type="minMidMax" maxColor="#DC4E41" minColor="#3C444D"></colorPalette>
+          <colorPalette type="minMidMax" maxColor="#DC4E41" minColor="#FFFFFF"></colorPalette>
           <scale type="minMidMax"></scale>
         </format>
         <format type="color" field="high">
-          <colorPalette type="minMidMax" maxColor="#F8BE34" minColor="#3C444D"></colorPalette>
+          <colorPalette type="minMidMax" maxColor="#F8BE34" minColor="#FFFFFF"></colorPalette>
           <scale type="minMidMax"></scale>
         </format>
         <format type="color" field="medium">
-          <colorPalette type="minMidMax" maxColor="#62B3B2" minColor="#3C444D"></colorPalette>
+          <colorPalette type="minMidMax" maxColor="#62B3B2" minColor="#FFFFFF"></colorPalette>
           <scale type="minMidMax"></scale>
         </format>
       </table>
