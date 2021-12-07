@@ -39,6 +39,9 @@
               <li>The "Enterprise Server Monitor" drop down has several dashboards that report on the health and performance of your GHES environment</li>
               <li>"Audit" drop down works for GHES as well as GitHub.com audit logs</li>
               <li>The <a href="alerts">Alerts</a> menu item contains all GitHub recommended alerts</li>
+              <li><a href="audit_log_activity">Audit Log Activity</a> provides a highlevel overview of what activity is going on in GitHub.</li>
+              <li><a href="repository_audit">Repository Audit</a> lets you review changes to individual or groups of repositories </li>
+              <li><a href="user_audit">User Change Audit</a> is the best place to review actions taken by or made to individual users.</li>
             </ol>
           </p>
         </div>  
@@ -55,13 +58,12 @@
           }
         </style>
         <div>
-          <h2><b>Audit and Security</b></h2>
+          <h2><b>GitHub Advanced Security</b></h2>
           <p>
-            Security users will probably be most interested in the Audit dashboards
+            Open Source repositories and customers of GitHub Advanced Security have access to application security tooling such as Code Scanning, Secret Scanning, and Dependency Review.
             <ol>
-              <li><a href="audit_log_activity">Audit Log Activity</a> provides a highlevel overview of what activity is going on in GitHub.</li>
-              <li><a href="repository_audit">Repository Audit</a> lets you review changes to individual or groups of repositories </li>
-              <li><a href="user_audit">User Change Audit</a> is the best place to review actions taken by or made to individual users.</li>
+              <li>The <a href="security_alert_overview"> Advanced Security Overview</a> dashboard gives insight into the security posture of your GitHub Organization</li>
+              <li>The <a href="code_scanning_overview"> Code Scanning</a> dashboard gives you access to alerts created by Code Scanning within your Organization</li>
             </ol>
           </p>
         </div>  
@@ -85,7 +87,7 @@
             GitHub has several ways to collect data from their services depending on your needs. Information is available within the App on how to collect different types of data from GitHub:
             <ol>
               <li><a href="api_config">Audit Log</a> data is available through a Splunk Add-On</li>
-              <li><a href="webhook_config">Rich commit and pull request</a> data is available through GitHub Webhooks</li>
+              <li><a href="webhook_config">Rich commit, pull request, and Code Scanning</a> data is available through GitHub Webhooks</li>
             </ol>
           </p>
         </div>  

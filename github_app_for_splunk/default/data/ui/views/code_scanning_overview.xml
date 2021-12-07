@@ -1,0 +1,192 @@
+<form theme="light">
+  <label>Code Scanning Alerts</label>
+  <search id="baseSearch">
+    <query>
+      `github_webhooks` (eventtype="GitHub::CodeScanning" OR eventtype="GitHub::Push") | eval action='action', tool=if(isnotnull('alert.tool.name'),'alert.tool.name','unknown'), repository=if(isnotnull('repository.name'),'repository.name','unknown'), severity=if(isnotnull('alert.rule.security_severity_level'),'alert.rule.security_severity_level','none'), create_time=if(isnotnull('alert.created_at'),'alert.created_at','unknown'), received_time='_time', alert_url=if(isnotnull('alert.html_url'),'alert.html_url','unknown'), eventtype='eventtype', created=strptime(create_time, "%Y-%m-%dT%H:%M:%S%Z"), duration=received_time - created, duration_str=tostring(avg(duration), "duration")
+    </query>
+    <earliest>$timeTkn.earliest$</earliest>
+    <latest>$timeTkn.latest$</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="time" token="timeTkn" searchWhenChanged="true">
+      <label>Time Range</label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="multiselect" token="tool_name" searchWhenChanged="true">
+      <label>Tool</label>
+      <fieldForLabel>tool</fieldForLabel>
+      <fieldForValue>tool</fieldForValue>
+      <valuePrefix>"</valuePrefix>
+      <valueSuffix>"</valueSuffix>
+      <search base="baseSearch">
+        <query>| table tool | dedup tool</query>
+      </search>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="multiselect" token="repoTkn" searchWhenChanged="true">
+      <label>Repositories</label>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <valuePrefix>"</valuePrefix>
+      <valueSuffix>"</valueSuffix>
+      <delimiter>,</delimiter>
+      <fieldForLabel>repository</fieldForLabel>
+      <fieldForValue>repository</fieldForValue>
+      <search base="baseSearch">
+        <query>| dedup repository | table repository</query>
+      </search>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <single>
+        <title>Created</title>
+        <search base="baseSearch">
+          <query>| search tool=$tool_name$ repository=$repoTkn$ action="created" | stats count</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="height">50</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Fixed</title>
+        <search base="baseSearch">
+          <query>| search tool=$tool_name$ repository=$repoTkn$ action="fixed" | stats count</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="height">50</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Reopened</title>
+        <search base="baseSearch">
+          <query>| search tool=$tool_name$ repository=$repoTkn$ action="reopened" | stats count</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="height">50</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Alert Found/Fixed Ratio</title>
+        <search base="baseSearch">
+          <query>| search tool=$tool_name$ repository=$repoTkn$ (action=created OR action=fixed)
+| timechart count(_raw)  by action 
+| accum created
+| accum fixed 
+| rename created as "Found" 
+| rename fixed as "Fixed"</query>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="height">150</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Commit/Alert Ratio</title>
+        <search base="baseSearch">
+          <query>| search  (eventtype="GitHub::Push" repository=$repoTkn$) OR ((action=created OR action=reopened) tool=$tool_name$ repository=$repoTkn$ )
+| timechart count(_raw)  by eventtype
+| accum "GitHub::Push"
+| accum "GitHub::CodeScanning"
+| rename GitHub::Push as "Pushes"
+| rename GitHub::CodeScanning as "Code Scanning Alerts"</query>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.axisY2.enabled">1</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.overlayFields">DC_cumulative</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="height">150</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>New Alerts by Tool</title>
+        <search base="baseSearch">
+          <query>| search tool=$tool_name$ repository=$repoTkn$ (action=created OR action=appeared_in_branch) | timechart count(_raw)  by tool</query>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.drilldown">none</option>
+        <option name="height">150</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Fixed Alerts</title>
+        <search base="baseSearch">
+          <query> | search (action=fixed OR action=closed_by_user) repository=$repoTkn$ tool=$tool_name$
+| table repository, tool, alert_url,duration_str
+| rename repository AS "Repository" duration_str AS "Time to Resolution",tool AS "Tool", alert_url AS "Alert URL" 
+| sort -"Time to Resolution"
+          </query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Alerts by Severity</title>
+        <search base="baseSearch">
+          <query>| search (action=created OR action=reopened) repository=$repoTkn$ tool=$tool_name$ | chart usenull=f count  over repository by severity</query>
+        </search>
+        <option name="drilldown">none</option>
+        <format type="color" field="critical">
+          <colorPalette type="minMidMax" maxColor="#DC4E41" minColor="#FFFFFF"></colorPalette>
+          <scale type="minMidMax"></scale>
+        </format>
+        <format type="color" field="high">
+          <colorPalette type="minMidMax" maxColor="#F8BE34" minColor="#FFFFFF"></colorPalette>
+          <scale type="minMidMax"></scale>
+        </format>
+        <format type="color" field="medium">
+          <colorPalette type="minMidMax" maxColor="#62B3B2" minColor="#FFFFFF"></colorPalette>
+          <scale type="minMidMax"></scale>
+        </format>
+      </table>
+    </panel>
+    <panel>
+      <table>
+        <title>Alerts by Repo</title>
+        <search base="baseSearch">
+          <query>| search (action=created OR action=reopened)  repository=$repoTkn$ tool=$tool_name$| chart usenull=f count over repository by tool</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="totalsRow">false</option>
+        <format type="color" field="repository.name">
+          <colorPalette type="minMidMax" maxColor="#53A051" minColor="#FFFFFF"></colorPalette>
+          <scale type="minMidMax"></scale>
+        </format>
+      </table>
+    </panel>
+  </row>
+</form>

@@ -64,6 +64,12 @@
             <td>Pull request reviews</td>
             <td>Pull request review submitted, edited, or dismissed.</td>
           </tr>
+          <tr>
+            <td>GitHub::CodeScanning</td>
+            <td>Code Scanning alerts</td>
+            <td>Alert created, fixed, reopened, appeared in branch, closed by user, or reopened by user.</td>
+          </tr>
+
         </table>
       </html>
     </panel>

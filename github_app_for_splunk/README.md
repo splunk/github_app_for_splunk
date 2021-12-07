@@ -1,13 +1,13 @@
 # GitHub App for Splunk
 
-The GitHub App for Splunk is a collection of out of the box dashboards and Splunk knowledge objects designed to give GitHub Admins and platform owners immediate visibility into GitHub.
+The GitHub App for Splunk is a collection of out of the box dashboards and Splunk knowledge objects designed to give GitHub Admins, platform owners, and Security Engineers immediate visibility into GitHub.
 
 This App is designed to work across multiple GitHub data sources however not all all required. You may choose to only collect a certain set of data and the parts of this app that utilize that set will function, while those that use other data sources will not function correctly, so please only use the Dashboards that relate to the data you are collecting.
 
 The GitHub App for Splunk is designed to work with the following data sources:
 
 * [GitHub Audit Log Monitoring Add-On For Splunk](./docs/ghe_audit_logs.MD): Audit logs from GitHub Enterprise Cloud.
-* [Github.com Webhooks]((./docs/github_webhooks.MD)): A select set of webhook events like Push, PullRequest, and Repo.
+* [Github.com Webhooks]((./docs/github_webhooks.MD)): A select set of webhook events like Push, PullRequest, Repo, and Code Scanning alerts.
 * [GitHub Enterprise Server Syslog Forwarder](https://docs.github.com/en/enterprise-server@3.0/admin/user-management/monitoring-activity-in-your-enterprise/log-forwarding): Audit and Application logs from GitHub Enterprise Server.
 * [GitHub Enterprise Collectd monitoring](./docs/splunk_collectd_forwarding_for_ghes.MD): Performance and Infrastructure metrics from GitHub Enterprise Server.
 
