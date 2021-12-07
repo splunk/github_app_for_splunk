@@ -64,4 +64,10 @@ Once that is complete and webhooks are triggering, you'll want to update the mac
 <td>Pull request reviews</td>
 <td>Pull request review submitted, edited, or dismissed.</td>
 </tr>
+<tr>
+<td>GitHub::CodeScanning</td>
+<td>Code scanning alerts</td>
+<td>Alerts identified by CodeQL and other 3rd party/OSS scanning tools.</td>
+</tr>
+
 </table>
