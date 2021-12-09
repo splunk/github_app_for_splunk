@@ -21,5 +21,6 @@
   </collection>
   <view name="search"/>
   <view name="dashboards" />
+  <view name="reports" />
   <view name="alerts" />
 </nav>
