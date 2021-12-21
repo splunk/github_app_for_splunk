@@ -11,6 +11,7 @@
   <collection label="Advanced Security">
     <view name="security_alert_overview" />
     <view name="code_scanning_overview" />
+    <view name="secret_scanning_overview" />
   </collection>
   <collection label="Developer Insights">
     <view name="value_stream_analytics" />
