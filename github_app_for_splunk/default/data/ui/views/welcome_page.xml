@@ -63,7 +63,8 @@
             Open Source repositories and customers of GitHub Advanced Security have access to application security tooling such as Code Scanning, Secret Scanning, and Dependency Review.
             <ol>
               <li>The <a href="security_alert_overview"> Advanced Security Overview</a> dashboard gives insight into the security posture of your GitHub Organization</li>
-              <li>The <a href="code_scanning_overview"> Code Scanning</a> dashboard gives you access to alerts created by Code Scanning within your Organization</li>
+              <li>The <a href="code_scanning_overview"> Code Scanning Alerts</a> dashboard gives you access to alerts created by Code Scanning within your Organization</li>
+              <li>The <a href="secret_scanning_overview"> Secret Scanning Alerts</a> dashboard provides visibility into secrets like API keys and personal access tokens that have been checked into your repositories</li>
             </ol>
           </p>
         </div>  
