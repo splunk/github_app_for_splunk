@@ -1,4 +1,4 @@
-<form theme="light">
+<form version="1.1" theme="dark">
   <label>Code Scanning Alerts</label>
   <search id="baseSearch">
     <query>
@@ -86,10 +86,10 @@
         <title>Alert Found/Fixed Ratio</title>
         <search base="baseSearch">
           <query>| search tool=$tool_name$ repository=$repoTkn$ (action=created OR action=fixed)
-| timechart count(_raw)  by action 
+| timechart count(_raw)  by action
 | accum created
-| accum fixed 
-| rename created as "Found" 
+| accum fixed
+| rename created as "Found"
 | rename fixed as "Fixed"</query>
         </search>
         <option name="charting.axisTitleX.visibility">collapsed</option>
@@ -142,7 +142,7 @@
         <search base="baseSearch">
           <query> | search (action=fixed OR action=closed_by_user) repository=$repoTkn$ tool=$tool_name$
 | table repository, tool, alert_url,duration_str
-| rename repository AS "Repository" duration_str AS "Time to Resolution",tool AS "Tool", alert_url AS "Alert URL" 
+| rename repository AS "Repository" duration_str AS "Time to Resolution",tool AS "Tool", alert_url AS "Alert URL"
 | sort -"Time to Resolution"
           </query>
         </search>

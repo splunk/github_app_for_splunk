@@ -1,4 +1,4 @@
-<dashboard>
+<dashboard version="1.1">
   <label>Welcome Page</label>
   <row>
     <panel>
@@ -16,7 +16,7 @@
           <p>
             This Splunk app is meant to be your single pane of glass for anything GitHub. Whether you're looking for audit log analytics, GitHub Enterprise Server monitoring, or other GitHub metrics, you're in the right place!
           </p>
-        </div>  
+        </div>
       </html>
     </panel>
   </row>
@@ -44,7 +44,7 @@
               <li><a href="user_audit">User Change Audit</a> is the best place to review actions taken by or made to individual users.</li>
             </ol>
           </p>
-        </div>  
+        </div>
       </html>
     </panel>
     <panel>
@@ -67,7 +67,7 @@
               <li>The <a href="secret_scanning_overview"> Secret Scanning Alerts</a> dashboard provides visibility into secrets like API keys and personal access tokens that have been checked into your repositories</li>
             </ol>
           </p>
-        </div>  
+        </div>
       </html>
     </panel>
   </row>
@@ -91,7 +91,7 @@
               <li><a href="webhook_config">Rich commit, pull request, and Code Scanning</a> data is available through GitHub Webhooks</li>
             </ol>
           </p>
-        </div>  
+        </div>
       </html>
     </panel>
   </row>
