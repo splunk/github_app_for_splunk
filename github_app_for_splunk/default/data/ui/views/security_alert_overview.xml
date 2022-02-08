@@ -231,12 +231,17 @@
         </search>
         <option name="count">20</option>
         <option name="dataOverlayMode">none</option>
-        <option name="drilldown">none</option>
+        <option name="drilldown">cell</option>
         <option name="percentagesRow">false</option>
-        <option name="refresh.display">progressbar</option>
         <option name="rowNumbers">false</option>
         <option name="totalsRow">false</option>
         <option name="wrap">true</option>
+        <format type="color" field="severity">
+          <colorPalette type="map">{"critical":#DC4E41,"high":#F1813F,"moderate":#F8BE34}</colorPalette>
+        </format>
+        <drilldown>
+          <link target="_blank">https://www.cve.org/CVERecord?id=$row.id$</link>
+        </drilldown>
       </table>
     </panel>
   </row>
