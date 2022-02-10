@@ -35,10 +35,6 @@ jobs:
         with:
           args: build
 
-      - name: Update Permissions
-        run: |
-          chmod +x ./.github/actions/appinspect_cli/entrypoint.sh
-
       - name: Update Version Number
         run: |
           old_str="X.Y.Z"
@@ -47,6 +43,6 @@ jobs:
           sed -i "s/$old_str/$new_str/g" ./github_app_for_splunk/default/app.conf
 
       - name: Run App Inspect CLI
-        uses: ./.github/actions/appinspect_cli
+        uses: splunk/appinspect-cli-action@v1
         with:
           app-path: github_app_for_splunk/
