@@ -45,5 +45,5 @@ jobs:
       - name: Run App Inspect CLI
         uses: splunk/appinspect-cli-action@v1
         with:
-          app_path: github_app_for_splunk/
+          app_path: github_app_for_splunk
           included_tags: cloud, splunk_appinspect
