@@ -14,7 +14,7 @@
       <chart>
         <title>Events over time</title>
         <search>
-          <query>`github_source` action | dedup document_id | timechart count by action</query>
+          <query>`github_source` action=* | timechart count by action</query>
           <earliest>$timeRng.earliest$</earliest>
           <latest>$timeRng.latest$</latest>
         </search>
@@ -29,7 +29,7 @@
       <single>
         <title>Total events</title>
         <search>
-          <query>`github_source` action | dedup document_id | stats count</query>
+          <query>`github_source` action=* | stats count</query>
           <earliest>$timeRng.earliest$</earliest>
           <latest>$timeRng.latest$</latest>
         </search>
@@ -61,7 +61,7 @@
     <panel>
       <map>
         <search>
-          <query>`github_source` | rex field=actor_location "\{\'country_code\'\: \'(?&lt;iso2&gt;[A-Z]{2})\'" | stats count by iso2 | lookup geo_attr_countries iso2 OUTPUT country | append [ | inputlookup geo_attr_countries] | dedup country | fillnull value=0 | fields+ count, country, geom | geom geo_countries featureIdField="country"</query>
+          <query>`github_source` | rename actor_location.country_code AS iso2 | stats count by iso2 | lookup geo_attr_countries iso2 OUTPUT country | append [ | inputlookup geo_attr_countries] | dedup country | fillnull value=0 | fields+ count, country, geom | geom geo_countries featureIdField="country"</query>
           <earliest>$timeRng.earliest$</earliest>
           <latest>$timeRng.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -99,7 +99,7 @@
     <panel>
       <table>
         <search>
-          <query>`github_source` action | rex field=actor_location "\{\'country_code\'\: \'(?&lt;iso2&gt;[A-Z]{2})\'" | stats count by iso2 | lookup geo_attr_countries iso2 OUTPUT country | fields country, count</query>
+          <query>`github_source` action=* | rename actor_location.country_code AS iso2 | stats count by iso2 | lookup geo_attr_countries iso2 OUTPUT country | fields country, count</query>
           <earliest>$timeRng.earliest$</earliest>
           <latest>$timeRng.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -120,7 +120,7 @@
       <chart>
         <title>Top 5 event types</title>
         <search>
-          <query>`github_source` action | dedup document_id | stats count by action | sort 5 - count</query>
+          <query>`github_source` action=* | stats count by action | sort 5 - count</query>
           <earliest>$timeRng.earliest$</earliest>
           <latest>$timeRng.latest$</latest>
         </search>
@@ -138,7 +138,7 @@
       <chart>
         <title>Top 5 active users</title>
         <search>
-          <query>`github_source` action | dedup document_id | stats count by actor | sort 5 - count</query>
+          <query>`github_source` action=* | stats count by actor | sort 5 - count</query>
           <earliest>$timeRng.earliest$</earliest>
           <latest>$timeRng.latest$</latest>
         </search>
@@ -154,7 +154,7 @@
       <chart>
         <title>Events per org</title>
         <search>
-          <query>`github_source` action | dedup document_id | stats count by org</query>
+          <query>`github_source` action=* | stats count by org</query>
           <earliest>$timeRng.earliest$</earliest>
           <latest>$timeRng.latest$</latest>
         </search>
@@ -168,7 +168,7 @@
       <chart>
         <title>Workflow runs</title>
         <search>
-          <query>`github_source` | dedup document_id | stats count by conclusion</query>
+          <query>`github_source` | stats count by conclusion</query>
           <earliest>$timeRng.earliest$</earliest>
           <latest>$timeRng.latest$</latest>
         </search>
@@ -183,7 +183,7 @@
       <chart>
         <title>Top 10 active repositories</title>
         <search>
-          <query>`github_source` | dedup document_id | rename repo as repository | stats count by repository | sort 10 - count</query>
+          <query>`github_source` | rename repo as repository | stats count by repository | sort 10 - count</query>
           <earliest>$timeRng.earliest$</earliest>
           <latest>$timeRng.latest$</latest>
         </search>
