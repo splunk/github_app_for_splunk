@@ -60,7 +60,7 @@
       <title>Workflow History</title>
       <table>
         <search>
-          <query>`github_webhooks` eventtype="GitHub::Workflow" repository.name IN(""*"") | eval queued=if(action="queued",_time,NULL), started=if(action="in_progress",_time,NULL),completed=if(action="completed",_time,NULL), status='workflow_job.conclusion' | stats min(queued) as queued, min(started) as started, min(completed) as completed, latest(status) as status by repository.full_name,workflow_job.name,workflow_job.id | eval queueTime=toString(round(started-queued),"Duration"), runTime=toString(round(completed-started),"Duration"), totalTime=toString(round(completed-queued),"Duration") | table repository.full_name,workflow_job.name, workflow_job.id, status, queueTime, runTime, totalTime</query>
+          <query>`github_webhooks` eventtype="GitHub::Workflow" repository.name IN(""*"") | eval queued=if(action="queued",_time,NULL), started=if(action="in_progress",_time,NULL),completed=if(action="completed",_time,NULL), status='workflow_job.conclusion' | stats min(queued) as queued, min(started) as started, min(completed) as completed, latest(status) as status by repository.full_name,workflow_job.name,workflow_job.id | eval queueTime=toString(round(started-queued),"Duration"), runTime=toString(round(completed-started),"Duration"), totalTime=toString(round(completed-queued),"Duration"), status=if(status=="null","in progress",status) | table repository.full_name,workflow_job.name, workflow_job.id, status, queueTime, runTime, totalTime | sort -workflow_job.id</query>
           <earliest>$timeTkn.earliest$</earliest>
           <latest>$timeTkn.latest$</latest>
           <sampleRatio>1</sampleRatio>
