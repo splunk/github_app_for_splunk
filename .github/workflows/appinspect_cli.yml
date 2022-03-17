@@ -42,8 +42,11 @@ jobs:
           sed -i "s/$old_str/$new_str/g" package.json
           sed -i "s/$old_str/$new_str/g" ./github_app_for_splunk/default/app.conf
 
+      - name: Build Package
+        run: COPYFILE_DISABLE=1 tar -cvzf package.tar.gz ./github_app_for_splunk
+
       - name: Run App Inspect CLI
         uses: splunk/appinspect-cli-action@v1
         with:
-          app_path: 'github_app_for_splunk'
+          app_path: package.tar.gz
           included_tags: cloud, splunk_appinspect
