@@ -1,4 +1,4 @@
-<form>
+<form version="1.1">
   <label>Advanced Security Overview</label>
   <search id="baseSearch">
     <query>
@@ -78,7 +78,7 @@
       <title>Open Alerts By Repository</title>
       <chart>
         <search base="baseSearch">
-          <query>| search status IN("create","created") | stats count by repository.name</query>
+          <query>| search status IN("create","created") | stats count by repository.full_name</query>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
         <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
