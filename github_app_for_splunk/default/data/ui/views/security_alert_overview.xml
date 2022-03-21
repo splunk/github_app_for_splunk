@@ -1,8 +1,8 @@
-<form version="1.1">
+<form>
   <label>Advanced Security Overview</label>
   <search id="baseSearch">
     <query>
-      `github_webhooks` alert.created_at=* | eval reason=if(isnotnull('alert.affected_package_name'),'alert.affected_package_name','alert.rule.name'), id=if(isnotnull('alert.external_identifier'),'alert.external_identifier','alert.rule.id'), severity=if(isnotnull('alert.severity'),'alert.severity','alert.rule.security_severity_level'), type=if(isnotnull('alert.external_identifier'),"Dependabot Alert","Code Scanning Alert") | stats latest(action) as status, earliest(alert.created_at) as created_at by repository.name, reason, id, type, severity | eval age = toString(round(now() - strptime(created_at, "%Y-%m-%dT%H:%M:%S")),"Duration")
+      index=gh_vuln OR (`github_webhooks` alert.created_at=*) | eval reason=if(isnotnull('alert.affected_package_name'),'alert.affected_package_name','alert.rule.name'), id=if(isnotnull('alert.external_identifier'),'alert.external_identifier','alert.rule.id'), severity=if(isnotnull('alert.severity'),'alert.severity','alert.rule.security_severity_level'), type=if(isnotnull('alert.external_identifier'),"Dependabot Alert","Code Scanning Alert") | stats latest(action) as status, earliest(alert.created_at) as created_at, latest(alert.number) as number by repository.full_name, reason, id, type, severity | eval source=if(type=="Dependabot Alert","dependabot","code-scanning") | eval age = toString(round(now() - strptime(created_at, "%Y-%m-%dT%H:%M:%S")),"Duration")
     </query>
     <earliest>$timeTkn.earliest$</earliest>
     <latest>$timeTkn.latest$</latest>
@@ -229,19 +229,20 @@
         <search base="baseSearch">
           <query>|search severity IN($severityTkn$) status IN($statusTkn$) type IN($typeTkn$) | sort -age</query>
         </search>
+        <fields>repository.full_name, reason, id, type,severity,status, created_at, age</fields>
+        <drilldown target="_blank">
+          <link>
+            https://github.com/$row.repository.full_name|n$/security/$row.source$/$row.number$
+          </link>
+        </drilldown>
         <option name="count">20</option>
         <option name="dataOverlayMode">none</option>
-        <option name="drilldown">cell</option>
+        <option name="drilldown">row</option>
         <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
         <option name="rowNumbers">false</option>
         <option name="totalsRow">false</option>
         <option name="wrap">true</option>
-        <format type="color" field="severity">
-          <colorPalette type="map">{"critical":#DC4E41,"high":#F1813F,"moderate":#F8BE34}</colorPalette>
-        </format>
-        <drilldown>
-          <link target="_blank">https://www.cve.org/CVERecord?id=$row.id$</link>
-        </drilldown>
       </table>
     </panel>
   </row>
