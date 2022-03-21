@@ -16,11 +16,14 @@
   <collection label="Developer Insights">
     <view name="value_stream_analytics" />
     <view name="workflow_analytics" />
+    <view name="workflow_analysis" />
   </collection>
   <collection label="Config">
     <view source="all" match="config" />
   </collection>
-  <view name="search"/>
-  <view name="dashboards" />
-  <view name="alerts" />
+  <collection label="Other">
+    <view name="search"/>
+    <view name="dashboards" />
+    <view name="alerts" />
+  </collection>
 </nav>
