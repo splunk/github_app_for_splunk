@@ -20,7 +20,7 @@
       <chart>
         <title>Workflow Conclusions Over Time</title>
         <search>
-          <query>index=github_webhook "workflow_run.name"="*" | spath "repository.full_name" | search repository.full_name="$repos$" | stats latest(_time) as _time, latest(workflow_run.conclusion) as workflow_run.conclusion by repository.full_name,workflow_run.name,workflow_run.id | timechart count by workflow_run.conclusion span=1h</query>
+          <query>index=github_webhook "workflow_run.name"="*" | spath "repository.full_name" | search repository.full_name="$repos$" | stats latest(_time) as _time, latest(workflow_run.conclusion) as workflow_run.conclusion by repository.full_name,workflow_run.name,workflow_run.id | timechart count by workflow_run.conclusion span=1h | rename null as "in-progress"</query>
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
           <sampleRatio>1</sampleRatio>
