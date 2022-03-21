@@ -53,13 +53,13 @@
       <html>
         <ul id="tabs" class="nav nav-tabs">
           <li class="active">
-            <a href="#" class="toggle-tab" data-toggle="tab" data-elements="tab_repoChanges">Repository Changes</a>
+            <a href="" class="toggle-tab" data-toggle="tab" data-elements="tab_repoChanges">Repository Changes</a>
           </li>
           <li>
-            <a href="#" class="toggle-tab" data-toggle="tab" data-elements="tab_userChanges">Repository User Changes</a>
+            <a href="" class="toggle-tab" data-toggle="tab" data-elements="tab_userChanges">Repository User Changes</a>
           </li>
           <li>
-            <a href="#" class="toggle-tab" data-toggle="tab" data-elements="tab_repoActions">Repository Workflow Details</a>
+            <a href="" class="toggle-tab" data-toggle="tab" data-elements="tab_repoActions">Repository Workflow Details</a>
           </li>
         </ul>
       </html>
