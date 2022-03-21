@@ -1,4 +1,4 @@
-<form theme="dark">
+<form version="1.1" theme="dark">
   <label>Workflow Analytics</label>
   <fieldset submitButton="false" autoRun="true">
     <input type="time" token="timeTkn">
@@ -53,32 +53,6 @@
         <option name="useColors">0</option>
         <option name="useThousandSeparators">1</option>
       </single>
-    </panel>
-  </row>
-  <row>
-    <panel>
-      <title>Workflow History</title>
-      <table>
-        <search>
-          <query>`github_webhooks` eventtype="GitHub::Workflow" repository.name IN(""*"") | eval queued=if(action="queued",_time,NULL), started=if(action="in_progress",_time,NULL),completed=if(action="completed",_time,NULL), status='workflow_job.conclusion' | stats min(queued) as queued, min(started) as started, min(completed) as completed, latest(status) as status by repository.full_name,workflow_job.name,workflow_job.id | eval queueTime=toString(round(started-queued),"Duration"), runTime=toString(round(completed-started),"Duration"), totalTime=toString(round(completed-queued),"Duration"), status=if(status=="null","in progress",status) | table repository.full_name,workflow_job.name, workflow_job.id, status, queueTime, runTime, totalTime | sort -workflow_job.id</query>
-          <earliest>$timeTkn.earliest$</earliest>
-          <latest>$timeTkn.latest$</latest>
-          <sampleRatio>1</sampleRatio>
-        </search>
-        <option name="count">20</option>
-        <option name="dataOverlayMode">none</option>
-        <option name="drilldown">cell</option>
-        <option name="percentagesRow">false</option>
-        <option name="refresh.display">progressbar</option>
-        <option name="rowNumbers">false</option>
-        <option name="totalsRow">false</option>
-        <option name="wrap">true</option>
-        <drilldown>
-          <link target="_blank">
-            <![CDATA[https://github.com/$row.repository.full_name|n$/runs/$row.workflow_job.id$?check_suite_focus=true]]>
-          </link>
-        </drilldown>
-      </table>
     </panel>
   </row>
   <row>
