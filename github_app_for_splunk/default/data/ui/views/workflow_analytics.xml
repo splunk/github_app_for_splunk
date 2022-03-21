@@ -1,5 +1,5 @@
 <form version="1.1" theme="dark">
-  <label>Workflow Analytics</label>
+  <label>Workflow Overview</label>
   <fieldset submitButton="false" autoRun="true">
     <input type="time" token="timeTkn">
       <label></label>

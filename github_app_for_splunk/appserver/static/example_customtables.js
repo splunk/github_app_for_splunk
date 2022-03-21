@@ -13,10 +13,10 @@ require([
 
     // Set up search managers
     var search2 = new SearchManager({
-        id: "workflow_details",
+        id: "search2",
         preview: true,
         cache: true,
-        search: mvc.tokenSafe("index=github_webhook eventtype=\"GitHub::Workflow\" \"workflow_job.run_id\"=$workflow_id$| fields * | eval queued=if(action==\"queued\",_time,null), started=if(action==\"in_progress\",_time,null), completed=if(action==\"completed\",_time,null) | stats latest(workflow_job.conclusion) as status, latest(workflow_job.name) as Name, latest(queued) as queued, latest(started) as started, latest(completed) as completed by workflow_job.id | eval queueTime=toString(round(started-queued),\"Duration\"), runTime=toString(round(completed-started),\"Duration\"), totalTime=toString(round(completed-queued),\"Duration\"), status=if(status==\"null\",\"in_progress\",status) | rename workflow_job.id AS JobID | fields status, Name, JobID, queueTime, runTime, totalTime"),
+        search: "index=github_webhook \"workflow_run.name\"=\"*\" | spath \"repository.full_name\" | search repository.full_name=* | eval started=if(action=\"requested\",_time,NULL), completed=if(action=\"completed\",_time, NULL), created=round(strptime('workflow_run.created_at',\"%Y-%m-%dT%H:%M:%SZ\")) | stats latest(created) as created, latest(started) as started, latest(completed) as completed, latest(duration) as duration, latest(workflow_run.conclusion) as workflow_run.conclusion by repository.full_name,workflow_run.name,workflow_run.id | eval started=if(isnull(started), created, started) | eval duration=if(isnotnull(completed),tostring(completed-started,\"Duration\"),\"In Progress\") | rename workflow_run.conclusion as status, repository.full_name as \"Repository Name\", workflow_run.name as \"Workflow Name\", workflow_run.id as \"Run ID\" | table status, \"Repository Name\", \"Workflow Name\", \"Run ID\", duration,completed|sort completed|fields - completed",
         earliest_time: mvc.tokenSafe("$field1.earliest$"),
         latest_time: mvc.tokenSafe("$field1.latest$")
     });
@@ -24,7 +24,7 @@ require([
     // Create a table for a custom row expander
     var mycustomrowtable = new TableView({
         id: "table-customrow",
-        managerid: "workflow_details",
+        managerid: "search2",
         drilldown: "none",
         drilldownRedirect: false,
         el: $("#table-customrow")
@@ -81,7 +81,7 @@ require([
 
         render: function($container, rowData) {
         // Print the rowData object to the console
-        // console.log("RowData: ", rowData);
+        console.log("RowData: ", rowData);
 
         var repoNameCell = _(rowData.cells).find(function (cell) {
             return cell.field === 'Repository Name';
@@ -96,7 +96,13 @@ require([
             return cell.field === 'Run ID';
         });
 
-        this._searchManager.set({ search: 'index=github_webhook (workflow_run.id='+workflowIDCell.value+' OR workflow_job.run_id='+workflowIDCell.value+') | eval started=if(action=="requested", _time, null), completed=if(action=="completed", _time,null) | stats latest(workflow_run.conclusion) as Status, earliest(started) as Started, latest(completed) as Completed, latest(workflow_run.head_branch) as Branch, latest(workflow_run.event) as Trigger | eval Duration=tostring(Completed-Started, "Duration") | fields Status, Duration, Branch, Trigger | eval Details="Click here for Workflow Details" | transpose|rename column AS Details| rename "row 1" AS values'});
+        this._TableView.on("click", function(e) {
+            e.preventDefault();
+            console.log(e);
+            window.open("/app/github_app_for_splunk/workflow_details?form.workflow_id="+workflowIDCell.value+"&form.repoName="+repoNameCell.value+"&form.workflowName="+workflowName.value+"&form.field1.earliest=-24h%40h&form.field1.latest=now&form.timeRange.earliest=-30d%40d&form.timeRange.latest=now&form.workflowCount=25",'_self');
+        });
+
+        this._searchManager.set({ search: 'index=github_webhook (workflow_run.id='+workflowIDCell.value+' OR workflow_job.run_id='+workflowIDCell.value+') | eval started=if(action=="requested", _time, null), completed=if(action=="completed", _time,null) | stats latest(workflow_run.conclusion) as Status, earliest(started) as Started, latest(completed) as Completed, latest(workflow_run.head_branch) as Branch, latest(workflow_run.event) as Trigger | eval Duration=tostring(Completed-Started, "Duration") | eval Started=strftime(Started,"%Y-%m-%dT%H:%M:%S"), Completed=strftime(Completed,"%Y-%m-%dT%H:%M:%S")| fields Status, Started, Completed, Duration, Branch, Trigger | eval Details="Click here for Workflow Details" | transpose|rename column AS Details| rename "row 1" AS values'});
                 // $container is the jquery object where we can put out content.
                 // In this case we will render our chart and add it to the $container
                 $container.append(this._TableView.render().el);
@@ -112,7 +118,13 @@ require([
     // Create an instance of the custom row renderer,
     // add it to the table, and render the table
     var myRowRenderer = new CustomRowRenderer();
+    mycustomrowtable.addRowExpansionRenderer(myRowRenderer);
     mycustomrowtable.render();
 
+    mycustomrowtable.on("click", function(e) {
+       e.preventDefault();
+       console.log(e.data);
+       window.open("/app/github_app_for_splunk/workflow_details?form.repoName="+e.data["row.repository.full_name"]+"&form.workflowName="+e.data["row.workflow_job.name"]+"&form.field1.earliest=-24h%40h&form.field1.latest=now&form.timeRange.earliest=-30d%40d&form.timeRange.latest=now&form.workflowCount=25",'_blank');
+    });
 
 });

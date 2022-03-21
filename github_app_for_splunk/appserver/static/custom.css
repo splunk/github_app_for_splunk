@@ -1,0 +1,24 @@
+/* custom.css */
+
+/* Define icon styles */
+
+td.icon {
+    text-align: center;
+}
+
+td.icon i {
+    font-size: 30px;
+    text-shadow: 1px 1px #aaa;
+}
+
+td.icon .failure {
+    color: red;
+}
+
+td.icon .in_progress {
+    color: yellow;
+}
+
+td.icon .success {
+    color: green;
+}

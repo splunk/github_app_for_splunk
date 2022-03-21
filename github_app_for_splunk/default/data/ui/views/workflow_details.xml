@@ -1,0 +1,212 @@
+<form version="1.1" script="tabs2.js,workflowdetails.js" stylesheet="tabs2.css,custom.css">
+  <label>Workflow Details</label>
+  <search id="buildTrends">
+    <query>
+      index=github_webhook "workflow_run.name"="$workflowName$" | fields * | spath "repository.full_name"
+    </query>
+    <earliest>$timeRange.earliest$</earliest>
+    <latest>$timeRange.latest$</latest>
+  </search>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="text" token="repoName" searchWhenChanged="true">
+      <label>Repository</label>
+      <default>*</default>
+    </input>
+    <input type="text" token="workflowName" searchWhenChanged="true">
+      <label>Workflow Name</label>
+      <default>*</default>
+    </input>
+    <input type="text" searchWhenChanged="true" token="workflow_id">
+      <label>Run ID</label>
+    </input>
+    <input type="time" token="timeRange" searchWhenChanged="true">
+      <label>Time Range</label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="workflowCount" searchWhenChanged="true">
+      <label>Workflow Limit</label>
+      <default>25</default>
+      <choice value="10">10</choice>
+      <choice value="25">25</choice>
+      <choice value="50">50</choice>
+      <choice value="100">100</choice>
+      <choice value="250">250</choice>
+      <initialValue>25</initialValue>
+    </input>
+  </fieldset>
+  <row id="tabs">
+    <panel>
+      <html>
+        <ul id="tabs" class="nav nav-tabs">
+          <li class="active">
+            <a href="" class="toggle-tab" data-toggle="tab" data-elements="tab_buildDetails1,tab_buildDetails2">Workflow Run Info</a>
+          </li>
+          <li>
+            <a href="" class="toggle-tab" data-toggle="tab" data-elements="tab_buildTrends1,tab_buildTrends2,tab_buildTrends3">Workflow Trends</a>
+          </li>
+          <li>
+            <a href="" class="toggle-tab" data-toggle="tab" data-elements="tab_buildLogs">Workflow Logs</a>
+          </li>
+        </ul>
+      </html>
+    </panel>
+  </row>
+  <row id="tab_buildTrends1">
+    <panel>
+      <title>Build Duration History</title>
+      <chart>
+        <search base="buildTrends">
+          <query>| eval started=if(action=="requested",_time, NULL), ended=if(action=="completed", _time, NULL) | stats latest(_time) as _time, latest(workflow_run.conclusion) as conclusion, earliest(started) as started, latest(ended) as ended by workflow_run.name, workflow_run.id, repository.full_name  | eval duration=ended-started, queued=started-queued |  table workflow_run.id, _time, duration | sort -_time | head 25 | sort _time | fields - _time</query>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row id="tab_buildTrends2">
+    <panel>
+      <title>Build Status History</title>
+      <chart>
+        <search base="buildTrends">
+          <query>| eval failed=if('workflow_run.conclusion'=="failure",1,0), successful=if('workflow_run.conclusion'=="success",1,0) | stats  latest(_time) as _time, max(successful) as successful, max(failed) as failed, latest(workflow_run.conclusion) as conclusion by repository.full_name,workflow_run.name,workflow_run.id | table _time, workflow_run.id, successful,failed | sort -_time | head $workflowCount$ | sort _time | fields - _time</query>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row id="tab_buildTrends3">
+    <panel>
+      <title>Build Status Overview</title>
+      <chart>
+        <search base="buildTrends">
+          <query>| stats latest(_time) as _time, latest(workflow_run.conclusion) as conclusion by repository.full_name,workflow_run.name,workflow_run.id | sort -_time | head $workflowCount$ | sort _time | fields - _time | stats count by conclusion</query>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">pie</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row id="tab_buildDetails1">
+    <panel>
+      <table>
+        <title>Workflow Information</title>
+        <search>
+          <query>index=github_webhook (workflow_run.id=$workflow_id$ OR workflow_job.run_id=$workflow_id$) | eval started=if(action=="requested", _time, null), completed=if(action=="completed", _time,null) | stats latest(workflow_run.name) as WorkflowName, latest(workflow_run.id) as WorkflowID, latest(workflow_run.conclusion) as Status, latest(repository.full_name) as RepositoryName,earliest(started) as Started, latest(completed) as Completed, latest(workflow_run.head_branch) as Branch, latest(workflow_run.event) as Trigger, latest(workflow_run.run_number) as RunNumber, latest(workflow_run.run_attempt) as Attempt | eval Duration=tostring(Completed-Started, "Duration"), Completed=strftime(Completed,"%Y-%m-%dT%H:%M:%S"), Started=strftime(Started,"%Y-%m-%dT%H:%M:%S") | fields WorkflowName, RepositoryName, Status, WorkflowID, RunNumber, Attempt, Started, Completed, Duration, Branch, Trigger|transpose|rename column AS Details| rename "row 1" AS values</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row id="tab_buildDetails2">
+    <panel>
+      <html>
+        <table style="width:100%">
+          <tr>
+            <td>
+              <h3>Workflow Jobs</h3>
+              <div id="table-customrow"/>
+            </td>
+          </tr>
+        </table>
+      </html>
+    </panel>
+  </row>
+  <row id="tab_buildLogs">
+    <panel>
+      <title>Workflow Run Logs</title>
+      <event>
+        <search>
+          <query>index="github_workflow_logs" workflowID::$workflow_id$ | sort _time</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">50</option>
+        <option name="list.drilldown">full</option>
+        <option name="list.wrap">1</option>
+        <option name="maxLines">5</option>
+        <option name="raw.drilldown">none</option>
+        <option name="rowNumbers">0</option>
+        <option name="table.drilldown">all</option>
+        <option name="table.sortDirection">asc</option>
+        <option name="table.wrap">1</option>
+        <option name="type">raw</option>
+      </event>
+    </panel>
+  </row>
+</form>
