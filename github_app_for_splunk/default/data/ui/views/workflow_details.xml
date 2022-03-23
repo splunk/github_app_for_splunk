@@ -2,7 +2,7 @@
   <label>Workflow Details</label>
   <search id="buildTrends">
     <query>
-      index=github_webhook "workflow_run.name"="$workflowName$" | fields * | spath "repository.full_name"
+      `github_webhooks` "workflow_run.name"="$workflowName$" | fields * | spath "repository.full_name"
     </query>
     <earliest>$timeRange.earliest$</earliest>
     <latest>$timeRange.latest$</latest>
@@ -157,7 +157,7 @@
       <table>
         <title>Workflow Information</title>
         <search>
-          <query>index=github_webhook (workflow_run.id=$workflow_id$ OR workflow_job.run_id=$workflow_id$) | eval started=if(action=="requested", _time, null), completed=if(action=="completed", _time,null) | stats latest(workflow_run.name) as WorkflowName, latest(workflow_run.id) as WorkflowID, latest(workflow_run.conclusion) as Status, latest(repository.full_name) as RepositoryName,earliest(started) as Started, latest(completed) as Completed, latest(workflow_run.head_branch) as Branch, latest(workflow_run.event) as Trigger, latest(workflow_run.run_number) as RunNumber, latest(workflow_run.run_attempt) as Attempt, latest(workflow_run.html_url) as URL | eval Duration=tostring(Completed-Started, "Duration"), Completed=strftime(Completed,"%Y-%m-%dT%H:%M:%S"), Started=strftime(Started,"%Y-%m-%dT%H:%M:%S") | fields WorkflowName, RepositoryName, Status, WorkflowID, RunNumber, Attempt, Started, Completed, Duration, Branch, Trigger, URL|transpose|rename column AS Details| rename "row 1" AS values</query>
+          <query>`github_webhooks` (workflow_run.id=$workflow_id$ OR workflow_job.run_id=$workflow_id$) | eval started=if(action=="requested", _time, null), completed=if(action=="completed", _time,null) | stats latest(workflow_run.name) as WorkflowName, latest(workflow_run.id) as WorkflowID, latest(workflow_run.conclusion) as Status, latest(repository.full_name) as RepositoryName,earliest(started) as Started, latest(completed) as Completed, latest(workflow_run.head_branch) as Branch, latest(workflow_run.event) as Trigger, latest(workflow_run.run_number) as RunNumber, latest(workflow_run.run_attempt) as Attempt, latest(workflow_run.html_url) as URL | eval Duration=tostring(Completed-Started, "Duration"), Completed=strftime(Completed,"%Y-%m-%dT%H:%M:%S"), Started=strftime(Started,"%Y-%m-%dT%H:%M:%S") | fields WorkflowName, RepositoryName, Status, WorkflowID, RunNumber, Attempt, Started, Completed, Duration, Branch, Trigger, URL|transpose|rename column AS Details| rename "row 1" AS values</query>
           <earliest>0</earliest>
           <latest></latest>
           <sampleRatio>1</sampleRatio>
