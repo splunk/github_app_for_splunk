@@ -27,7 +27,7 @@
       <fieldForLabel>repository.name</fieldForLabel>
       <fieldForValue>repository.name</fieldForValue>
       <search>
-        <query>index=github_webhook alert.created_at=* | dedup repository.name | table repository.name</query>
+        <query>`github_webhooks` alert.created_at=* | dedup repository.name | table repository.name</query>
         <earliest>$timeTkn.earliest$</earliest>
         <latest>$timeTkn.latest$</latest>
       </search>
