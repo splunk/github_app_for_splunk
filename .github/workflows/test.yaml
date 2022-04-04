@@ -1,0 +1,36 @@
+name: Build Candidate
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install build dependencies
+        run: |
+          pip install https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.1.tar.gz
+
+      - name: Update Version Number
+        run: |
+          old_str="X.Y.Z"
+          new_str=$(echo "${GITHUB_REF#refs/*/}" | tr -d "v")
+          sed -i "s/$old_str/$new_str/g" package.json
+          sed -i "s/$old_str/$new_str/g" ./github_app_for_splunk/default/app.conf
+
+      - name: Create package
+        run: |
+          mkdir build
+          slim package ./github_app_for_splunk -o build/
+
+      - name: Upload package
+        uses: actions/upload-artifact@v3
+        with:
+          name: github_app_for_splunk
+          path: build/*
