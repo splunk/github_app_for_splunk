@@ -20,7 +20,7 @@ jobs:
       - name: Update Version Number
         run: |
           old_str="X.Y.Z"
-          new_str=$(echo "${GITHUB_REF#refs/*/}" | tr -d "v")
+          new_str=$(echo "1.0.0" | tr -d "v")
           sed -i "s/$old_str/$new_str/g" package.json
           sed -i "s/$old_str/$new_str/g" ./github_app_for_splunk/default/app.conf
 
