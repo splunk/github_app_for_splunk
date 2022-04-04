@@ -42,11 +42,26 @@ jobs:
           sed -i "s/$old_str/$new_str/g" package.json
           sed -i "s/$old_str/$new_str/g" ./github_app_for_splunk/default/app.conf
 
-      - name: Build Package
-        run: COPYFILE_DISABLE=1 tar -cvzf package.tar.gz ./github_app_for_splunk
+      - name: Update Version Number
+        run: |
+          old_str="X.Y.Z"
+          new_str=$(echo "1.0.0" | tr -d "v")
+          sed -i "s/$old_str/$new_str/g" package.json
+          sed -i "s/$old_str/$new_str/g" ./github_app_for_splunk/default/app.conf
+
+      - name: Create package
+        run: |
+          mkdir build
+          slim package ./github_app_for_splunk
 
       - name: Run App Inspect CLI
         uses: splunk/appinspect-cli-action@v1
         with:
-          app_path: package.tar.gz
+          app_path: github_app_for_splunk-1.0.0.tar.gz
           included_tags: cloud, splunk_appinspect
+
+      - name: Upload package
+        uses: actions/upload-artifact@v3
+        with:
+          name: github_app_for_splunk-1.0.0.tar.gz
+          path: ./*
