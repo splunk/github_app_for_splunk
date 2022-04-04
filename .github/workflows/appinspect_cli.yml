@@ -42,12 +42,9 @@ jobs:
           sed -i "s/$old_str/$new_str/g" package.json
           sed -i "s/$old_str/$new_str/g" ./github_app_for_splunk/default/app.conf
 
-      - name: Update Version Number
+      - name: Install slim
         run: |
-          old_str="X.Y.Z"
-          new_str=$(echo "1.0.0" | tr -d "v")
-          sed -i "s/$old_str/$new_str/g" package.json
-          sed -i "s/$old_str/$new_str/g" ./github_app_for_splunk/default/app.conf
+          pip install https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.1.tar.gz
 
       - name: Create package
         run: |
