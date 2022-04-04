@@ -39,3 +39,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: github_app_for_splunk-1.0.0.tar.gz
+          path: ./*
