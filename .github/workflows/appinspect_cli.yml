@@ -51,6 +51,10 @@ jobs:
           mkdir build
           slim package ./github_app_for_splunk
 
+      - name: Check directory contents
+        run: |
+          ls build/
+
       - name: Run App Inspect CLI
         uses: splunk/appinspect-cli-action@v1
         with:
