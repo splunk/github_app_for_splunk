@@ -35,6 +35,10 @@ jobs:
           app_path: build/github_app_for_splunk-1.0.0.tar.gz
           included_tags: cloud, splunk_appinspect
 
+      - name: Check directory contents
+        run: |
+          ls build/
+
       - name: Upload package
         uses: actions/upload-artifact@v3
         with:
