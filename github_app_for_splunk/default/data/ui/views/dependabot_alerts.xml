@@ -17,7 +17,7 @@
       </default>
     </input>
     <input type="multiselect" token="repoTkn" searchWhenChanged="true">
-      <label>Repositories</label>
+      <label>Repositories</label> 
       <choice value="*">All</choice>
       <default>*</default>
       <initialValue>*</initialValue>
