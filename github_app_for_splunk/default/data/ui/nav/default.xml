@@ -10,6 +10,7 @@
   </collection>
   <collection label="Advanced Security">
     <view name="security_alert_overview" />
+    <view name="dependabot_alerts" />
     <view name="code_scanning_overview" />
     <view name="secret_scanning_overview" />
   </collection>

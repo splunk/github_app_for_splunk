@@ -1,0 +1,173 @@
+<form theme="light">
+  <label>Dependabot Alerts</label>
+  <search id="baseSearch">
+    <query>
+      `github_webhooks` (eventtype="GitHub::VulnerabilityAlert" OR eventtype="GitHub::Push") | eval action='action', repository=if(isnotnull('repository.name'),'repository.name','unknown'), severity=if(isnotnull('alert.severity'),'alert.severity','none'), create_time=if(isnotnull('alert.created_at'),'alert.created_at','unknown'), received_time='_time', alert_url=if(isnotnull('alert.external_reference'),'alert.external_reference','unknown'), eventtype='eventtype', created=strptime(create_time, "%Y-%m-%dT%H:%M:%S%Z"), duration=received_time - created, duration_str=tostring(avg(duration), "duration")
+    </query>
+    <earliest>$timeTkn.earliest$</earliest>
+    <latest>$timeTkn.latest$</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="time" token="timeTkn" searchWhenChanged="true">
+      <label>Time Range</label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="multiselect" token="repoTkn" searchWhenChanged="true">
+      <label>Repositories</label>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <valuePrefix>"</valuePrefix>
+      <valueSuffix>"</valueSuffix>
+      <delimiter>,</delimiter>
+      <fieldForLabel>repository</fieldForLabel>
+      <fieldForValue>repository</fieldForValue>
+      <search base="baseSearch">
+        <query>| dedup repository | table repository</query>
+      </search>
+    </input>
+    <input type="multiselect" token="severity_label" searchWhenChanged="true">
+      <label>Severity</label>
+      <fieldForLabel>severity</fieldForLabel>
+      <fieldForValue>severity</fieldForValue>
+      <valuePrefix>"</valuePrefix>
+      <valueSuffix>"</valueSuffix>
+      <search base="baseSearch">
+        <query>| table severity | dedup severity</query>
+      </search>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <single>
+        <title>Created</title>
+        <search base="baseSearch">
+          <query>| search severity=$severity_label$ repository=$repoTkn$ action="create" | stats count</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="height">50</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Fixed</title>
+        <search base="baseSearch">
+          <query>| search severity=$severity_label$ repository=$repoTkn$ (action="resolve") | stats count</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="height">50</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Dismissed</title>
+        <search base="baseSearch">
+          <query>| search severity=$severity_label$ repository=$repoTkn$ (action="dismiss") | stats count</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="height">50</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Alert Found/Fixed Ratio</title>
+        <search base="baseSearch">
+          <query>| search severity=$severity_label$ repository=$repoTkn$ (action=create OR action=resolve OR action=dismiss)
+| timechart count(_raw)  by action
+| accum create
+| accum resolve
+| rename create as "Found"
+| rename resolve as "Fixed"
+| rename dismiss as "Dismissed"</query>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="height">150</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>Commit/Alert Ratio</title>
+        <search base="baseSearch">
+          <query>| search  (eventtype="GitHub::Push" repository=$repoTkn$) OR ((action=create) severity=$severity_label$ repository=$repoTkn$ )
+| timechart count(_raw)  by eventtype
+| accum "GitHub::Push"
+| accum "GitHub::VulnerabilityAlert"
+| rename GitHub::Push as "Pushes"
+| rename GitHub::VulnerabilityAlert as "Dependabot Alerts"
+| fields - err0r</query>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisY.scale">log</option>
+        <option name="charting.axisY2.enabled">1</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.overlayFields">DC_cumulative</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="height">150</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <chart>
+        <title>New Alerts by Severity</title>
+        <search base="baseSearch">
+          <query>| search severity=$severity_label$ repository=$repoTkn$ (action=create) | timechart count(_raw)  by severity</query>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.drilldown">none</option>
+        <option name="height">150</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Fixed Alerts</title>
+        <search base="baseSearch">
+          <query> | search (action=resolve OR action=dismiss) repository=$repoTkn$ severity=$severity_label$
+| table action, repository, severity, alert_url,duration_str
+| rename action AS "Action", repository AS "Repository" duration_str AS "Time to Resolution",severity AS "Severity", alert_url AS "Alert URL"
+| sort -"Time to Resolution"
+          </query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Alerts by Repo</title>
+        <search base="baseSearch">
+          <query>| search (action=create)  repository=$repoTkn$ severity=$severity_label$| chart usenull=f count over repository by severity</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="totalsRow">false</option>
+        <format type="color" field="repository.name">
+          <colorPalette type="minMidMax" maxColor="#53A051" minColor="#FFFFFF"></colorPalette>
+          <scale type="minMidMax"></scale>
+        </format>
+      </table>
+    </panel>
+  </row>
+</form>
