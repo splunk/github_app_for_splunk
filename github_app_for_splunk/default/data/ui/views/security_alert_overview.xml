@@ -2,7 +2,14 @@
   <label>Advanced Security Overview</label>
   <search id="baseSearch">
     <query>
-      index=gh_vuln OR (`github_webhooks` alert.created_at=*) | eval reason=if(isnotnull('alert.affected_package_name'),'alert.affected_package_name','alert.rule.name'), id=if(isnotnull('alert.external_identifier'),'alert.external_identifier','alert.rule.id'), severity=if(isnotnull('alert.severity'),'alert.severity','alert.rule.security_severity_level'), type=if(isnotnull('alert.external_identifier'),"Dependabot Alert","Code Scanning Alert") | stats latest(action) as status, earliest(alert.created_at) as created_at, latest(alert.number) as number by repository.full_name, reason, id, type, severity | eval source=if(type=="Dependabot Alert","dependabot","code-scanning") | eval age = toString(round(now() - strptime(created_at, "%Y-%m-%dT%H:%M:%S")),"Duration")
+    index=gh_vuln OR (`github_webhooks` alert.created_at=*) 
+    | eval type=case((eventtype="GitHub::CodeScanning"), "Code Scanning Alert", (eventtype="GitHub::VulnerabilityAlert"), "Dependabot Alert", (eventtype="GitHub::SecretScanning"), "Secret Scanning Alert") 
+    | eval reason=case((type="Dependabot Alert"),'alert.affected_package_name',(type="Code Scanning Alert"), 'alert.rule.name', (type="Secret Scanning Alert"), 'alert.secret_type'), id=case((type="Dependabot Alert"),'alert.external_identifier',(type="Code Scanning Alert"), 'alert.rule.id', (type="Secret Scanning Alert"), 'alert.number'), severity=case((type="Dependabot Alert"),'alert.severity',(type="Code Scanning Alert"), 'alert.rule.security_severity_level', (type="Secret Scanning Alert"), "high")
+    | stats latest(action) as status, earliest(alert.created_at) as created_at, latest(alert.number) as number by repository.full_name, reason, id, type, severity 
+    | eval source=type
+    | eval age = toString(round(now() - strptime(created_at, "%Y-%m-%dT%H:%M:%S")),"Duration") 
+    | search severity IN("*") status IN("*") type IN("*") 
+    | sort -age
     </query>
     <earliest>$timeTkn.earliest$</earliest>
     <latest>$timeTkn.latest$</latest>
@@ -244,7 +251,7 @@
         <option name="totalsRow">false</option>
         <option name="wrap">true</option>
         <format type="color" field="severity">
-          <colorPalette type="map">{"critical":#DC4E41,"high":#F1813F,"moderate":#F8BE34}</colorPalette>
+          <colorPalette type="map">{"critical":#DC4E41,"high":#F1813F,"moderate":#F8BE34, "medium":#F8BE34}</colorPalette>
         </format>
       </table>
     </panel>
