@@ -46,7 +46,7 @@
   </fieldset>
   <row>
     <panel>
-      <title>Average Resolution Time (MTTR)</title>
+      <title>Mean Time to Resolution (MTTR)</title>
       <single>
         <search base="baseSearch">
           <query>| search eventtype="GitHub::CodeScanning" (action=fixed OR action=closed_by_user) tool=$tool_name$ repository=$repoTkn$
