@@ -1,8 +1,8 @@
-<form version="1.1">
+<form version="1.1" theme="dark">
   <label>Dependabot Alerts</label>
   <search id="baseSearch">
     <query>
-      `github_webhooks` (eventtype="GitHub::VulnerabilityAlert" OR eventtype="GitHub::Push") | eval action='action', repository=if(isnotnull('repository.name'),'repository.name','unknown'), severity=if(isnotnull('alert.severity'),'alert.severity','none'), create_time=if(isnotnull('alert.created_at'),'alert.created_at','unknown'), received_time='_time', alert_url=if(isnotnull('alert.external_reference'),'alert.external_reference','unknown'), eventtype='eventtype', created=strptime(create_time, "%Y-%m-%dT%H:%M:%S%Z"), duration=received_time - created, duration_str=tostring(avg(duration), "duration")
+      `github_webhooks` eventtype="GitHub::VulnerabilityAlert" | eval action='action', repository=if(isnotnull('repository.name'),'repository.name','unknown'), severity=if(isnotnull('alert.severity'),'alert.severity','none'), create_time=if(isnotnull('alert.created_at'),'alert.created_at','unknown'), received_time='_time', alert_url=if(isnotnull('alert.external_reference'),'alert.external_reference','unknown'), eventtype='eventtype', created=strptime(create_time, "%Y-%m-%dT%H:%M:%S%Z"), resolved_at=case('alert.dismissed_at' != "null", 'alert.dismissed_at', isnotnull('alert.fixed_at'), 'alert.fixed_at', isnotnull('alert.resolved_at'),'alert.resolved_at', 1=1, _time),  duration = toString(round(strptime(resolved_at, "%Y-%m-%dT%H:%M:%S") - strptime(create_time, "%Y-%m-%dT%H:%M:%S"))), duration_str=tostring(avg(duration), "duration")
     </query>
     <earliest>$timeTkn.earliest$</earliest>
     <latest>$timeTkn.latest$</latest>
@@ -17,7 +17,7 @@
       </default>
     </input>
     <input type="multiselect" token="repoTkn" searchWhenChanged="true">
-      <label>Repositories</label> 
+      <label>Repositories</label>
       <choice value="*">All</choice>
       <default>*</default>
       <initialValue>*</initialValue>
@@ -47,12 +47,29 @@
   <row>
     <panel>
       <single>
+        <title>Mean Time to Resolution (MTTR)</title>
+        <search base="baseSearch">
+          <query>| search severity=$severity_label$ repository=$repoTkn$ action="resolve" 
+          | eval age = avg(duration) 
+          | appendpipe [ stats avg(age) as totalTime ]
+          | eval mttr = toString(round(totalTime), "duration"), clean_mttr = replace (mttr , "\+" , " days, ")
+          | stats max(clean_mttr)
+          </query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="height">100</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
         <title>Created</title>
         <search base="baseSearch">
           <query>| search severity=$severity_label$ repository=$repoTkn$ action="create" | stats count</query>
         </search>
         <option name="drilldown">none</option>
-        <option name="height">50</option>
+        <option name="height">100</option>
         <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
         <option name="refresh.display">progressbar</option>
       </single>
@@ -64,7 +81,7 @@
           <query>| search severity=$severity_label$ repository=$repoTkn$ (action="resolve") | stats count</query>
         </search>
         <option name="drilldown">none</option>
-        <option name="height">50</option>
+        <option name="height">100</option>
         <option name="refresh.display">progressbar</option>
       </single>
     </panel>
@@ -75,7 +92,7 @@
           <query>| search severity=$severity_label$ repository=$repoTkn$ (action="dismiss") | stats count</query>
         </search>
         <option name="drilldown">none</option>
-        <option name="height">50</option>
+        <option name="height">100</option>
         <option name="refresh.display">progressbar</option>
       </single>
     </panel>
@@ -97,29 +114,20 @@
         <option name="charting.chart">line</option>
         <option name="charting.drilldown">none</option>
         <option name="refresh.display">progressbar</option>
-        <option name="height">150</option>
+        <option name="height">200</option>
       </chart>
     </panel>
     <panel>
       <chart>
-        <title>Commit/Alert Ratio</title>
+        <title>Vulnerabilities by Repo</title>
         <search base="baseSearch">
-          <query>| search  (eventtype="GitHub::Push" repository=$repoTkn$) OR ((action=create) severity=$severity_label$ repository=$repoTkn$ )
-| timechart count(_raw)  by eventtype
-| accum "GitHub::Push"
-| accum "GitHub::VulnerabilityAlert"
-| rename GitHub::Push as "Pushes"
-| rename GitHub::VulnerabilityAlert as "Dependabot Alerts"
-| fields - err0r</query>
+          <query>| search severity=$severity_label$ repository=$repoTkn$ action=create | chart count by repository
+          </query>
         </search>
-        <option name="charting.axisTitleX.visibility">collapsed</option>
-        <option name="charting.axisY.scale">log</option>
-        <option name="charting.axisY2.enabled">1</option>
-        <option name="charting.chart">line</option>
-        <option name="charting.chart.overlayFields">DC_cumulative</option>
+        <option name="charting.chart">pie</option>
         <option name="charting.drilldown">none</option>
         <option name="charting.legend.mode">standard</option>
-        <option name="height">150</option>
+        <option name="height">200</option>
         <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
@@ -132,7 +140,7 @@
         <option name="charting.chart">column</option>
         <option name="charting.chart.stackMode">stacked</option>
         <option name="charting.drilldown">none</option>
-        <option name="height">150</option>
+        <option name="height">200</option>
         <option name="refresh.display">progressbar</option>
       </chart>
     </panel>

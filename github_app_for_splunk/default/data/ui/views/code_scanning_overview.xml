@@ -2,7 +2,7 @@
   <label>Code Scanning Alerts</label>
   <search id="baseSearch">
     <query>
-      `github_webhooks` (eventtype="GitHub::CodeScanning" OR eventtype="GitHub::Push") | eval action='action', tool=if(isnotnull('alert.tool.name'),'alert.tool.name','unknown'), repository=if(isnotnull('repository.name'),'repository.name','unknown'), severity=if(isnotnull('alert.rule.security_severity_level'),'alert.rule.security_severity_level','none'), create_time=if(isnotnull('alert.created_at'),'alert.created_at','unknown'), received_time='_time', alert_url=if(isnotnull('alert.html_url'),'alert.html_url','unknown'), eventtype='eventtype', created=strptime(create_time, "%Y-%m-%dT%H:%M:%S%Z"), duration=received_time - created, duration_str=tostring(avg(duration), "duration")
+      `github_webhooks` (eventtype="GitHub::CodeScanning" OR eventtype="GitHub::Push") | eval action='action', tool=if(isnotnull('alert.tool.name'),'alert.tool.name','unknown'), repository=if(isnotnull('repository.name'),'repository.name','unknown'), severity=if(isnotnull('alert.rule.security_severity_level'),'alert.rule.security_severity_level','none'), create_time=if(isnotnull('alert.created_at'),'alert.created_at','unknown'), received_time='_time', alert_url=if(isnotnull('alert.html_url'),'alert.html_url','unknown'), eventtype='eventtype', created=strptime(create_time, "%Y-%m-%dT%H:%M:%S%Z"), resolved_at=case('alert.dismissed_at' != "null", 'alert.dismissed_at', isnotnull('alert.fixed_at'), 'alert.fixed_at', isnotnull('alert.resolved_at'),'alert.resolved_at', 1=1, _time),  duration = toString(round(strptime(resolved_at, "%Y-%m-%dT%H:%M:%S") - strptime(create_time, "%Y-%m-%dT%H:%M:%S"))), duration_str=tostring(avg(duration), "duration")
     </query>
     <earliest>$timeTkn.earliest$</earliest>
     <latest>$timeTkn.latest$</latest>
@@ -46,62 +46,78 @@
   </fieldset>
   <row>
     <panel>
+      <title>Mean Time to Resolution (MTTR)</title>
       <single>
-        <title>Created</title>
+        <search base="baseSearch">
+          <query>| search eventtype="GitHub::CodeScanning" (action=fixed OR action=closed_by_user) tool=$tool_name$ repository=$repoTkn$
+| eval action=action, , repository=if(isnotnull('repository.name'),'repository.name','unknown') 
+| eval age = avg(duration) 
+| appendpipe [ stats avg(age) as totalTime ]
+| eval mttr = toString(round(totalTime), "duration"), clean_mttr = replace (mttr , "\+" , " days, ")
+| stats max(clean_mttr)
+            
+          </query>
+        </search>
+        <option name="drilldown">none</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Created</title>
+      <single>
         <search base="baseSearch">
           <query>| search tool=$tool_name$ repository=$repoTkn$ action="created" | stats count</query>
         </search>
         <option name="drilldown">none</option>
-        <option name="height">50</option>
+        <option name="height">100</option>
         <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
         <option name="refresh.display">progressbar</option>
       </single>
     </panel>
     <panel>
+      <title>Fixed</title>
       <single>
-        <title>Fixed</title>
         <search base="baseSearch">
           <query>| search tool=$tool_name$ repository=$repoTkn$ action="fixed" | stats count</query>
         </search>
         <option name="drilldown">none</option>
-        <option name="height">50</option>
+        <option name="height">100</option>
         <option name="refresh.display">progressbar</option>
       </single>
     </panel>
     <panel>
+      <title>Reopened</title>
       <single>
-        <title>Reopened</title>
         <search base="baseSearch">
           <query>| search tool=$tool_name$ repository=$repoTkn$ action="reopened" | stats count</query>
         </search>
         <option name="drilldown">none</option>
-        <option name="height">50</option>
+        <option name="height">100</option>
         <option name="refresh.display">progressbar</option>
       </single>
     </panel>
   </row>
   <row>
     <panel>
+      <title>Alert Found/Fixed Ratio</title>
       <chart>
-        <title>Alert Found/Fixed Ratio</title>
         <search base="baseSearch">
           <query>| search tool=$tool_name$ repository=$repoTkn$ (action=created OR action=fixed)
-| timechart count(_raw)  by action
+| timechart count(_raw)  by action 
 | accum created
-| accum fixed
-| rename created as "Found"
+| accum fixed 
+| rename created as "Found" 
 | rename fixed as "Fixed"</query>
         </search>
         <option name="charting.axisTitleX.visibility">collapsed</option>
         <option name="charting.chart">line</option>
         <option name="charting.drilldown">none</option>
-        <option name="refresh.display">progressbar</option>
         <option name="height">150</option>
+        <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
     <panel>
+      <title>Commit/Alert Ratio</title>
       <chart>
-        <title>Commit/Alert Ratio</title>
         <search base="baseSearch">
           <query>| search  (eventtype="GitHub::Push" repository=$repoTkn$) OR ((action=created OR action=reopened) tool=$tool_name$ repository=$repoTkn$ )
 | timechart count(_raw)  by eventtype
@@ -122,8 +138,8 @@
       </chart>
     </panel>
     <panel>
+      <title>New Alerts by Tool</title>
       <chart>
-        <title>New Alerts by Tool</title>
         <search base="baseSearch">
           <query>| search tool=$tool_name$ repository=$repoTkn$ (action=created OR action=appeared_in_branch) | timechart count(_raw)  by tool</query>
         </search>
@@ -141,8 +157,9 @@
         <title>Fixed Alerts</title>
         <search base="baseSearch">
           <query> | search (action=fixed OR action=closed_by_user) repository=$repoTkn$ tool=$tool_name$
-| table repository, tool, alert_url,duration_str
-| rename repository AS "Repository" duration_str AS "Time to Resolution",tool AS "Tool", alert_url AS "Alert URL"
+|eval clean_duration = replace (duration_str , "\+" , " days, ")
+| table repository, tool, alert_url,clean_duration
+| rename repository AS "Repository" clean_duration AS "Time to Resolution",tool AS "Tool", alert_url AS "Alert URL" 
 | sort -"Time to Resolution"
           </query>
         </search>
@@ -157,11 +174,8 @@
         <search base="baseSearch">
           <query>| search (action=created OR action=reopened) repository=$repoTkn$ tool=$tool_name$ | chart usenull=f count  over repository by severity</query>
         </search>
+        <option name="dataOverlayMode">heatmap</option>
         <option name="drilldown">none</option>
-        <format type="color" field="critical">
-          <colorPalette type="minMidMax" maxColor="#DC4E41" minColor="#FFFFFF"></colorPalette>
-          <scale type="minMidMax"></scale>
-        </format>
         <format type="color" field="high">
           <colorPalette type="minMidMax" maxColor="#F8BE34" minColor="#FFFFFF"></colorPalette>
           <scale type="minMidMax"></scale>
