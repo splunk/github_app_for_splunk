@@ -65,8 +65,11 @@ The following are the required scopes for the personal access token allowing the
 
 - **Hostname**
 
-  - This is the hostname of your GitHub Enterprise instance. Make sure there are no trailing `/` in the URL provided. This could either be a FQDN or an IP address. Do not append any paths beyond the tld.
+  - This is the hostname of your GitHub Enterprise instance. Make sure there are no trailing `/` in the URL provided. This could either be a FQDN or an IP address. Do not append any paths beyond the tld. **Most Users Will Not Need to change this!**
   - Example: [https://api.github.com](https://api.github.com)
+
+- **Account Type**
+  - This is the type of GitHub account you are using. GitHub Enterprise Cloud users should keep it at `enterprise`, however some users that only have an enterprise tier paid Organization should change it to `organization`. If you can't tell which you have, go to your user icon in GitHub in the upper right corner. If you have an entry listed as "Your enterprises", then you should use `enterprise`, otherwise use `organization`.
 
 - **Enterprise**
 
