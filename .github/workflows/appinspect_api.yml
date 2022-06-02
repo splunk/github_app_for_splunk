@@ -45,3 +45,13 @@ jobs:
                   splunkUser: ${{ secrets.SPLUNKBASE_USER }}
                   splunkPassword: ${{ secrets.SPLUNKBASE_PASSWORD }}
                   includedTags: cloud
+    release:
+      name: Release
+      runs-on: ubuntu-latest
+      steps:
+        - name: Release
+          uses: fnkr/github-action-ghr@v1
+          if: startsWith(github.ref, 'refs/tags/')
+          env:
+            GHR_PATH: ./dist/github_app_for_splunk.spl
+            GITHUB_TOKEN: ${{ secrets.API_TOKEN }}
