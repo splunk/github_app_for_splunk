@@ -27,7 +27,7 @@
     <panel>
       <single>
         <search>
-          <query>index=_internal component=ExecProcessor "TA_splunk_ghe_audit_log_monitoring" "stream_events(): Fetched:" OR "API Rate limits"| rex "\'x_rl_limit\'\: \'(?&lt;x_rl_limit&gt;\d+?)\', \'x_rl_remainig\'\: \'(?&lt;x_rl_remaining&gt;\d+?)\', 'x_rl_reset_timestamp\'\: \'(?&lt;x_rl_reset_timestamp&gt;\d+?)\', \'x_rl_used\'\: \'(?&lt;x_rl_used&gt;\d+?)\'" | rex "stream_events\(\)\: Fetched: (?&lt;event_count&gt;\d+?) events" | timechart sum(event_count) as fetched_event max(x_rl_limit) as x_rl_limit, min(x_rl_remaining) as x_rl_remaining, max(x_rl_used) as x_rl_used | stats max(x_rl_limit) as "Rate Limit", avg(x_rl_used) as "Average Rate Limit Used", min(fetched_event) as "Minimum Fetched Events", avg(fetched_event) as "Average Fetched Events", max(fetched_event) as "Maximum Fetched Events"</query>
+          <query>index=_internal component=ExecProcessor "github-audit-log-monitoring-add-on-for-splunk" "stream_events(): Fetched:" OR "API Rate limits"| rex "\'x_rl_limit\'\: \'(?&lt;x_rl_limit&gt;\d+?)\', \'x_rl_remainig\'\: \'(?&lt;x_rl_remaining&gt;\d+?)\', 'x_rl_reset_timestamp\'\: \'(?&lt;x_rl_reset_timestamp&gt;\d+?)\', \'x_rl_used\'\: \'(?&lt;x_rl_used&gt;\d+?)\'" | rex "stream_events\(\)\: Fetched: (?&lt;event_count&gt;\d+?) events" | timechart sum(event_count) as fetched_event max(x_rl_limit) as x_rl_limit, min(x_rl_remaining) as x_rl_remaining, max(x_rl_used) as x_rl_used | stats max(x_rl_limit) as "Rate Limit", avg(x_rl_used) as "Average Rate Limit Used", min(fetched_event) as "Minimum Fetched Events", avg(fetched_event) as "Average Fetched Events", max(fetched_event) as "Maximum Fetched Events"</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
@@ -57,7 +57,7 @@
       <title>Rate Limit Usage</title>
       <chart>
         <search>
-          <query>index=_internal component=ExecProcessor "TA_splunk_ghe_audit_log_monitoring" "API Rate limits"| rex "\'x_rl_limit\'\: \'(?&lt;x_rl_limit&gt;\d+?)\', \'x_rl_remainig\'\: \'(?&lt;x_rl_remaining&gt;\d+?)\', 'x_rl_reset_timestamp\'\: \'(?&lt;x_rl_reset_timestamp&gt;\d+?)\', \'x_rl_used\'\: \'(?&lt;x_rl_used&gt;\d+?)\'" | timechart max(x_rl_limit) as "Rate Limit", min(x_rl_remaining) as "Rate Limit Remaining", max(x_rl_used) as "Rate Limit Used"</query>
+          <query>index=_internal component=ExecProcessor "github-audit-log-monitoring-add-on-for-splunk" "API Rate limits"| rex "\'x_rl_limit\'\: \'(?&lt;x_rl_limit&gt;\d+?)\', \'x_rl_remainig\'\: \'(?&lt;x_rl_remaining&gt;\d+?)\', 'x_rl_reset_timestamp\'\: \'(?&lt;x_rl_reset_timestamp&gt;\d+?)\', \'x_rl_used\'\: \'(?&lt;x_rl_used&gt;\d+?)\'" | timechart max(x_rl_limit) as "Rate Limit", min(x_rl_remaining) as "Rate Limit Remaining", max(x_rl_used) as "Rate Limit Used"</query>
           <earliest>$timeRng.earliest$</earliest>
           <latest>$timeRng.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -101,7 +101,7 @@
       <title>Fetched Events</title>
       <chart>
         <search>
-          <query>index=_internal component=ExecProcessor "TA_splunk_ghe_audit_log_monitoring" "stream_events(): Fetched:" | rex "stream_events\(\)\: Fetched: (?&lt;event_count&gt;\d+?) events" | timechart sum(event_count) as fetched_event</query>
+          <query>index=_internal component=ExecProcessor "github-audit-log-monitoring-add-on-for-splunk" "stream_events(): Fetched:" | rex "stream_events\(\)\: Fetched: (?&lt;event_count&gt;\d+?) events" | timechart sum(event_count) as fetched_event</query>
           <earliest>$timeRng.earliest$</earliest>
           <latest>$timeRng.latest$</latest>
           <sampleRatio>1</sampleRatio>
