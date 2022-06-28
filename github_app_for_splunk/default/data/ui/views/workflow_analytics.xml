@@ -14,8 +14,8 @@
       <fieldForValue>repository.name</fieldForValue>
       <search>
         <query>`github_webhooks` eventtype="GitHub::Workflow"|dedup repository.name| table repository.name</query>
-        <earliest>-30d@d</earliest>
-        <latest>now</latest>
+        <earliest>$timeTkn.earliest$</earliest>
+        <latest>$timeTkn.latest$</latest>
       </search>
       <choice value="*">All</choice>
       <default>*</default>
