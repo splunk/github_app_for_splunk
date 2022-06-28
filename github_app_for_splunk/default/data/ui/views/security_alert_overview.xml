@@ -2,14 +2,14 @@
   <label>Advanced Security Overview</label>
   <search id="baseSearch">
     <query>
-    index=gh_vuln OR (`github_webhooks` alert.created_at=*) 
-    | eval type=case((eventtype="GitHub::CodeScanning"), "Code Scanning Alert", (eventtype="GitHub::VulnerabilityAlert"), "Dependabot Alert", (eventtype="GitHub::SecretScanning"), "Secret Scanning Alert") 
-    | eval url=case((eventtype="GitHub::CodeScanning"), 'alert.html_url', (eventtype="GitHub::VulnerabilityAlert"), 'repository.html_url'+"/security/dependabot/"+'alert.number', (eventtype="GitHub::SecretScanning"), 'alert.html_url')    
+    `github_webhooks` alert.created_at=*
+    | eval type=case((eventtype="GitHub::CodeScanning"), "Code Scanning Alert", (eventtype="GitHub::VulnerabilityAlert"), "Dependabot Alert", (eventtype="GitHub::SecretScanning"), "Secret Scanning Alert")
+    | eval url=case((eventtype="GitHub::CodeScanning"), 'alert.html_url', (eventtype="GitHub::VulnerabilityAlert"), 'repository.html_url'+"/security/dependabot/"+'alert.number', (eventtype="GitHub::SecretScanning"), 'alert.html_url')
     | eval reason=case((type="Dependabot Alert"),'alert.affected_package_name',(type="Code Scanning Alert"), 'alert.rule.name', (type="Secret Scanning Alert"), 'alert.secret_type'), id=case((type="Dependabot Alert"),'alert.external_identifier',(type="Code Scanning Alert"), 'alert.rule.id', (type="Secret Scanning Alert"), 'alert.number'), severity=case((type="Dependabot Alert"),'alert.severity',(type="Code Scanning Alert"), 'alert.rule.security_severity_level', (type="Secret Scanning Alert"), "high"), repository = 'repository.full_name'
     | stats latest(action) as status, earliest(alert.created_at) as created_at, latest(alert.number) as number by repository, reason, id, type, severity, url
     | eval source=type
-    | eval age = toString(round(now() - strptime(created_at, "%Y-%m-%dT%H:%M:%S")),"Duration") 
-    | search severity IN("*") status IN("*") type IN("*") 
+    | eval age = toString(round(now() - strptime(created_at, "%Y-%m-%dT%H:%M:%S")),"Duration")
+    | search severity IN("*") status IN("*") type IN("*")
     | sort -age
     </query>
     <earliest>$timeTkn.earliest$</earliest>
