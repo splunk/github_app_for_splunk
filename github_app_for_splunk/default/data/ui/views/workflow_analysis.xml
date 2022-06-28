@@ -1,7 +1,7 @@
 <form version="1.1" script="example_customtables.js" stylesheet="custom.css" theme="dark">
   <label>Workflow Analysis</label>
   <fieldset submitButton="false" autoRun="true">
-    <input type="time" token="field1">
+    <input type="time" token="timeTkn">
       <label></label>
       <default>
         <earliest>-24h@h</earliest>
@@ -10,6 +10,13 @@
     </input>
     <input type="multiselect" token="repos">
       <label>Repositories</label>
+      <fieldForLabel>repository.name</fieldForLabel>
+      <fieldForValue>repository.name</fieldForValue>
+      <search>
+        <query>`github_webhooks` eventtype="GitHub::Workflow"|dedup repository.name| table repository.name</query>
+        <earliest>$timeTkn.earliest$</earliest>
+        <latest>$timeTkn.latest$</latest>
+      </search>
       <choice value="*">All</choice>
       <default>*</default>
       <initialValue>*</initialValue>
@@ -21,8 +28,8 @@
         <title>Workflow Conclusions Over Time</title>
         <search>
           <query>`github_webhooks` "workflow_run.name"="*" | spath "repository.full_name" | search repository.full_name="$repos$" | stats latest(_time) as _time, latest(workflow_run.conclusion) as workflow_run.conclusion by repository.full_name,workflow_run.name,workflow_run.id | timechart count by workflow_run.conclusion span=1h | rename null as "in-progress"</query>
-          <earliest>$field1.earliest$</earliest>
-          <latest>$field1.latest$</latest>
+          <earliest>$timeTkn.earliest$</earliest>
+          <latest>$timeTkn.latest$</latest>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>

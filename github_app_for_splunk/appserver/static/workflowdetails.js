@@ -17,8 +17,8 @@ require([
         preview: true,
         cache: true,
         search: mvc.tokenSafe("index=github_webhook eventtype=\"GitHub::Workflow\" \"workflow_job.run_id\"=$workflow_id$| fields * | eval queued=if(action==\"queued\",_time,null), started=if(action==\"in_progress\",_time,null), completed=if(action==\"completed\",_time,null) | stats latest(workflow_job.conclusion) as status, latest(workflow_job.name) as Name, latest(queued) as queued, latest(started) as started, latest(completed) as completed by workflow_job.id | eval queueTime=toString(round(started-queued),\"Duration\"), runTime=toString(round(completed-started),\"Duration\"), totalTime=toString(round(completed-queued),\"Duration\"), status=if(status==\"null\",\"in_progress\",status) | rename workflow_job.id AS JobID | fields status, Name, JobID, queueTime, runTime, totalTime"),
-        earliest_time: mvc.tokenSafe("$field1.earliest$"),
-        latest_time: mvc.tokenSafe("$field1.latest$")
+        earliest_time: mvc.tokenSafe("timeTkn.earliest$"),
+        latest_time: mvc.tokenSafe("timeTkn.latest$")
     });
 
     // Create a table for a custom row expander
