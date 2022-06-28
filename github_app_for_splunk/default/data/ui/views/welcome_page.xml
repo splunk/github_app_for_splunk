@@ -85,10 +85,10 @@
         <div>
           <h2><b>How to collect GitHub Data</b></h2>
           <p>
-            GitHub has several ways to collect data from their services depending on your needs. Information is available within the App on how to collect different types of data from GitHub:
+            GitHub has several ways to collect data from their services depending on your needs.
             <ol>
-              <li><a href="api_config">Audit Log</a> data is available through a Splunk Add-On</li>
-              <li><a href="webhook_config">Rich commit, pull request, and Code Scanning</a> data is available through GitHub Webhooks</li>
+              <li><a href="https://github.com/splunk/github_app_for_splunk/blob/main/docs/ghe_audit_logs.MD" target="_blank">Audit Log</a> data is available through a Splunk Add-On</li>
+              <li><a href="https://github.com/splunk/github_app_for_splunk/blob/main/docs/github_webhooks.MD" target="_blank">Rich commit, pull request, and Code Scanning</a> data is available through GitHub Webhooks</li>
             </ol>
           </p>
         </div>
