@@ -194,7 +194,7 @@
       <title>Workflow Run Logs</title>
       <event>
         <search>
-          <query>index="github_workflow_logs" workflowID::$workflow_id$ | sort _time</query>
+          <query>`github_workflow_logs` workflowID::$workflow_id$ | sort _time</query>
           <earliest>0</earliest>
           <sampleRatio>1</sampleRatio>
         </search>
