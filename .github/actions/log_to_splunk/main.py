@@ -35,25 +35,25 @@ def main():
         output = "GITHUB API Http Error:" + str(errh)
         print(f"Error: {output}")
         print(f"::set-output name=result::{output}")
-        return
+        return x.status_code
     except requests.exceptions.ConnectionError as errc:
         output = "GITHUB API Error Connecting:" + str(errc)
         print(f"Error: {output}")
         print(f"::set-output name=result::{output}")
-        return
+        return x.status_code
     except requests.exceptions.Timeout as errt:
         output = "Timeout Error:" + str(errt)
         print(f"Error: {output}")
         print(f"::set-output name=result::{output}")
-        return
+        return x.status_code
     except requests.exceptions.RequestException as err:
         output = "GITHUB API Non catched error conecting:" + str(err)
         print(f"Error: {output}")
         print(f"::set-output name=result::{output}")
-        return
+        return x.status_code
     except Exception as e:
         print("Internal error", e)
-        return None
+        return x.status_code
 
     summary = x.json()
 
