@@ -30,7 +30,7 @@ def main():
 
     try:
         x = requests.get(summary_url, stream=True, auth=('token',GITHUB_TOKEN))
-
+        x.raise_for_status()
     except requests.exceptions.HTTPError as errh:
         output = "GITHUB API Http Error:" + str(errh)
         print(f"Error: {output}")
@@ -51,6 +51,9 @@ def main():
         print(f"Error: {output}")
         print(f"::set-output name=result::{output}")
         return
+    except Exception as e:
+        print("Internal error", e)
+        return None
 
     summary = x.json()
 
