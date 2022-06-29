@@ -6,9 +6,8 @@ This App is designed to work across multiple GitHub data sources however not all
 
 The GitHub App for Splunk is designed to work with the following data sources:
 
-* [GitHub Audit Log Monitoring Add-On For Splunk](./docs/ghe_audit_logs.MD): Audit logs from GitHub Enterprise Cloud.
+* [GitHub Audit Log Collection](./docs/ghe_audit_logs.MD): Audit logs from GitHub Enterprise Cloud and Server.
 * [Github.com Webhooks](./docs/github_webhooks.MD): A select set of webhook events like Push, PullRequest, Code Scanning and Repo.
-* [Github Enterprise Server Syslog Forwarder](./docs/ghes_syslog_setup.MD): Audit and Application logs from Github Enterprise Server.
 * [Github Enterprise Collectd monitoring](./docs/splunk_collectd_forwarding_for_ghes.MD): Performance and Infrastructure metrics from Github Enterprise Server.
 
 ## Dashboard Instructions

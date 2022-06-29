@@ -7,7 +7,7 @@
 
 ## Installation
 
-Installation and configuration documents for the (Splunk Add-on for GitHub)[https://docs.splunk.com/Documentation/AddOns/released/GitHub/About] is available in our official Splunk docs. This add-on can be used for both GitHub Enterprise Cloud and Server. To configure for each specific environment, please refer to the official docs.
+Installation and configuration documents for the [Splunk Add-on for GitHub](https://docs.splunk.com/Documentation/AddOns/released/GitHub/About) is available in our official Splunk docs. This add-on can be used for both GitHub Enterprise Cloud and Server. To configure for each specific environment, please refer to the official docs.
 
 ## Configuration
 
