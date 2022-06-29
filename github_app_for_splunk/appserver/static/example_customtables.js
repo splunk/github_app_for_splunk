@@ -11,20 +11,22 @@ require([
    TableView
 ) {
 
+    mvc.Components.revokeInstance("myCustomRowSearch");
+
     // Set up search managers
-    var search2 = new SearchManager({
-        id: "search2",
+    var myCustomRowSearch = new SearchManager({
+        id: "myCustomRowSearch",
         preview: true,
         cache: true,
         search: "`github_webhooks` \"workflow_run.name\"=\"*\" | spath \"repository.full_name\" | search repository.full_name=* | eval started=if(action=\"requested\",_time,NULL), completed=if(action=\"completed\",_time, NULL), created=round(strptime('workflow_run.created_at',\"%Y-%m-%dT%H:%M:%SZ\")) | stats latest(created) as created, latest(started) as started, latest(completed) as completed, latest(duration) as duration, latest(workflow_run.conclusion) as workflow_run.conclusion by repository.full_name,workflow_run.name,workflow_run.id | eval started=if(isnull(started), created, started) | eval duration=if(isnotnull(completed),tostring(completed-started,\"Duration\"),\"In Progress\") | rename workflow_run.conclusion as status, repository.full_name as \"Repository Name\", workflow_run.name as \"Workflow Name\", workflow_run.id as \"Run ID\" | table status, \"Repository Name\", \"Workflow Name\", \"Run ID\", duration,completed|sort completed|fields - completed",
-        earliest_time: mvc.tokenSafe("$field1.earliest$"),
-        latest_time: mvc.tokenSafe("$field1.latest$")
+        earliest_time: mvc.tokenSafe("$timeTkn.earliest$"),
+        latest_time: mvc.tokenSafe("$timeTkn.latest$")
     });
 
     // Create a table for a custom row expander
     var mycustomrowtable = new TableView({
         id: "table-customrow",
-        managerid: "search2",
+        managerid: "myCustomRowSearch",
         drilldown: "none",
         drilldownRedirect: false,
         el: $("#table-customrow")
