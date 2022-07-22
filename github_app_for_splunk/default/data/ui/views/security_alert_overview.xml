@@ -168,7 +168,7 @@
       <title>Resolved Alert Count</title>
       <single>
         <search base="baseSearch">
-          <query>| search status IN("dismiss","resolve","closed_by_user","fixed")| stats count</query>
+          <query>| search status IN("dismiss","resolve","resolved","closed_by_user","fixed")| stats count</query>
         </search>
         <option name="colorBy">value</option>
         <option name="colorMode">none</option>
