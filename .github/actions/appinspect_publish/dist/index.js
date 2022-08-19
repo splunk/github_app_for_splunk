@@ -9682,7 +9682,7 @@ try {
   const options = {
     hostname: 'splunkbase.splunk.com',
     port: 443,
-    path: '/api/v1/app/${AppID}/new_release/',
+    path: `/api/v1/app/${AppID}/new_release/`,
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
