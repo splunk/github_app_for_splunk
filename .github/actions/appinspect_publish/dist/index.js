@@ -9698,15 +9698,12 @@ try {
     console.log(`URL: ${options.hostname}${options.path}`);
     console.log(`statusCode: ${res.statusCode}`);
 
-    let data = '';
-    res.on('data', (chunk) => {
-        data = data + chunk.toString();
+    res.on('data', d => {
+        process.stdout.write(d);
     });
 
-    console.log(data);
-
     if (res.statusCode != 200) {
-      throw new Error(data);
+        throw new Error(`statusCode: ${res.statusCode}`);
     }
   });
   
