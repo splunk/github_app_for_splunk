@@ -9680,9 +9680,9 @@ try {
 
   // Print the response body to the console
   const options = {
-    hostname: 'example.com',
+    hostname: 'splunkbase.splunk.com',
     port: 443,
-    path: '/todos',
+    path: '/api/v1/app/${AppID}/new_release/',
     method: 'GET',
   };
   
