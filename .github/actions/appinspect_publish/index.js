@@ -40,7 +40,7 @@ try {
     console.log(data);
 
     if (res.statusCode != 200) {
-      throw data;
+      throw new Error(data);
     }
   });
   
