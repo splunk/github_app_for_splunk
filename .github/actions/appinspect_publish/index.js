@@ -17,14 +17,11 @@ try {
       body: payload
   });
 
-  // Format and return the response
+  // Print the response body to the console
     const body = await response.text();
-    return {
-        statusCode: response.status,
-        body: body,
-    };
-
+    console.log(`The API response: ${body}`);
     
+
 
 } catch (error) {
   core.setFailed(error.message);
