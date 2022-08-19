@@ -15,6 +15,8 @@ jobs:
         with:
           who-to-greet: 'Mona the Octocat'
           AppID: '5596'
+          splunkUser: ${{ secrets.SPLUNKBASE_USER }}
+          splunkPassword: ${{ secrets.SPLUNKBASE_PASSWORD }}
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"

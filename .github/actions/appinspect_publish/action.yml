@@ -9,6 +9,12 @@ inputs:
     description: 'App ID From Splunkbase'
     required: true
     default: '5596'
+  splunkUser:
+    description: 'Splunkbase Username'
+    required: true
+  splunkPassword:
+    description: 'Splunkbase Password'
+    required: true
 outputs:
   time: # id of output
     description: 'The time we greeted you'
