@@ -9679,14 +9679,18 @@ try {
   //console.log(`The event payload: ${payload}`);
 
   const AppID = core.getInput('AppID');
+  const user = core.getInput('User');
+  const password = core.getInput('Password');
+
   // Print the response body to the console
   const options = {
     hostname: 'splunkbase.splunk.com',
     port: 443,
     path: `/api/v1/app/${AppID}/new_release/`,
     method: 'POST',
+    auth : `${user}:${password}`,
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
     },
   };
   
