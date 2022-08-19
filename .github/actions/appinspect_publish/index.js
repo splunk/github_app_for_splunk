@@ -31,6 +31,12 @@ try {
   const req = https.request(options, res => {
     console.log(`URL: ${options.hostname}${options.path}`);
     console.log(`statusCode: ${res.statusCode}`);
+
+    if (res.statusCode != 200) {
+      throw res.on('data', d => {
+        process.stdout.write(d);
+      });
+    }
   
     res.on('data', d => {
       process.stdout.write(d);
