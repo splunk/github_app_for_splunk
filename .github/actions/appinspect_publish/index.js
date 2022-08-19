@@ -17,7 +17,10 @@ try {
     hostname: 'splunkbase.splunk.com',
     port: 443,
     path: '/api/v1/app/${AppID}/new_release/',
-    method: 'GET',
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
   };
   
   const req = https.request(options, res => {
