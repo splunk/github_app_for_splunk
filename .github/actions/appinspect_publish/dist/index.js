@@ -9690,6 +9690,7 @@ try {
   };
   
   const req = https.request(options, res => {
+    console.log(`URL: ${options.hostname}${options.path}`);
     console.log(`statusCode: ${res.statusCode}`);
   
     res.on('data', d => {
