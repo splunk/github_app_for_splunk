@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const https = require('https');
 
 try {
   // `who-to-greet` input defined in action metadata file
@@ -9,18 +10,30 @@ try {
   core.setOutput("time", time);
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
-
-  // Call an API endpoint with the payload
-  const response = await fetch('https://splunkbase.splunk.com/api/v1/app/${AppID}/new_release/', {
-      method: 'POST',
-      body: payload
-  });
+  //console.log(`The event payload: ${payload}`);
 
   // Print the response body to the console
-    const body = await response.text();
-    console.log(`The API response: ${body}`);
-    
+  const options = {
+    hostname: 'example.com',
+    port: 443,
+    path: '/todos',
+    method: 'GET',
+  };
+  
+  const req = https.request(options, res => {
+    console.log(`statusCode: ${res.statusCode}`);
+  
+    res.on('data', d => {
+      process.stdout.write(d);
+    });
+  });
+  
+  req.on('error', error => {
+    console.error(error);
+  });
+  
+  req.end();
+
 
 
 } catch (error) {
