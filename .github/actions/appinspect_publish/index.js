@@ -17,6 +17,15 @@ try {
       body: payload
   });
 
+  // Format and return the response
+    const body = await response.text();
+    return {
+        statusCode: response.status,
+        body: body,
+    };
+
+    
+
 } catch (error) {
   core.setFailed(error.message);
 }
