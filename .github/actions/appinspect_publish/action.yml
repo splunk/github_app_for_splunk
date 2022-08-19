@@ -5,6 +5,10 @@ inputs:
     description: 'Who to greet'
     required: true
     default: 'World'
+  AppID:
+    description: 'App ID From Splunkbase'
+    required: true
+    default: '5596'
 outputs:
   time: # id of output
     description: 'The time we greeted you'
