@@ -9678,6 +9678,7 @@ try {
   const payload = JSON.stringify(github.context.payload, undefined, 2)
   //console.log(`The event payload: ${payload}`);
 
+  const AppID = core.getInput('AppID');
   // Print the response body to the console
   const options = {
     hostname: 'splunkbase.splunk.com',
