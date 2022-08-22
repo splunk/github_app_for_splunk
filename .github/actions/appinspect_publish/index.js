@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const https = require('https');
+//const https = require('https');
+const axios = require('axios').default;
 
 try {
   // `who-to-greet` input defined in action metadata file
@@ -10,21 +11,45 @@ try {
   core.setOutput("time", time);
   // Get the JSON webhook payload for the event that triggered the workflow
   const payload = JSON.stringify(github.context.payload, undefined, 2)
-  //console.log(`The event payload: ${payload}`);
+  console.log(`The event payload: ${payload}`);
 
-  const AppID = core.getInput('AppID');
-  const user = core.getInput('User');
-  const password = core.getInput('Password');
-
+  const AppID = '5596'; //core.getInput('AppID');
+  const user = 'derkkila@splunk.com'; //core.getInput('User');
+  const password = 'chur21Wra'; //core.getInput('Password');
+  var auth= 'Basic ' + Buffer.from(user + ':' + password).toString('base64');
+  
+  axios({
+    method: 'post',
+    url: `https://splunkbase.splunk.com/api/v1/app/${AppID}/new_release/`,
+    headers: {
+        'Authorization': auth,
+        'Content-Type': 'application/json'
+    },
+    data: {
+      visibility: 'true',
+      filename: 'github_app_for_splunk.tgz',
+      splunk_versions: '8.0,8.1,8.2,9.0'
+    },
+    responseType: 'json'
+  })  
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error.response.data);
+    core.setFailed(error.response.data);
+  });;
+  
   // Print the response body to the console
+  /*
   const options = {
     hostname: 'splunkbase.splunk.com',
     port: 443,
     path: `/api/v1/app/${AppID}/new_release/`,
     method: 'POST',
-    auth : Buffer.from(user + ':' + password).toString('base64'),
     headers: {
         'Content-Type': 'application/json',
+        'Authorization': auth,
     },
   };
   
@@ -32,12 +57,16 @@ try {
     console.log(`URL: ${options.hostname}${options.path}`);
     console.log(`statusCode: ${res.statusCode}`);
 
-    res.on('data', d => {
-        process.stdout.write(d);
+    var body = '';
+
+    res.on('data', function (chunk) {
+        console.log('Body: '+chunk);
+        body = ''+chunk;
     });
 
     if (res.statusCode != 200) {
-        throw new Error(`statusCode: ${res.statusCode}`);
+        core.setFailed(`statusCode: ${res.statusCode}`);
+        //throw `statusCode: ${res.statusCode}`;
     }
   });
   
@@ -46,9 +75,10 @@ try {
   });
   
   req.end();
-
+    */
 
 
 } catch (error) {
+  console.log(error.message);
   core.setFailed(error.message);
 }
