@@ -9688,7 +9688,7 @@ try {
     port: 443,
     path: `/api/v1/app/${AppID}/new_release/`,
     method: 'POST',
-    auth : `${user}:${password}`,
+    auth : Buffer.from(user + ':' + password).toString('base64'),
     headers: {
         'Content-Type': 'application/json',
     },
