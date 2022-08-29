@@ -69,5 +69,14 @@ Once that is complete and webhooks are triggering, you'll want to update the mac
 <td>Code scanning alerts</td>
 <td>Alerts identified by CodeQL and other 3rd party/OSS scanning tools.</td>
 </tr>
-
+<tr>
+<td>GitHub::VulnerabilityAlert</td>
+<td>Repository vulnerability alerts</td>
+<td>Dependabot alert (aka dependency vulnerability alert) created, resolved, or dismissed on a repository.</td>
+</tr>
+<tr>
+<td>GitHub::SecretScanning</td>
+<td>Secret scanning alerts</td>
+<td>Secrets scanning alert created, resolved, or reopened.</td>
+</tr>
 </table>
