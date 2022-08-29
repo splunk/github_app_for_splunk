@@ -63,12 +63,4 @@ jobs:
           name: github_app_for_splunk-1.0.0.tar.gz
           path: ./github_app_for_splunk-1.0.0.tar.gz
 
-      - name: Hello world action step
-        uses: ./.github/actions/appinspect_publish # Uses an action in the root directory
-        id: hello
-        with:
-          APP_ID: '5596'
-          APP_FILE: 'github_app_for_splunk-1.0.0.tar.gz'
-          SPLUNK_USERNAME: ${{ secrets.SPLUNKBASE_USER }}
-          SPLUNK_PASSWORD: ${{ secrets.SPLUNKBASE_PASSWORD }}
-          SPLUNK_VERSION: '8.0,8.1'
+      
