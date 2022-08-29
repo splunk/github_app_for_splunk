@@ -2,12 +2,12 @@ import os
 import requests
 from requests.auth import HTTPBasicAuth
 
-APP_ID= os.environ['APP_ID']
-filename = os.environ['APP_FILE']
+APP_ID= os.environ['INPUT_APP_ID']
+filename = os.environ['INPUT_APP_FILE']
 filepath = os.path.join(os.environ['GITHUB_WORKSPACE'], filename)
-SPLUNK_USERNAME = os.environ['SPLUNK_USERNAME']
-SPLUNK_PASSWORD = os.environ['SPLUNK_PASSWORD']
-SPLUNK_VERSION = os.environ['SPLUNK_VERSION']
+SPLUNK_USERNAME = os.environ['INPUT_SPLUNK_USERNAME']
+SPLUNK_PASSWORD = os.environ['INPUT_SPLUNK_PASSWORD']
+SPLUNK_VERSION = os.environ['INPUT_SPLUNK_VERSION']
 
 api_path = 'https://splunkbase.splunk.com/api/v1/app/{}/new_release'.format(APP_ID)
 
