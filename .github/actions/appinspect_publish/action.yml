@@ -1,23 +1,30 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
-  AppID:
+  APP_ID:
     description: 'App ID From Splunkbase'
     required: true
     default: '5596'
-  splunkUser:
+  SPLUNK_USERNAME:
     description: 'Splunkbase Username'
     required: true
-  splunkPassword:
+  SPLUNK_PASSWORD:
     description: 'Splunkbase Password'
     required: true
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  APP_FILE:
+    description: 'The name of the file, for example "my_package.tar.gz".'
+    required: true
+  SPLUNK_VERSION:
+    description: 'The Splunk version(s) that the release is compatible with. For example, "6.7,7.0".'
+    required: true
+  VISIBILITY:
+    description: 'true = The release is to be visible upon package validation success. false = if the release is to be hidden.'
+    required: false
+    default: 'false'
+  CIM_VERSIONS:
+    description: 'The CIM version(s) that the release is compatible with. For example, "4.9,4.7".'
+    required: false
+    default: ''
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: 'docker'
+  image: 'Dockerfile'

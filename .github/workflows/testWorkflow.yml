@@ -13,10 +13,11 @@ jobs:
         uses: ./.github/actions/appinspect_publish # Uses an action in the root directory
         id: hello
         with:
-          who-to-greet: 'Mona the Octocat'
-          AppID: '5596'
-          splunkUser: ${{ secrets.SPLUNKBASE_USER }}
-          splunkPassword: ${{ secrets.SPLUNKBASE_PASSWORD }}
+          APP_ID: '5596'
+          APP_FILE: 'github_app_for_splunk-1.0.0.tar.gz'
+          SPLUNK_USERNAME: ${{ secrets.SPLUNKBASE_USER }}
+          SPLUNK_PASSWORD: ${{ secrets.SPLUNKBASE_PASSWORD }}
+          SPLUNK_VERSION: '8.0,8.1'
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
