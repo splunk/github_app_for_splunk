@@ -55,7 +55,7 @@ jobs:
               uses: ./.github/actions/appinspect_publish # Uses an action in the root directory
               with:
                 APP_ID: '5596'
-                APP_FILE: 'github_app_for_splunk.spl'
+                APP_FILE: './dist/github_app_for_splunk.spl'
                 SPLUNK_USERNAME: ${{ secrets.SPLUNKBASE_USER }}
                 SPLUNK_PASSWORD: ${{ secrets.SPLUNKBASE_PASSWORD }}
                 SPLUNK_VERSION: '8.0,8.1'
