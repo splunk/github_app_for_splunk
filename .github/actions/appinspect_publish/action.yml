@@ -15,7 +15,7 @@ inputs:
     description: 'The name of the file, for example "my_package.tar.gz".'
     required: true
   SPLUNK_VERSION:
-    description: 'The Splunk version(s) that the release is compatible with. For example, "6.7,7.0".'
+    description: 'The Splunk version(s) that the release is compatible with. For example, "8.0,8.1,8.2".'
     required: true
   VISIBILITY:
     description: 'true = The release is to be visible upon package validation success. false = if the release is to be hidden.'
