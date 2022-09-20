@@ -51,11 +51,11 @@ jobs:
               env:
                   GHR_PATH: ./dist/github_app_for_splunk.spl
                   GITHUB_TOKEN: ${{ secrets.API_TOKEN }}
-            - name: Hello world action step
+            - name: Publish App to Splunkbase
               uses: ./.github/actions/appinspect_publish # Uses an action in the root directory
               with:
                 APP_ID: '5596'
                 APP_FILE: './dist/github_app_for_splunk.spl'
                 SPLUNK_USERNAME: ${{ secrets.SPLUNKBASE_USER }}
                 SPLUNK_PASSWORD: ${{ secrets.SPLUNKBASE_PASSWORD }}
-                SPLUNK_VERSION: '8.0,8.1'
+                SPLUNK_VERSION: '8.0,8.1,8.2,9.0'
