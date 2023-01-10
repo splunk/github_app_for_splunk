@@ -16,6 +16,9 @@ on:
 jobs:
   inspect:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9"]
 
     steps:
       - uses: actions/checkout@v2
@@ -62,5 +65,3 @@ jobs:
         with:
           name: github_app_for_splunk-1.0.0.tar.gz
           path: ./github_app_for_splunk-1.0.0.tar.gz
-
-      
