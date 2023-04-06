@@ -10,6 +10,11 @@ export = system
 [eventtypes]
 export = system
 
+### TAGS
+
+[tags]
+export = system
+
 
 ### PROPS
 
