@@ -1,7 +1,10 @@
 <nav search_view="search" color="#24292e">
   <view name="welcome_page" default='true'/>
   <collection label="Enterprise Server Monitor">
-    <view source="all" match="monitor" />
+    <view name="1_system_health_monitor" />
+    <view name="2_process_monitor" />
+    <view name="3_authentication_monitor" />
+    <view name="8_storage_monitor" />
   </collection>
   <collection label="Audit">
     <view name="audit_log_activity" />
