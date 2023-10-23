@@ -30,7 +30,7 @@
       <title>Average Workflow Overview</title>
       <single>
         <search>
-          <query>`github_webhooks` eventtype="GitHub::Workflow" repository.name IN("$repoTkn$") | eval queued=if(action="queued",_time,NULL), started=if(action="in_progress",_time,NULL),completed=if(action="completed",_time,NULL) | stats min(queued) as queued, min(started) as started, min(completed) as completed by repository.name,workflow_job.name,workflow_job.id | eval queueTime=started-queued, runTime=completed-started, totalTime=completed-queued | fields repository.name,workflow_job.name, workflow_job.id, queueTime, runTime, totalTime | stats avg(queueTime) as queueTime, avg(runTime) as runTime, avg(totalTime) as totalTime | eval queueTime=toString(round(queueTime),"Duration"), runTime=toString(round(runTime),"Duration"),totalTime=toString(round(totalTime),"Duration")</query>
+          <query>`github_webhooks` eventtype="GitHub::Workflow" repository.name IN(""*"") | eval queued=if(action="requested",_time,NULL), completed=if(action="completed",_time,NULL) | stats min(queued) as queued, min(completed) as completed by repository.name,workflow_run.name,workflow_run.id | eval totalTime=completed-queued | fields repository.name,workflow_run.name, workflow_run.id, totalTime | stats avg(totalTime) as totalTime | eval totalTime=toString(round(totalTime),"Duration")</query>
           <earliest>$timeTkn.earliest$</earliest>
           <latest>$timeTkn.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -60,7 +60,7 @@
       <title>Workflow Analytics by Job Name</title>
       <table>
         <search>
-          <query>`github_webhooks` eventtype="GitHub::Workflow" repository.name IN("$repoTkn$") | eval queued=if(action="queued",_time,NULL), started=if(action="in_progress",_time,NULL),completed=if(action="completed",_time,NULL) | stats min(queued) as queued, min(started) as started, min(completed) as completed by repository.full_name,workflow_job.name,workflow_job.id | eval queueTime=started-queued, runTime=completed-started, totalTime=completed-queued | fields repository.full_name,workflow_job.name, workflow_job.id, queueTime, runTime, totalTime | stats avg(queueTime) as queueTime, avg(runTime) as runTime, avg(totalTime) as totalTime by repository.full_name,workflow_job.name | eval queueTime=toString(round(queueTime),"Duration"), runTime=toString(round(runTime),"Duration"),totalTime=toString(round(totalTime),"Duration")</query>
+          <query>`github_webhooks` eventtype="GitHub::Workflow" repository.name IN(""*"") | eval queued=if(action="requested",_time,NULL),completed=if(action="completed",_time,NULL) | stats min(queued) as queued, min(completed) as completed by repository.full_name,workflow_run.name,workflow_run.id | eval totalTime=completed-queued | fields repository.full_name,workflow_run.name, workflow_run.id, totalTime | stats avg(totalTime) as totalTime by repository.full_name,workflow_run.name | eval totalTime=toString(round(totalTime),"Duration")</query>
           <earliest>$timeTkn.earliest$</earliest>
           <latest>$timeTkn.latest$</latest>
           <sampleRatio>1</sampleRatio>
